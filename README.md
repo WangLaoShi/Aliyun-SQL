@@ -46,4 +46,25 @@
 ![7za1Sh](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/7za1Sh.png)
 
 
+![Gy8TJu](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/Gy8TJu.png)
 
+
+## 在学习中进行打卡
+
+![OkbZre](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/OkbZre.png)
+
+![ipdJIf](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/ipdJIf.png)
+
+![eZFLdH](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/eZFLdH.png)
+
+![pfxN8C](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/pfxN8C.png)
+
+![heQtDb](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/heQtDb.png)
+## 打卡成功的标志
+
+![nsDaPH](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/nsDaPH.png)
+
+
+但是请注意，即使链接地址有问题的话，也是提示这个。所以还是建议使用上面的 **Fork** 的方法来进行。
+
+![Sf7r0F](https://ipslw.oss-cn-beijing.aliyuncs.com/uPic/Sf7r0F.png)
