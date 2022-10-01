@@ -19,11 +19,11 @@ SELECT stu_name FROM view_students_info;
 
 ### 3.1.2 视图与表有什么区别
 
-《sql 基础教程第 2 版 》用一句话非常凝练的概括了视图与表的区别—“是否保存了实际的数据”。所以视图并不是数据库真实存储的数据表，它可以看作是一个窗口，通过这个窗口我们可以看到数据库表中真实存在的数据。所以我们要区别视图和数据表的本质，即视图是基于真实表的一张虚拟的表，其数据来源均建立在真实表的基础上。
+《SQL 基础教程第 2 版 》用一句话非常凝练的概括了视图与表的区别—“是否保存了实际的数据”。所以视图并不是数据库真实存储的数据表，它可以看作是一个窗口，通过这个窗口我们可以看到数据库表中真实存在的数据。所以我们要区别视图和数据表的本质，即视图是基于真实表的一张虚拟的表，其数据来源均建立在真实表的基础上。
 
 ![SopKUf](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/SopKUf.jpg)
 
- 图片来源：《sql 基础教程第 2 版》
+ 图片来源：《SQL 基础教程第 2 版》
 
 下面这句顺口溜也方便大家记忆视图与表的关系：**“视图不是表，视图是虚表，视图依赖于表，视图不保存正式数据”**。
 
@@ -51,7 +51,7 @@ CREATE VIEW < 视图名称 >(< 列名 1>,< 列名 2>,...) AS <SELECT 语句 >
 
 ![LSe4zz](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/LSe4zz.jpg)
 
-图片来源：《sql 基础教程第 2 版》
+图片来源：《SQL 基础教程第 2 版》
 
 虽然在视图上继续创建视图的语法没有错误，但是我们还是应该尽量避免这种操作。这是因为对多数 DBMS 来说， 多重视图会降低 SQL 的性能。
 
@@ -237,8 +237,9 @@ DROP VIEW productSum;
 ```sql
 SELECT stu_name
 FROM (SELECT stu_name, COUNT(*) AS stu_cnt
-        FROM students_info
-        GROUP BY stu_age) AS studentSum;
+      FROM students_info
+      GROUP BY stu_age
+     ) AS studentSum;
 ```
 
 这个语句看起来很好理解，其中使用括号括起来的 SQL 语句首先执行，执行成功后再执行外面的 SQL 语句。但是我们上一节提到的视图也是根据 SELECT 语句创建视图然后在这个基础上再进行查询。那么什么是子查询呢？子查询和视图又有什么关系呢？
@@ -258,14 +259,14 @@ FROM (SELECT stu_name, COUNT(*) AS stu_cnt
 ```sql
 SELECT product_type, cnt_product
 FROM (SELECT *
-                FROM (  
-                        SELECT product_type, 
-                        COUNT(*) AS cnt_product
-                        FROM product 
-                        GROUP BY product_type
-                     ) AS productsum
-                WHERE cnt_product = 4
-        ) AS productsum2;
+      FROM (  
+              SELECT product_type, 
+              COUNT(*) AS cnt_product
+              FROM product 
+              GROUP BY product_type
+            ) AS productsum
+      WHERE cnt_product = 4
+      ) AS productsum2;
 ```
 
 其中最内层的子查询我们将其命名为 productSum，这条语句根据 product_type 分组并查询个数，第二层查询中将个数为 4 的商品查询出来，最外层查询 product_type 和 cnt_product 两列。 
@@ -281,7 +282,7 @@ FROM (SELECT *
 ```sql
 product_id | product_name | sale_price 
 ------------+-------------+----------
-0003       | 运动 T 恤       | 4000 
+0003       | 运动 T 恤     | 4000 
 0004       | 菜刀          | 3000 
 0005       | 高压锅        | 6800
 ```
@@ -309,7 +310,7 @@ WHERE sale_price > (
 );
 ```
 
-上面的这条语句首先后半部分查询出 product 表中的平均售价，前面的 sql 语句在根据 WHERE 条件挑选出合适的商品。  
+上面的这条语句首先后半部分查询出 product 表中的平均售价，前面的 SQL 语句在根据 WHERE 条件挑选出合适的商品。  
 由于标量子查询的特性，导致标量子查询不仅仅局限于 WHERE 子句中，通常任何可以使用单一值的位置都可以使用。也就是说， 能够使用常数或者列名的地方，无论是 SELECT 子句、GROUP BY 子句、HAVING 子句，还是 ORDER BY 子句，几乎所有的地方都可以使用。
 
 我们还可以这样使用标量子查询：
@@ -361,9 +362,9 @@ WHERE sale_price > (SELECT AVG(sale_price) FROM product);
 
 ```sql
 SELECT product_type, product_name, sale_price
-FROM product ASp1
+FROM product AS p1
 WHERE sale_price > (SELECT AVG(sale_price)
-                    FROM product ASp2
+                    FROM product AS p2
                     WHERE p1.product_type =p2.product_type
                     GROUP BY product_type);
 ```
@@ -377,7 +378,7 @@ WHERE sale_price > (SELECT AVG(sale_price)
 2.  根据主查询讯结果匹配 product_type，获取子查询结果
 3.  将子查询结果再与主查询结合执行完整的 SQL 语句
 
-_ 在子查询中像标量子查询，嵌套子查询或者关联子查询可以看作是子查询的一种操作方式即可。_
+*在子查询中像标量子查询，嵌套子查询或者关联子查询可以看作是子查询的一种操作方式即可。*
 
 ## 小结
 
@@ -404,7 +405,7 @@ SELECT * FROM ViewPractice5_1;
 ```sql
 product_name | sale_price | regist_date
 --------------+------------+------------
-T 恤衫         | 　 1000    | 2009-09-20
+T 恤衫        | 　 1000    | 2009-09-20
 菜刀          |    3000    | 2009-09-20
 ```
 
@@ -434,9 +435,9 @@ INSERT INTO ViewPractice5_1 VALUES ('刀子', 300, '2009-11-02');
 ```sql
 product_id | product_name | product_type | sale_price | sale_price_all
 ------------+-------------+--------------+------------+---------------------
-0001       | T 恤衫         | 衣服         | 1000       | 2097.5000000000000000
+0001       | T 恤衫        | 衣服         | 1000       | 2097.5000000000000000
 0002       | 打孔器        | 办公用品      | 500        | 2097.5000000000000000
-0003       | 运动 T 恤       | 衣服          | 4000      | 2097.5000000000000000
+0003       | 运动 T 恤     | 衣服          | 4000      | 2097.5000000000000000
 0004       | 菜刀          | 厨房用具      | 3000       | 2097.5000000000000000
 0005       | 高压锅        | 厨房用具      | 6800       | 2097.5000000000000000
 0006       | 叉子          | 厨房用具      | 500        | 2097.5000000000000000
@@ -462,7 +463,7 @@ product_id | product_name | product_type | sale_price | avg_sale_price
 ------------+-------------+--------------+------------+---------------------
 0001       | T 恤衫         | 衣服         | 1000       |2500.0000000000000000
 0002       | 打孔器         | 办公用品     | 500        | 300.0000000000000000
-0003       | 运动 T 恤        | 衣服        | 4000        |2500.0000000000000000
+0003       | 运动 T 恤      | 衣服        | 4000        |2500.0000000000000000
 0004       | 菜刀          | 厨房用具      | 3000        |2795.0000000000000000
 0005       | 高压锅         | 厨房用具     | 6800        |2795.0000000000000000
 0006       | 叉子          | 厨房用具      | 500         |2795.0000000000000000
@@ -481,9 +482,9 @@ SELECT product_id,
        product_type,
        sale_price,
        (SELECT AVG(sale_price)
-         FROM product p2
-         WHERE p1.product_type = p2.product_type
-         GROUP BY p1.product_type) AS avg_sale_price
+        FROM product p2
+        WHERE p1.product_type = p2.product_type
+        GROUP BY p1.product_type) AS avg_sale_price
 FROM product p1;
  
 -- 确认视图内容
@@ -494,7 +495,7 @@ SELECT * FROM AvgPriceByType;
 
 SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
 
-所谓函数，类似一个黑盒子，你给它一个输入值，它便按照预设的程序定义给出返回值，输入值称为 ` 参数 `。
+所谓函数，类似一个黑盒子，你给它一个输入值，它便按照预设的程序定义给出返回值，输入值称为 `参数`。
 
 函数大致分为如下几类：
 
@@ -641,7 +642,7 @@ SELECT * FROM samplestr;
 +-----------+------+------+
 | opx       | rt   | NULL |
 | abc       | def  | NULL |
-| 太阳      | 月亮 | 火星 |
+| 太阳       | 月亮 | 火星 |
 | aaa       | NULL | NULL |
 | NULL      | xyz  | NULL |
 | @!#$%     | NULL | NULL |
@@ -1041,7 +1042,7 @@ OR purchase_price = 5000;
 +--------------+----------------+
 | product_name | purchase_price |
 +--------------+----------------+
-| T 恤          |            500 |
+| T 恤        |            500 |
 | 打孔器       |            320 |
 | 高压锅       |           5000 |
 +--------------+----------------+
@@ -1058,7 +1059,7 @@ WHERE purchase_price IN (320, 500, 5000);
 +--------------+----------------+
 | product_name | purchase_price |
 +--------------+----------------+
-| T 恤          |            500 |
+| T 恤        |            500 |
 | 打孔器       |            320 |
 | 高压锅       |           5000 |
 +--------------+----------------+
@@ -1075,7 +1076,7 @@ WHERE purchase_price NOT IN (320, 500, 5000);
 +--------------+----------------+
 | product_name | purchase_price |
 +--------------+----------------+
-| 运动 T 恤      |           2800 |
+| 运动 T 恤    |           2800 |
 | 菜刀         |           2800 |
 | 擦菜板       |            790 |
 +--------------+----------------+
@@ -1090,7 +1091,7 @@ WHERE purchase_price NOT IN (320, 500, 5000);
 
 * IN 和子查询
 
-IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可以使用子查询作为其参数。我们已经在 5-2 节中学习过了，子查询就是 SQL 内部生成的表，因此也可以说“能够将表作为 IN 的参数”。同理，我们还可以说“能够将视图作为 IN 的参数”。
+IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可以使用子查询作为其参数。我们已经在前面的章节中学习过了，子查询就是 SQL 内部生成的表，因此也可以说“能够将表作为 IN 的参数”。同理，我们还可以说“能够将视图作为 IN 的参数”。
 
 在此，我们创建一张新表 `shopproduct` 显示出哪些商店销售哪些商品。
 
@@ -1142,11 +1143,11 @@ SELECT * FROM shopproduct;
 | 000A    | 东京      | 0001       |       30 |
 | 000A    | 东京      | 0002       |       50 |
 | 000A    | 东京      | 0003       |       15 |
-| 000B    | 名古屋      | 0002       |       30 |
-| 000B    | 名古屋      | 0003       |      120 |
-| 000B    | 名古屋      | 0004       |       20 |
-| 000B    | 名古屋      | 0006       |       10 |
-| 000B    | 名古屋      | 0007       |       40 |
+| 000B    | 名古屋    | 0002       |       30 |
+| 000B    | 名古屋    | 0003       |      120 |
+| 000B    | 名古屋    | 0004       |       20 |
+| 000B    | 名古屋    | 0006       |       10 |
+| 000B    | 名古屋    | 0007       |       40 |
 | 000C    | 大阪      | 0003       |       20 |
 | 000C    | 大阪      | 0004       |       50 |
 | 000C    | 大阪      | 0006       |       90 |
@@ -1192,7 +1193,7 @@ WHERE product_id IN (SELECT product_id
 +--------------+------------+
 | product_name | sale_price |
 +--------------+------------+
-| 运动 T 恤      |       4000 |
+| 运动 T 恤    |       4000 |
 | 菜刀         |       3000 |
 | 叉子         |        500 |
 | 擦菜板       |        880 |
@@ -1200,7 +1201,7 @@ WHERE product_id IN (SELECT product_id
 4 rows in set (0.00 sec)
 ```
 
-根据第 5 章学习的知识，子查询是从最内层开始执行的（由内而外），因此，上述语句的子查询执行之后，sql 展开成下面的语句
+根据前面章节学习的知识，子查询是从最内层开始执行的（由内而外），因此，上述语句的子查询执行之后，SQL 展开成下面的语句
 
 ```sql
 -- 子查询展开后的结果
@@ -1221,11 +1222,11 @@ WHERE product_id IN ('0003', '0004', '0006', '0007');
 可以看到，子查询转换之后变为 in 谓词用法，你理解了吗？  
 或者，你会疑惑既然 in 谓词也能实现，那为什么还要使用子查询呢？这里给出两点原因：
 
-1. 实际生活中，某个门店的在售商品是不断变化的，使用 in 谓词就需要经常更新 sql 语句，降低了效率，提高了维护成本；
+1. 实际生活中，某个门店的在售商品是不断变化的，使用 in 谓词就需要经常更新 SQL 语句，降低了效率，提高了维护成本；
 
 2. 实际上，某个门店的在售商品可能有成百上千个，手工维护在售商品编号真是个大工程。
 
-使用子查询即可保持 sql 语句不变，极大提高了程序的可维护性，这是系统开发中需要重点考虑的内容。
+使用子查询即可保持 SQL 语句不变，极大提高了程序的可维护性，这是系统开发中需要重点考虑的内容。
 
 * NOT IN 和子查询
 
@@ -1280,14 +1281,15 @@ FROM product AS p
 WHERE EXISTS (SELECT *
               FROM shopproduct AS sp
               WHERE sp.shop_id = '000C'
-                  AND sp.product_id = p.product_id);
+                    AND sp.product_id = p.product_id
+              );
 +--------------+------------+
 | product_name | sale_price |
 +--------------+------------+
-| 运动 T 恤      |       4000 |
+| 运动 T 恤     |       4000 |
 | 菜刀         |       3000 |
 | 叉子         |        500 |
-| 擦菜板       |        880 |
+| 擦菜板        |        880 |
 +--------------+------------+
 4 rows in set (0.00 sec)
 ```
@@ -1300,16 +1302,14 @@ WHERE EXISTS (SELECT *
 (SELECT *
  FROM shopproduct AS sp
  WHERE sp.shop_id = '000C'
-    AND sp.product_id = p.product_id)
+       AND sp.product_id = p.product_id)
 ```
 
-上面这样的子查询就是唯一的参数。确切地说，由于通过条件“SP.product_id = P.product_id”将 product 表和 shopproduct 表进行了联接，因此作为参数的是关联子查询。 EXIST 通常会使用关联子查询作为参数。
+上面这样的子查询就是唯一的参数。确切地说，由于通过条件 “SP.product_id = P.product_id” 将 product 表和 shopproduct 表进行了联接，因此作为参数的是关联子查询。 EXIST 通常会使用关联子查询作为参数。
 
 * 子查询中的 SELECT
 
-由于 EXIST 只关心记录是否存在，因此返回哪些列都没有关系。 EXIST 只会判断是否存在满足子查询中 WHERE 子句指定的条件“商店编号（shop_id）为 '000C'，商品（product）表和商店
-
-商品（shopproduct）表中商品编号（product_id）相同”的记录，只有存在这样的记录时才返回真（TRUE）。
+由于 EXIST 只关心记录是否存在，因此返回哪些列都没有关系。 EXIST 只会判断是否存在满足子查询中 WHERE 子句指定的条件“商店编号（shop_id）为 '000C'，商品（product）表和商店商品（shopproduct）表中商品编号（product_id）相同”的记录，只有存在这样的记录时才返回真（TRUE）。
 
 因此，使用下面的查询语句，查询结果也不会发生变化。
 
@@ -1323,7 +1323,7 @@ WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
 +--------------+------------+
 | product_name | sale_price |
 +--------------+------------+
-| 运动 T 恤      |       4000 |
+| 运动 T 恤    |       4000 |
 | 菜刀         |       3000 |
 | 叉子         |        500 |
 | 擦菜板       |        880 |
@@ -1358,7 +1358,7 @@ WHERE NOT EXISTS (SELECT *
 5 rows in set (0.00 sec)
 ```
 
-NOT EXIST 与 EXIST 相反，当“不存在”满足子查询中指定条件的记录时返回真（TRUE）。
+NOT EXIST 与 EXIST 相反，当 “不存在” 满足子查询中指定条件的记录时返回真（TRUE）。
 
 ## 3.5 CASE 表达式
 
@@ -1416,13 +1416,13 @@ FROM  product;
 | product_name | abc_product_type |
 +--------------+------------------+
 | T 恤          | A ： 衣服        |
-| 打孔器       | B ： 办公用品    |
+| 打孔器         | B ： 办公用品    |
 | 运动 T 恤      | A ： 衣服        |
-| 菜刀         | C ： 厨房用具    |
-| 高压锅       | C ： 厨房用具    |
-| 叉子         | C ： 厨房用具    |
-| 擦菜板       | C ： 厨房用具    |
-| 圆珠笔       | B ： 办公用品    |
+| 菜刀           | C ： 厨房用具    |
+| 高压锅         | C ： 厨房用具    |
+| 叉子           | C ： 厨房用具    |
+| 擦菜板         | C ： 厨房用具    |
+| 圆珠笔         | B ： 办公用品    |
 +--------------+------------------+
 8 rows in set (0.00 sec)
 ```
@@ -1462,12 +1462,9 @@ sum_price_clothes | sum_price_kitchen | sum_price_office
 ```sql
 -- 对按照商品种类计算出的销售单价合计值进行行列转换
 SELECT 
-        SUM(CASE WHEN product_type = '衣服' THEN sale_price ELSE 0 END) 
-        AS sum_price_clothes,
-        SUM(CASE WHEN product_type = '厨房用具' THEN sale_price ELSE 0 END) 
-        AS sum_price_kitchen,
-        SUM(CASE WHEN product_type = '办公用品' THEN sale_price ELSE 0 END) 
-        AS sum_price_office
+        SUM(CASE WHEN product_type = '衣服' THEN sale_price ELSE 0 END)    AS sum_price_clothes,
+        SUM(CASE WHEN product_type = '厨房用具' THEN sale_price ELSE 0 END) AS sum_price_kitchen,
+        SUM(CASE WHEN product_type = '办公用品' THEN sale_price ELSE 0 END) AS sum_price_office
 FROM product;
 +-------------------+-------------------+------------------+
 | sum_price_clothes | sum_price_kitchen | sum_price_office |
@@ -1496,8 +1493,8 @@ SELECT name,
        SUM(CASE WHEN subject = '语文' THEN score ELSE null END) as chinese,
        SUM(CASE WHEN subject = '数学' THEN score ELSE null END) as math,
        SUM(CASE WHEN subject = '外语' THEN score ELSE null END) as english
-  FROM score
- GROUP BY name;
+FROM score
+GROUP BY name;
 +------+---------+------+---------+
 | name | chinese | math | english |
 +------+---------+------+---------+
