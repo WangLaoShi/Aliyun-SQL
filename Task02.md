@@ -1,4 +1,5 @@
 本笔记为阿里云天池龙珠计划SQL训练营的学习内容，链接为：https://tianchi.aliyun.com/specials/promotion/aicampsql
+
 # Task02：SQL 基础查询与排序
 
 [TOC]
@@ -22,7 +23,8 @@ FROM < 表名 >;
 
 ### 1.2 从表中选取符合条件的数据
 
-**WHERE 语句**  
+**WHERE 语句**
+  
 当不需要取出全部数据，而是选取出满足“商品种类为衣服”“销售单价在 1000 日元以上”等某些条件的数据时，使用 WHERE 语句。
 
 SELECT 语句通过 WHERE 子句来指定查询数据的条件。在 WHERE 子句中可以指定“某一列的值和这个字符串相等”或者“某一列的值大于这个数字”等条件。执行含有这些条件的 SELECT 语句，就可以查询出只符合该条件的记录了。
@@ -52,7 +54,7 @@ WHERE product_type = '衣服';
 * SQL 中可以随意使用换行符，不影响语句执行（但不可插入空行）。
 * 设定汉语别名时需要使用双引号（"）括起来。
 * 在 SELECT 语句中使用 **DISTINCT** 可以删除重复行。
-* 注释是 SQL 语句中用来标识说明或者注意事项的部分。分为单 行注释 "--" 和多行注释两种 "/*  */"。
+* 注释是 SQL 语句中用来标识说明或者注意事项的部分。分为单行注释 "--" 和多行注释两种 "/*  */"。
 
 ```sql
 -- 想要查询出全部列时，可以使用代表所有列的星号（*）。
@@ -163,7 +165,8 @@ WHERE purchase_price IS NOT NULL;
 SELECT product_name, product_type, sale_price
 FROM product
 WHERE sale_price >= 1000;
- -- 向代码清单 2-30 的查询条件中添加 NOT 运算符
+
+-- 向上面代码清单的查询条件中添加 NOT 运算符
 SELECT product_name, product_type, sale_price
 FROM product
 WHERE NOT sale_price >= 1000;
@@ -216,11 +219,14 @@ OR regist_date = '2009-09-20');
 ### 3.4 真值表
 
 复杂运算时该怎样理解？
+
 当碰到条件较复杂的语句时，理解语句含义并不容易，这时可以采用 **真值表** 来梳理逻辑关系。
 
 **什么是真值？**
 
-本节介绍的三个运算符 NOT、AND 和 OR 称为逻辑运算符。这里所说的逻辑就是对真值进行操作的意思。**真值** 就是值为真（TRUE）或假 （FALSE）其中之一的值。
+本节介绍的三个运算符 NOT、AND 和 OR 称为逻辑运算符。
+
+这里所说的逻辑就是对真值进行操作的意思。**真值** 就是值为真（TRUE）或假 （FALSE）其中之一的值。
 
 例如，对于 `sale_price >= 3000` 这个查询条件来说，由于 product_name 列为 '运动 T 恤' 的记录的 sale_price 列的值是 2800，因此会返回假（FALSE），而 product_name 列为 '高压锅' 的记录的 sale_price 列的值是 5000，所以返回真（TRUE）。
 
@@ -285,11 +291,12 @@ WHERE product_name > NULL;
 ```
 
 ### 练习题 3
+
 代码清单 2-22（2-2 节）中的 SELECT 语句能够从 product 表中取出“销售单价（saleprice）比进货单价（purchase price）高出 500 日元以上”的商品。请写出两条可以得到相同结果的 SELECT 语句。执行结果如下所示。
 
 ```
 product_name | sale_price | purchase_price 
-------------- + ------------ + ------------
+------------ + ---------- + ------------
 T 恤衫        | 　 1000    | 500
 运动 T 恤     |    4000    | 2800
 高压锅        |    6800    | 5000
@@ -344,6 +351,8 @@ SQL 中用于汇总的函数叫做聚合函数。以下五个是最常用的聚�
 * MAX：求出表中任意列中数据的最大值
 * MIN：求出表中任意列中数据的最小值
 
+在使用 COUNT 的时候要特别注意的一点是,COUNT(*) 和 COUNT(字段) 的区别.
+
 请沿用第一章的数据，使用以下操作熟练函数：
 
 ```sql
@@ -367,6 +376,47 @@ FROM product;
 SELECT MAX(regist_date), MIN(regist_date)
 FROM product;
 ```
+
+
+MySQL 聚合函数主要用于数据统计，比如计数、求和、求平均数等。聚合函数结合分组操作，您可以在更多的维度统计数据。
+
+* AVG
+MySQL AVG() 函数计算并返回表达式的平均值。
+* BIT_AND
+MySQL BIT_AND() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位与"运算。
+* BIT_OR
+MySQL BIT_OR() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位或"运算。
+* BIT_XOR
+MySQL BIT_XOR() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位异或"运算。
+* COUNT
+MySQL COUNT() 函数用于统计表达式的数量。
+* GROUP_CONCAT
+MySQL GROUP_CONCAT() 函数将一个分组中指定的列或表达式的值连接成一个字符串并返回。
+* JSON_ARRAYAGG
+MySQL JSON_ARRAYAGG() 函数将指定的列或者表达式的值聚合为一个 JSON 数组。
+* JSON_OBJECTAGG
+MySQL JSON_OBJECTAGG() 函数将由第一个参数作为键和第二个参数作为值的键值对聚合为一个 JSON 对象。
+* MAX
+MySQL MAX() 函数返回表达式的最大值。
+* MIN
+MySQL MIN() 函数返回表达式的最小值。
+* STD
+MySQL STD() 计算所有非 null 输入值的总体标准差并返回结果。
+* STDDEV
+MySQL STDDEV() 函数计算所有非 null 输入值的总体标准差并返回结果。
+* STDDEV_POP
+MySQL STDDEV_POP() 函数计算所有非 null 输入值的总体标准差并返回结果。
+* STDDEV_SAMP
+MySQL STDDEV_SAMP() 函数计算所有非 null 输入值的样本标准差并返回结果。
+* SUM
+MySQL SUM() 函数计算所有指定的非 NULL 值的总和并返回。
+* VAR_POP
+MySQL VAR_POP() 函数计算所有非 null 输入值的总体方差（总体标准差的平方）并返回结果。
+* VAR_SAMP
+MySQL VAR_SAMP() 函数计算所有非 null 输入值的样本方差（样本标准差的平方）并返回结果。
+* VARIANCE
+MySQL VARIANCE() 函数计算所有非 null 输入值的总体方差（总体标准差的平方）并返回结果。
+
 
 ### 4.2 使用聚合函数删除重复值
 
@@ -408,7 +458,7 @@ SELECT product_type, COUNT(*)
 FROM product
 GROUP BY product_type;
 
- -- 不含 GROUP BY
+-- 不含 GROUP BY
 SELECT product_type, COUNT(*)
 FROM product
 ```
@@ -451,9 +501,9 @@ GROUP BY purchase_price;
 
 在使用聚合函数及 GROUP BY 子句时，经常出现的错误有：
 
-1.  在聚合函数的 SELECT 子句中写了聚合键以外的列使用 COUNT 等聚合函数时，SELECT 子句中如果出现列名，只能是 GROUP BY 子句中指定的列名（也就是聚合键）。
-2.  在 GROUP BY 子句中使用列的别名 SELECT 子句中可以通过 AS 来指定别名，但在 GROUP BY 中不能使用别名。因为在 DBMS 中 ,SELECT 子句在 GROUP BY 子句后执行。
-3.  在 WHERE 中使用聚合函数，原因是聚合函数的使用前提是结果集已经确定，而 WHERE 还处于确定结果集的过程中，所以相互矛盾会引发错误。 如果想指定条件，可以在 SELECT，HAVING（下面马上会讲）以及 ORDER BY 子句中使用聚合函数。
+1.  在聚合函数的 SELECT 子句中写了聚合键以外的列使用 COUNT 等聚合函数时，SELECT 子句中如果出现列名，**只能**是 GROUP BY 子句中指定的列名（也就是聚合键）。
+2.  在 GROUP BY 子句中使用列的别名 SELECT 子句中可以通过 AS 来指定别名，但在 GROUP BY 中**不能**使用别名。因为在 DBMS 中 ,**SELECT 子句在 GROUP BY 子句后执行**。
+3.  在 WHERE 中使用聚合函数，原因是聚合函数的使用前提是结果集已经确定，而 WHERE 还处于确定结果集的过程中，所以相互矛盾会引发错误。 如果想指定条件，可以在 SELECT，HAVING 以及 ORDER BY 子句中使用聚合函数。
 
 ## 六、为聚合结果指定条件
 
@@ -471,7 +521,7 @@ HAVING 的用法类似 WHERE
 
 ### 6.2 HAVING 特点
 
-HAVING 子句用于对分组进行过滤，可以使用数字、聚合函数和 GROUP BY 中指定的列名（聚合键）。
+**HAVING 子句用于对分组进行过滤，可以使用数字、聚合函数和 GROUP BY 中指定的列名（聚合键）。**
 
 ```sql
 -- 数字

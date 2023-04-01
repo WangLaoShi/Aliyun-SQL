@@ -165,7 +165,11 @@ Bag 是和 set 类似的一种数学结构, 不一样的地方在于: bag 里面
 
 通过上述 bag 与 set 定义之间的差别我们就发现, 使用 bag 模型来描述数据库中的表在很多时候更加合适.
 
-是否允许元素重复导致了 set 和 bag 的并交差等运算都存在一些区别. 以 bag 的交为例, 由于 bag 允许元素重复出现, 对于两个 bag, 他们的并运算会按照: **1. 该元素是否至少在一个 bag 里出现过, 2. 该元素在两个 bag 中的最大出现次数 ** 这两个方面来进行计算. 因此对于 A = {1,1,1,2,3,5,7}, B = {1,1,2,2,4,6,8} 两个 bag, 它们的并就等于 {1,1,1,2,2,3,4,5,6,7,8}.
+是否允许元素重复导致了 set 和 bag 的并交差等运算都存在一些区别. 以 bag 的交为例, 由于 bag 允许元素重复出现, 对于两个 bag, 他们的并运算会按照: 
+**1. 该元素是否至少在一个 bag 里出现过, 
+2. 该元素在两个 bag 中的最大出现次数** 
+
+这两个方面来进行计算. 因此对于 A = {1,1,1,2,3,5,7}, B = {1,1,2,2,4,6,8} 两个 bag, 它们的并就等于 {1,1,1,2,2,3,4,5,6,7,8}.
 
 #### 4.1.2.5 隐式类型转换
 
@@ -183,7 +187,7 @@ FROM product2;
 
 ![mWBODL](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/mWBODL.jpg)
 
-** 练习题:**
+**练习题:**
 
 使用 `SYSDATE()` 函数可以返回当前日期时间, 是一个日期时间类型的数据, 试测试该数据类型和数值, 字符串等类型的兼容性.
 
@@ -340,6 +344,8 @@ WHERE product_id NOT IN (
 #### 4.1.5.1 借助并集和差集迂回实现交集运算 INTERSECT
 
 通过观察集合运算的文氏图, 我们发现, 两个集合的交可以看作是两个集合的并去掉两个集合的对称差。
+
+![huNmct](https://oss.images.shujudaka.com/uPic/huNmct.png)
 
 ## 4.2 连结(JOIN)
 
@@ -809,7 +815,7 @@ SELECT P1.*
 
 FROM product AS P1
 
-INNER JOINproduct2 AS P2
+INNER JOIN product2 AS P2
 
 ON (P1.product_id  = P2.product_id
    AND P1.product_name = P2.product_name
