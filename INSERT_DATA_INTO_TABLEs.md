@@ -1,4 +1,5 @@
 
+```sql
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -3932,3 +3933,4 @@ INSERT INTO `products` VALUES ('S72_3212', 'Pont Yacht', 'Ships', '1:72', 'Unima
 -- ----------------------------
 INSERT INTO `tokens` VALUES ('abcdef');
 
+```
