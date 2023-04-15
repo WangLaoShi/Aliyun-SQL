@@ -3,6 +3,17 @@
 ```sql
 /******************************************/
 /*   DatabaseName = studentcourse   */
+/*   TableName = teacher   */
+/******************************************/
+CREATE TABLE `teacher` (
+  `tno` int NOT NULL,
+  `tname` varchar(20) NOT NULL,
+  PRIMARY KEY (`tno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+;
+
+/******************************************/
+/*   DatabaseName = studentcourse   */
 /*   TableName = course   */
 /******************************************/
 CREATE TABLE `course` (
@@ -14,6 +25,22 @@ CREATE TABLE `course` (
   CONSTRAINT `course_tno` FOREIGN KEY (`tno`) REFERENCES `teacher` (`tno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
 ;
+
+
+
+/******************************************/
+/*   DatabaseName = studentcourse   */
+/*   TableName = students   */
+/******************************************/
+CREATE TABLE `students` (
+  `sno` int NOT NULL,
+  `sname` varchar(20) NOT NULL,
+  `sage` date NOT NULL,
+  `ssex` char(2) NOT NULL,
+  PRIMARY KEY (`sno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='学生表'
+;
+
 
 /******************************************/
 /*   DatabaseName = studentcourse   */
@@ -30,29 +57,9 @@ CREATE TABLE `sc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
 ;
 
-/******************************************/
-/*   DatabaseName = studentcourse   */
-/*   TableName = students   */
-/******************************************/
-CREATE TABLE `students` (
-  `sno` int NOT NULL,
-  `sname` varchar(20) NOT NULL,
-  `sage` date NOT NULL,
-  `ssex` char(2) NOT NULL,
-  PRIMARY KEY (`sno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='学生表'
-;
 
-/******************************************/
-/*   DatabaseName = studentcourse   */
-/*   TableName = teacher   */
-/******************************************/
-CREATE TABLE `teacher` (
-  `tno` int NOT NULL,
-  `tname` varchar(20) NOT NULL,
-  PRIMARY KEY (`tno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
-;
+
+
 
 ```
 
