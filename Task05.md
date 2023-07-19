@@ -20,14 +20,14 @@
 
 ### MySQL字符串函数
 
-* [CONCAT](func-mysql-concat.html) - 将两个或多个字符串组合成一个字符串。
-* [LENGTH＆CHAR_LENGTH ](func-mysql-length.html "MySQL字符串长度") - 获取字符串的长度，以字节和字符为单位。
-* [LEFT](func-mysql-left.html) - 获取具有指定长度的字符串的左侧部分。
-* [REPLACE](func-mysql-replace.html) - 搜索并替换字符串中的子字符串。
-* [SUBSTRING](func-mysql-SUBSTRING.html) - 从具有特定长度的位置开始提取子字符串。
-* [TRIM](func-mysql-trim.html) - 从字符串中删除不需要的字符。
-* [FIND_IN_SET](func-mysql-find-in-set.html) - 在以逗号分隔的字符串列表中查找字符串。
-* [FORMAT](func-mysql-format.html) - 格式化具有特定区域设置的数字，四舍五入到小数位数
+* [CONCAT](functions/func-mysql-concat.md) - 将两个或多个字符串组合成一个字符串。
+* [LENGTH＆CHAR_LENGTH ](functions/func-mysql-length.md "MySQL字符串长度") - 获取字符串的长度，以字节和字符为单位。
+* [LEFT](functions/func-mysql-left.md) - 获取具有指定长度的字符串的左侧部分。
+* [REPLACE](functions/func-mysql-replace.md) - 搜索并替换字符串中的子字符串。
+* [SUBSTRING](functions/func-mysql-SUBSTRING.md) - 从具有特定长度的位置开始提取子字符串。
+* [TRIM](functions/func-mysql-trim.md) - 从字符串中删除不需要的字符。
+* [FIND_IN_SET](functions/func-mysql-find-in-set.md) - 在以逗号分隔的字符串列表中查找字符串。
+* [FORMAT](functions/func-mysql-format.md) - 格式化具有特定区域设置的数字，四舍五入到小数位数
 
 ### MySQL控制流功能
 
