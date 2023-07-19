@@ -38,44 +38,44 @@
 
 ### MySQL日期和时间函数
 
-* [CURDATE](func-mysql-curdate.html) - 返回当前日期。
-* [DATEDIFF](func-mysql-datediff.html)  - 计算两个`DATE`值之间的天数   。
-* [DAY](func-mysql-day.html)  - 获取指定日期的月份日期。
-* [DATE_ADD](func-mysql-date-add.html)  - 将日期值添加到日期值。
-* [DATE_SUB](func-mysql-date-sub.html) - 从日期值中减去时间值。
-* [DATE_FORMAT](func-mysql-date-format.html "MySQL DATE_FORMAT函数") - 根据指定的日期格式格式化日期值。
-* [DAYNAME](func-mysql-dayname.html) - 获取指定日期的工作日名称。
-* [DAYOFWEEK](func-mysql-dayofweek.html) - 返回日期的工作日索引。
-* [EXTRACT](func-mysql-extract.html) - 提取日期的一部分。
-* [NOW](func-mysql-now.html "MySQL NOW() 函数") - 返回执行语句的当前日期和时间。
-* [MONTH](https://www.begtut.com/mysql/mysql-month.html) - 返回表示指定日期月份的整数。
-* [STR_TO_DATE](func-mysql-str-to-date.html "MySQL STR_TO_DATE() 函数") - 根据指定的格式将字符串转换为日期和时间值。
-* [SYSDATE](func-mysql-sysdate.html) - 返回当前日期。
-* [TIMEDIFF](func-mysql-timediff.html) - 计算两个`TIME`或`DATETIME`值之间的差异。
-* [TIMESTAMPDIFF](func-mysql-timestampdiff.html) - 计算两个`DATE`或`DATETIME`值之间的差异。
-* [WEEK](func-mysql-week.html) - 返回一个星期的日期。
-* [WEEKDAY](func-mysql-weekday.html)  - 返回日期的工作日索引。
-* [YEAR](func-mysql-year.html) -返回日期值的年份部分。
+* [CURDATE](functions/func-mysql-curdate.md) - 返回当前日期。
+* [DATEDIFF](functions/func-mysql-datediff.md)  - 计算两个`DATE`值之间的天数   。
+* [DAY](functions/func-mysql-day.html)  - 获取指定日期的月份日期。
+* [DATE_ADD](functions/func-mysql-date-add.html)  - 将日期值添加到日期值。
+* [DATE_SUB](functions/func-mysql-date-sub.html) - 从日期值中减去时间值。
+* [DATE_FORMAT](functions/func-mysql-date-format.html "MySQL DATE_FORMAT函数") - 根据指定的日期格式格式化日期值。
+* [DAYNAME](functions/func-mysql-dayname.html) - 获取指定日期的工作日名称。
+* [DAYOFWEEK](functions/func-mysql-dayofweek.html) - 返回日期的工作日索引。
+* [EXTRACT](functions/func-mysql-extract.html) - 提取日期的一部分。
+* [NOW](functions/func-mysql-now.html "MySQL NOW() 函数") - 返回执行语句的当前日期和时间。
+* [MONTH](functions/mysql-month.html) - 返回表示指定日期月份的整数。
+* [STR_TO_DATE](functions/func-mysql-str-to-date.html "MySQL STR_TO_DATE() 函数") - 根据指定的格式将字符串转换为日期和时间值。
+* [SYSDATE](functions/func-mysql-sysdate.html) - 返回当前日期。
+* [TIMEDIFF](functions/func-mysql-timediff.html) - 计算两个`TIME`或`DATETIME`值之间的差异。
+* [TIMESTAMPDIFF](functions/func-mysql-timestampdiff.html) - 计算两个`DATE`或`DATETIME`值之间的差异。
+* [WEEK](functions/func-mysql-week.html) - 返回一个星期的日期。
+* [WEEKDAY](functions/func-mysql-weekday.html)  - 返回日期的工作日索引。
+* [YEAR](functions/func-mysql-year.html) -返回日期值的年份部分。
 
 ### MySQL比较功能
 
-* [COALESCE](func-mysql-coalesce.html) - 返回第一个非null参数，这对于替换null非常方便。
-* [GREATEST＆LEAST](func-mysql-greatest.html) - 取n个参数并分别返回n个参数的最大值和最小值。
-* [ISNULL](https://www.begtut.com/mysql/mysql-isnull-function.html) - 如果参数为null，则返回1，否则返回零。
+* [COALESCE](functions/func-mysql-coalesce.html) - 返回第一个非null参数，这对于替换null非常方便。
+* [GREATEST＆LEAST](functions/func-mysql-greatest.html) - 取n个参数并分别返回n个参数的最大值和最小值。
+* [ISNULL](functions/mysql-isnull-function.html) - 如果参数为null，则返回1，否则返回零。
 
 ### MySQL数学函数
 
-* [ABS](func-mysql-abs.html) - 返回数字的绝对值。
-* [CEIL](func-mysql-ceil.html) - 返回大于或等于输入数字的最小整数值。
-* [FLOOR](func-mysql-floor.html) - 返回不大于参数的最大整数值。
-* [MOD](func-mysql-mod.html) - 返回数字的余数除以另一个。
-* [ROUND](func-mysql-round.html)  - 将数字四舍五入到指定的小数位数。
-* [TRUNCATE](func-mysql-truncate.html) - 将数字截断为指定的小数位数。
+* [ABS](functions/func-mysql-abs.html) - 返回数字的绝对值。
+* [CEIL](functions/func-mysql-ceil.html) - 返回大于或等于输入数字的最小整数值。
+* [FLOOR](functions/func-mysql-floor.html) - 返回不大于参数的最大整数值。
+* [MOD](functions/func-mysql-mod.html) - 返回数字的余数除以另一个。
+* [ROUND](functions/func-mysql-round.html)  - 将数字四舍五入到指定的小数位数。
+* [TRUNCATE](functions/func-mysql-truncate.html) - 将数字截断为指定的小数位数。
 
 ### 其他MySQL功能
 
-* [LAST_INSERT_ID](func-mysql-last-insert-id.html) - 获取最后生成的最后一个插入记录的序列号。
-* [CAST](func-mysql-cast.html "MySQL CAST") - 将任何类型的值转换为具有指定类型的值。
+* [LAST_INSERT_ID](functions/func-mysql-last-insert-id.html) - 获取最后生成的最后一个插入记录的序列号。
+* [CAST](functions/func-mysql-cast.html "MySQL CAST") - 将任何类型的值转换为具有指定类型的值。
 
 
 ## 5.1 窗口函数
