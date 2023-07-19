@@ -40,10 +40,10 @@
 
 * [CURDATE](functions/func-mysql-curdate.md) - 返回当前日期。
 * [DATEDIFF](functions/func-mysql-datediff.md)  - 计算两个`DATE`值之间的天数   。
-* [DAY](functions/func-mysql-day.html)  - 获取指定日期的月份日期。
-* [DATE_ADD](functions/func-mysql-date-add.html)  - 将日期值添加到日期值。
-* [DATE_SUB](functions/func-mysql-date-sub.html) - 从日期值中减去时间值。
-* [DATE_FORMAT](functions/func-mysql-date-format.html "MySQL DATE_FORMAT函数") - 根据指定的日期格式格式化日期值。
+* [DAY](functions/func-mysql-day.md)  - 获取指定日期的月份日期。
+* [DATE_ADD](functions/func-mysql-date-add.md)  - 将日期值添加到日期值。
+* [DATE_SUB](functions/func-mysql-date-sub.md) - 从日期值中减去时间值。
+* [DATE_FORMAT](functions/func-mysql-date-format.md "MySQL DATE_FORMAT函数") - 根据指定的日期格式格式化日期值。
 * [DAYNAME](functions/func-mysql-dayname.html) - 获取指定日期的工作日名称。
 * [DAYOFWEEK](functions/func-mysql-dayofweek.html) - 返回日期的工作日索引。
 * [EXTRACT](functions/func-mysql-extract.html) - 提取日期的一部分。
