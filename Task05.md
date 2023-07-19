@@ -11,10 +11,10 @@
 
 * [AVG](functions/func-mysql-avg.md "MySQL AVG") - 计算一组值或表达式的平均值。
 * [COUNT](functions/func-mysql-count.md "MySQL COUNT") - 计算表中的行数。
-* [INSTR](func-mysql-instr.html) - 返回字符串中第一次出现的子字符串的位置。
-* [SUM ](func-mysql-sum.html "MySQL SUM") - 计算一组值或表达式的总和。
-* [MIN](func-mysql-min.html "MySQL MIN") - 在一组值中找到最小值
-* [MAX](func-mysql-max.html "MySQL MAX功能") - 在一组值中找到最大值
+* [INSTR](functions/func-mysql-instr.md) - 返回字符串中第一次出现的子字符串的位置。
+* [SUM ](functions/func-mysql-sum.md "MySQL SUM") - 计算一组值或表达式的总和。
+* [MIN](functions/func-mysql-min.md "MySQL MIN") - 在一组值中找到最小值
+* [MAX](functions/func-mysql-max.md "MySQL MAX功能") - 在一组值中找到最大值
 
 ### MySQL字符串函数
 
