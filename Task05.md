@@ -15,6 +15,8 @@
 * [SUM ](functions/func-mysql-sum.md "MySQL SUM") - 计算一组值或表达式的总和。
 * [MIN](functions/func-mysql-min.md "MySQL MIN") - 在一组值中找到最小值
 * [MAX](functions/func-mysql-max.md "MySQL MAX功能") - 在一组值中找到最大值
+* [group_concat()函数](functions/func-mysql-group_concat.md) - 将字符串从分组中连接成具有各种选项(如`DISTINCT`，`ORDER BY`和`SEPARATOR`)的字符串。
+* [MySQL标准偏差函数](functions/func-mysql-standard-deviation.md) - 显示如何计算人口标准偏差和样本标准偏差。
 
 ### MySQL字符串函数
 
