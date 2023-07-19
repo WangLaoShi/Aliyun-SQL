@@ -80,11 +80,11 @@ BEGIN
     WHERE customerNumber = p_customerNumber;
 
     IF creditlim > 50000 THEN
- SET p_customerLevel = 'PLATINUM';
+       SET p_customerLevel = 'PLATINUM';
     ELSEIF (creditlim <= 50000 AND creditlim >= 10000) THEN
-        SET p_customerLevel = 'GOLD';
+       SET p_customerLevel = 'GOLD';
     ELSEIF creditlim < 10000 THEN
-        SET p_customerLevel = 'SILVER';
+       SET p_customerLevel = 'SILVER';
     END IF;
 
 END$$
