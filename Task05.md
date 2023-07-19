@@ -9,7 +9,7 @@
 
 ### MySQL聚合函数
 
-* [AVG](func-mysql-avg.html "MySQL AVG") - 计算一组值或表达式的平均值。
+* [AVG](functions/func-mysql-avg.md "MySQL AVG") - 计算一组值或表达式的平均值。
 * [COUNT](func-mysql-count.html "MySQL COUNT") - 计算表中的行数。
 * [INSTR](func-mysql-instr.html) - 返回字符串中第一次出现的子字符串的位置。
 * [SUM ](func-mysql-sum.html "MySQL SUM") - 计算一组值或表达式的总和。
