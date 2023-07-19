@@ -31,10 +31,10 @@
 
 ### MySQL控制流功能
 
-* [CASE](func-mysql-case.html) - `THEN`如果`WHEN`满足分支中的条件，则返回分支中的相应结果，否则返回`ELSE`分支中的结果。
-* [IF](func-mysql-if.html) - 根据给定条件返回值。
-* [IFNULL](func-mysql-ifnull.html "MySQL IFNULL") - 如果它不是NULL则返回第一个参数，否则返回第二个参数。
-* [NULLIF](func-mysql-nullif.html "MySQL NULLIF") - 如果第一个参数等于第二个参数，[则](func-mysql-nullif.html "MySQL NULLIF")返回NULL，否则返回第一个参数。
+* [CASE](functions/func-mysql-case.md) - `THEN`如果`WHEN`满足分支中的条件，则返回分支中的相应结果，否则返回`ELSE`分支中的结果。
+* [IF](functions/func-mysql-if.md) - 根据给定条件返回值。
+* [IFNULL](functions/func-mysql-ifnull.md "MySQL IFNULL") - 如果它不是NULL则返回第一个参数，否则返回第二个参数。
+* [NULLIF](functions/func-mysql-nullif.md "MySQL NULLIF") - 如果第一个参数等于第二个参数，[则](functions/func-mysql-nullif.md "MySQL NULLIF")返回NULL，否则返回第一个参数。
 
 ### MySQL日期和时间函数
 
