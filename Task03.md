@@ -8,7 +8,7 @@
 我们先来看一个查询语句（仅做示例，未提供相关数据）
 
 ```sql
-SELECT stu_name FROM view_students_info;
+  SELECT stu_name FROM view_students_info;
 ```
 
 单从表面上看起来这个语句是和正常的从数据表中查询数据是完全相同的，但其实我们操作的是一个视图。所以从 SQL 的角度来说操作视图与操作表看起来是完全相同的，那么为什么还会有视图的存在呢？视图到底是什么？视图与表有什么不同呢？
@@ -41,7 +41,7 @@ SELECT stu_name FROM view_students_info;
 说了这么多视图与表的区别，下面我们就一起来看一下如何创建视图吧。创建视图的基本语法如下：
 
 ```sql
-CREATE VIEW < 视图名称 >(< 列名 1>,< 列名 2>,...) AS <SELECT 语句 >
+  CREATE VIEW < 视图名称 >(< 列名 1>,< 列名 2>,...) AS <SELECT 语句 >
 ```
 
 其中 SELECT 语句需要书写在 AS 关键字之后。 SELECT 语句中列的排列顺序和视图中列的排列顺序相同， SELECT 语句中的第 1 列就是视图中的第 1 列， SELECT 语句中的第 2 列就是视图中的第 2 列，以此类推。而且视图的列名是在视图名称之后的列表中定义的。  
@@ -60,12 +60,12 @@ CREATE VIEW < 视图名称 >(< 列名 1>,< 列名 2>,...) AS <SELECT 语句 >
 需要注意的是在一般的 DBMS 中定义视图时不能使用 ORDER BY 语句。下面这样定义视图是错误的。
 
 ```sql
-CREATE VIEW productsum (product_type, cnt_product)
-AS
-SELECT product_type, COUNT(*)
-FROM product
-GROUP BY product_type
-ORDER BY product_type;
+  CREATE VIEW productsum (product_type, cnt_product)
+  AS
+  SELECT product_type, COUNT(*)
+  FROM product
+  GROUP BY product_type
+  ORDER BY product_type;
 ```
 
 为什么不能使用 ORDER BY 子句呢？这是因为视图和表一样，**数据行都是没有顺序的**。
@@ -77,11 +77,11 @@ ORDER BY product_type;
 我们在 product 表的基础上创建一个视图，如下：
 
 ```sql
-CREATE VIEW productsum (product_type, cnt_product)
-AS
-SELECT product_type, COUNT(*)
-FROM product
-GROUP BY product_type ;
+  CREATE VIEW productsum (product_type, cnt_product)
+  AS
+  SELECT product_type, COUNT(*)
+  FROM product
+  GROUP BY product_type ;
 ```
 
 创建的视图如下图所示：
@@ -93,37 +93,37 @@ GROUP BY product_type ;
 为了学习多表视图，我们再创建一张表，相关代码如下：
 
 ```sql
-CREATE TABLE shop_product(
-    shop_id    CHAR(4)       NOT NULL,
-    shop_name  VARCHAR(200)  NOT NULL,
-    product_id CHAR(4)       NOT NULL,
-    quantity   INTEGER       NOT NULL,
-    PRIMARY KEY (shop_id, product_id)
-);
-
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000A',	'东京',		'0001',	30);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000A',	'东京',		'0002',	50);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000A',	'东京',		'0003',	15);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B',	'名古屋',	'0002',	30);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B',	'名古屋',	'0003',	120);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B',	'名古屋',	'0004',	20);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B',	'名古屋',	'0006',	10);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B',	'名古屋',	'0007',	40);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000C',	'大阪',		'0003',	20);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000C',	'大阪',		'0004',	50);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000C',	'大阪',		'0006',	90);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000C',	'大阪',		'0007',	70);
-INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000D',	'福冈',		'0001',	100);
+  CREATE TABLE shop_product(
+      shop_id    CHAR(4)       NOT NULL,
+      shop_name  VARCHAR(200)  NOT NULL,
+      product_id CHAR(4)       NOT NULL,
+      quantity   INTEGER       NOT NULL,
+      PRIMARY KEY (shop_id, product_id)
+  );
+  
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000A','东京','0001',30);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000A','东京','0002',50);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000A','东京','0003',15);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B','名古屋','0002',30);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B','名古屋','0003',120);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B','名古屋','0004',20);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B','名古屋','0006',10);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000B','名古屋','0007',40);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000C','大阪','0003',20);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000C','大阪','0004',50);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000C','大阪','0006',90);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000C','大阪','0007',70);
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) VALUES ('000D','福冈','0001',100);
 ```
 
 我们在 product 表和 shop_product 表的基础上创建视图。
 
 ```sql
-CREATE VIEW view_shop_product(product_type, sale_price, shop_name)
-AS
-SELECT product_type, sale_price, shop_name
-FROM product,shop_product
-WHERE product.product_id = shop_product.product_id;
+  CREATE VIEW view_shop_product(product_type, sale_price, shop_name)
+  AS
+  SELECT product_type, sale_price, shop_name
+  FROM product,shop_product
+  WHERE product.product_id = shop_product.product_id;
 ```
 
 ![bPSvEa](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/bPSvEa.png)
@@ -135,9 +135,9 @@ WHERE product.product_id = shop_product.product_id;
 我们可以在这个视图的基础上进行查询
 
 ```sql
-SELECT sale_price, shop_name
-FROM view_shop_product
-WHERE product_type = '衣服';
+  SELECT sale_price, shop_name
+  FROM view_shop_product
+  WHERE product_type = '衣服';
 ```
 
 查询结果为：
@@ -149,7 +149,7 @@ WHERE product_type = '衣服';
 修改视图结构的基本语法如下：
 
 ```sql
-ALTER VIEW < 视图名 > AS <SELECT 语句 >
+  ALTER VIEW < 视图名 > AS <SELECT 语句 >
 ```
 
 其中视图名在数据库中需要是唯一的，不能与其他视图和表重名。  
@@ -160,11 +160,11 @@ ALTER VIEW < 视图名 > AS <SELECT 语句 >
 我们修改上方的 productSum 视图为
 
 ```sql
-ALTER VIEW productSum
-AS
-SELECT product_type, sale_price
-FROM Product
-WHERE regist_date > '2009-09-11';
+  ALTER VIEW productSum
+  AS
+  SELECT product_type, sale_price
+  FROM Product
+  WHERE regist_date > '2009-09-11';
 ```
 
 此时 productSum 视图内容如下图所示  
@@ -191,9 +191,9 @@ WHERE regist_date > '2009-09-11';
 因为我们刚刚修改的 productSum 视图不包括以上的限制条件，我们来尝试更新一下视图
 
 ```sql
-UPDATE productsum
-SET sale_price = '5000'
-WHERE product_type = '办公用品';
+  UPDATE productsum
+  SET sale_price = '5000'
+  WHERE product_type = '办公用品';
 ```
 
 此时我们再查看 productSum 视图，可以发现数据已经更新了
@@ -217,7 +217,7 @@ WHERE product_type = '办公用品';
 删除视图的基本语法如下：
 
 ```sql
-DROP VIEW < 视图名 1> [, < 视图名 2> …]
+  DROP VIEW < 视图名 1> [, < 视图名 2> …]
 ```
 
 注意：需要有相应的权限才能成功删除。
@@ -227,7 +227,7 @@ DROP VIEW < 视图名 1> [, < 视图名 2> …]
 我们删除刚才创建的 productSum 视图
 
 ```sql
-DROP VIEW productSum;
+  DROP VIEW productSum;
 ```
 
 如果我们继续操作这个视图的话就会提示当前操作的内容不存在。
@@ -237,11 +237,11 @@ DROP VIEW productSum;
 我们先来看一个语句（仅做示例，未提供相关数据）
 
 ```sql
-SELECT stu_name
-FROM (SELECT stu_name, COUNT(*) AS stu_cnt
-      FROM students_info
-      GROUP BY stu_age
-     ) AS studentSum;
+  SELECT stu_name
+  FROM (SELECT stu_name, COUNT(*) AS stu_cnt
+        FROM students_info
+        GROUP BY stu_age
+       ) AS studentSum;
 ```
 
 这个语句看起来很好理解，其中使用括号括起来的 SQL 语句首先执行，执行成功后再执行外面的 SQL 语句。但是我们上一节提到的视图也是根据 SELECT 语句创建视图然后在这个基础上再进行查询。那么什么是子查询呢？子查询和视图又有什么关系呢？
@@ -259,16 +259,16 @@ FROM (SELECT stu_name, COUNT(*) AS stu_cnt
 与在视图上再定义视图类似，子查询也没有具体的限制，例如我们可以这样
 
 ```sql
-SELECT product_type, cnt_product
-FROM (SELECT *
-      FROM (  
-              SELECT product_type, 
-              COUNT(*) AS cnt_product
-              FROM product 
-              GROUP BY product_type
-            ) AS productsum
-      WHERE cnt_product = 4
-      ) AS productsum2;
+  SELECT product_type, cnt_product
+  FROM (SELECT *
+        FROM (  
+                SELECT product_type, 
+                COUNT(*) AS cnt_product
+                FROM product 
+                GROUP BY product_type
+              ) AS productsum
+        WHERE cnt_product = 4
+        ) AS productsum2;
 ```
 
 其中最内层的子查询我们将其命名为 productSum，这条语句根据 product_type 分组并查询个数，第二层查询中将个数为 4 的商品查询出来，最外层查询 product_type 和 cnt_product 两列。 
@@ -305,11 +305,11 @@ product_id | product_name | sale_price
 让我们看如何通过标量子查询语句查询出销售单价高于平均销售单价的商品。
 
 ```sql
-SELECT product_id, product_name, sale_price
-FROM product
-WHERE sale_price > (
-    SELECT AVG(sale_price) FROM product
-);
+  SELECT product_id, product_name, sale_price
+  FROM product
+  WHERE sale_price > (
+      SELECT AVG(sale_price) FROM product
+  );
 ```
 
 上面的这条语句首先后半部分查询出 product 表中的平均售价，前面的 SQL 语句在根据 WHERE 条件挑选出合适的商品。  
@@ -318,11 +318,11 @@ WHERE sale_price > (
 我们还可以这样使用标量子查询：
 
 ```sql
-SELECT product_id,
-       product_name,
-       sale_price,
-       (SELECT AVG(sale_price) FROM product) AS avg_price
-FROM product;
+  SELECT product_id,
+         product_name,
+         sale_price,
+         (SELECT AVG(sale_price) FROM product) AS avg_price
+  FROM product;
 ```
 
 你能猜到这段代码的运行结果是什么吗？运行一下看看与你想象的结果是否一致。
@@ -336,12 +336,12 @@ FROM product;
 我们先看一个例子：
 
 ```sql
-SELECT product_type, product_name, sale_price
-FROM product AS p1
-WHERE sale_price > (SELECT AVG(sale_price)
-                    FROM product AS p2
-                    WHERE p1.product_type = p2.product_type
-                    GROUP BY product_type);
+  SELECT product_type, product_name, sale_price
+  FROM product AS p1
+  WHERE sale_price > (SELECT AVG(sale_price)
+                      FROM product AS p2
+                      WHERE p1.product_type = p2.product_type
+                      GROUP BY product_type);
 ```
 
 你能理解这个例子在做什么操作么？先来看一下这个例子的执行结果 
@@ -355,20 +355,20 @@ WHERE sale_price > (SELECT AVG(sale_price)
 还记得我们之前的那个例子么 ` 查询出销售单价高于平均销售单价的商品 `，这个例子的 SQL 语句如下
 
 ```sql
-SELECT product_id, product_name, sale_price
-FROM product
-WHERE sale_price > (SELECT AVG(sale_price) FROM product);
+  SELECT product_id, product_name, sale_price
+  FROM product
+  WHERE sale_price > (SELECT AVG(sale_price) FROM product);
 ```
 
 我们再来看一下这个需求 ` 选取出各商品种类中高于该商品种类的平均销售单价的商品 `。SQL 语句如下：
 
 ```sql
-SELECT product_type, product_name, sale_price
-FROM product AS p1
-WHERE sale_price > (SELECT AVG(sale_price)
-                    FROM product AS p2
-                    WHERE p1.product_type =p2.product_type
-                    GROUP BY product_type);
+  SELECT product_type, product_name, sale_price
+  FROM product AS p1
+  WHERE sale_price > (SELECT AVG(sale_price)
+                      FROM product AS p2
+                      WHERE p1.product_type =p2.product_type
+                      GROUP BY product_type);
 ```
 
 可以看出上面这两个语句的区别吗？  
@@ -399,7 +399,7 @@ WHERE sale_price > (SELECT AVG(sale_price)
 对该视图执行 SELECT 语句的结果如下所示。
 
 ```sql
-SELECT * FROM ViewPractice5_1;
+  SELECT * FROM ViewPractice5_1;
 ```
 
 执行结果
@@ -413,11 +413,11 @@ T 恤衫        | 　 1000    | 2009-09-20
 
 
 ```sql
--- 创建视图的语句
-CREATE VIEW ViewPractice5_1 AS
-SELECT product_name, sale_price, regist_date
-FROM product
-WHERE sale_price >= 1000 AND regist_date = '2009-09-20';
+  -- 创建视图的语句
+  CREATE VIEW ViewPractice5_1 AS
+  SELECT product_name, sale_price, regist_date
+  FROM product
+  WHERE sale_price >= 1000 AND regist_date = '2009-09-20';
 ```
 
 ### 练习 3.2
@@ -425,7 +425,7 @@ WHERE sale_price >= 1000 AND regist_date = '2009-09-20';
 向习题一中创建的视图 ViewPractice5_1 中插入如下数据，会得到什么样的结果呢？
 
 ```sql
-INSERT INTO ViewPractice5_1 VALUES ('刀子', 300, '2009-11-02');
+  INSERT INTO ViewPractice5_1 VALUES ('刀子', 300, '2009-11-02');
 ```
 
 ![8YkZMk](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/8YkZMk.png)
@@ -448,12 +448,12 @@ product_id | product_name | product_type | sale_price | sale_price_all
 ```
 
 ```sql
-SELECT product_id,
-       product_name,
-       product_type,
-       sale_price,
-       (SELECT AVG(sale_price) FROM product) AS sale_price_all
-FROM product;
+  SELECT product_id,
+         product_name,
+         product_type,
+         sale_price,
+         (SELECT AVG(sale_price) FROM product) AS sale_price_all
+  FROM product;
 ```
 
 ### 练习 3.4
@@ -477,20 +477,20 @@ product_id | product_name | product_type | sale_price | avg_sale_price
 
 
 ```sql
--- 创建视图的语句
-CREATE VIEW AvgPriceByType AS
-SELECT product_id,
-       product_name,
-       product_type,
-       sale_price,
-       (SELECT AVG(sale_price)
-        FROM product p2
-        WHERE p1.product_type = p2.product_type
-        GROUP BY p1.product_type) AS avg_sale_price
-FROM product p1;
- 
--- 确认视图内容
-SELECT * FROM AvgPriceByType;
+  -- 创建视图的语句
+  CREATE VIEW AvgPriceByType AS
+  SELECT product_id,
+         product_name,
+         product_type,
+         sale_price,
+         (SELECT AVG(sale_price)
+          FROM product p2
+          WHERE p1.product_type = p2.product_type
+          GROUP BY p1.product_type) AS avg_sale_price
+  FROM product p1;
+   
+  -- 确认视图内容
+  SELECT * FROM AvgPriceByType;
 ```
 
 ## 3.3 各种各样的函数
@@ -516,48 +516,48 @@ SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
 为了演示其他的几个算数函数，在此构造 `samplemath` 表
 
 ```sql
--- DDL ：创建表
-USE shop;
-DROP TABLE IF EXISTS samplemath;
-CREATE TABLE samplemath(
-    m float(10,3),
-    n INT,
-    p INT
-);
-
--- DML ：插入数据
-START TRANSACTION; -- 开始事务
-INSERT INTO samplemath(m, n, p) VALUES (500, 0, NULL);
-INSERT INTO samplemath(m, n, p) VALUES (-180, 0, NULL);
-INSERT INTO samplemath(m, n, p) VALUES (NULL, NULL, NULL);
-INSERT INTO samplemath(m, n, p) VALUES (NULL, 7, 3);
-INSERT INTO samplemath(m, n, p) VALUES (NULL, 5, 2);
-INSERT INTO samplemath(m, n, p) VALUES (NULL, 4, NULL);
-INSERT INTO samplemath(m, n, p) VALUES (8, NULL, 3);
-INSERT INTO samplemath(m, n, p) VALUES (2.27, 1, NULL);
-INSERT INTO samplemath(m, n, p) VALUES (5.555,2, NULL);
-INSERT INTO samplemath(m, n, p) VALUES (NULL, 1, NULL);
-INSERT INTO samplemath(m, n, p) VALUES (8.76, NULL, NULL);
-COMMIT; -- 提交事务
-
--- 查询表内容
-SELECT * FROM samplemath;
-+----------+------+------+
-| m        | n    | p    |
-+----------+------+------+
-|  500.000 |    0 | NULL |
-| -180.000 |    0 | NULL |
-|     NULL | NULL | NULL |
-|     NULL |    7 |    3 |
-|     NULL |    5 |    2 |
-|     NULL |    4 | NULL |
-|    8.000 | NULL |    3 |
-|    2.270 |    1 | NULL |
-|    5.555 |    2 | NULL |
-|     NULL |    1 | NULL |
-|    8.760 | NULL | NULL |
-+----------+------+------+
-11 rows in set (0.00 sec)
+  -- DDL ：创建表
+  USE shop;
+  DROP TABLE IF EXISTS samplemath;
+  CREATE TABLE samplemath(
+      m float(10,3),
+      n INT,
+      p INT
+  );
+  
+  -- DML ：插入数据
+  START TRANSACTION; -- 开始事务
+  INSERT INTO samplemath(m, n, p) VALUES (500, 0, NULL);
+  INSERT INTO samplemath(m, n, p) VALUES (-180, 0, NULL);
+  INSERT INTO samplemath(m, n, p) VALUES (NULL, NULL, NULL);
+  INSERT INTO samplemath(m, n, p) VALUES (NULL, 7, 3);
+  INSERT INTO samplemath(m, n, p) VALUES (NULL, 5, 2);
+  INSERT INTO samplemath(m, n, p) VALUES (NULL, 4, NULL);
+  INSERT INTO samplemath(m, n, p) VALUES (8, NULL, 3);
+  INSERT INTO samplemath(m, n, p) VALUES (2.27, 1, NULL);
+  INSERT INTO samplemath(m, n, p) VALUES (5.555,2, NULL);
+  INSERT INTO samplemath(m, n, p) VALUES (NULL, 1, NULL);
+  INSERT INTO samplemath(m, n, p) VALUES (8.76, NULL, NULL);
+  COMMIT; -- 提交事务
+  
+  -- 查询表内容
+  SELECT * FROM samplemath;
+  +----------+------+------+
+  | m        | n    | p    |
+  +----------+------+------+
+  |  500.000 |    0 | NULL |
+  | -180.000 |    0 | NULL |
+  |     NULL | NULL | NULL |
+  |     NULL |    7 |    3 |
+  |     NULL |    5 |    2 |
+  |     NULL |    4 | NULL |
+  |    8.000 | NULL |    3 |
+  |    2.270 |    1 | NULL |
+  |    5.555 |    2 | NULL |
+  |     NULL |    1 | NULL |
+  |    8.760 | NULL | NULL |
+  +----------+------+------+
+  11 rows in set (0.00 sec)
 ```
 
 * ABS – 绝对值
@@ -582,30 +582,30 @@ SELECT * FROM samplemath;
     注意：当参数 **保留小数的位数** 为变量时，可能会遇到错误，请谨慎使用变量。
 
 ```sql
-SELECT 
-m,
-ABS(m) AS abs_col ,
-n, 
-p,
-MOD(n, p) AS mod_col,
-ROUND(m,1) AS round_colS
-FROM samplemath;
-+----------+---------+------+------+---------+-----------+
-| m        | abs_col | n    | p    | mod_col | round_col |
-+----------+---------+------+------+---------+-----------+
-|  500.000 | 500.000 |    0 | NULL |    NULL |     500.0 |
-| -180.000 | 180.000 |    0 | NULL |    NULL |    -180.0 |
-|     NULL |    NULL | NULL | NULL |    NULL |      NULL |
-|     NULL |    NULL |    7 |    3 |       1 |      NULL |
-|     NULL |    NULL |    5 |    2 |       1 |      NULL |
-|     NULL |    NULL |    4 | NULL |    NULL |      NULL |
-|    8.000 |   8.000 | NULL |    3 |    NULL |       8.0 |
-|    2.270 |   2.270 |    1 | NULL |    NULL |       2.3 |
-|    5.555 |   5.555 |    2 | NULL |    NULL |       5.6 |
-|     NULL |    NULL |    1 | NULL |    NULL |      NULL |
-|    8.760 |   8.760 | NULL | NULL |    NULL |       8.8 |
-+----------+---------+------+------+---------+-----------+
-11 rows in set (0.08 sec)
+  SELECT 
+  m,
+  ABS(m) AS abs_col ,
+  n, 
+  p,
+  MOD(n, p) AS mod_col,
+  ROUND(m,1) AS round_colS
+  FROM samplemath;
+  +----------+---------+------+------+---------+-----------+
+  | m        | abs_col | n    | p    | mod_col | round_col |
+  +----------+---------+------+------+---------+-----------+
+  |  500.000 | 500.000 |    0 | NULL |    NULL |     500.0 |
+  | -180.000 | 180.000 |    0 | NULL |    NULL |    -180.0 |
+  |     NULL |    NULL | NULL | NULL |    NULL |      NULL |
+  |     NULL |    NULL |    7 |    3 |       1 |      NULL |
+  |     NULL |    NULL |    5 |    2 |       1 |      NULL |
+  |     NULL |    NULL |    4 | NULL |    NULL |      NULL |
+  |    8.000 |   8.000 | NULL |    3 |    NULL |       8.0 |
+  |    2.270 |   2.270 |    1 | NULL |    NULL |       2.3 |
+  |    5.555 |   5.555 |    2 | NULL |    NULL |       5.6 |
+  |     NULL |    NULL |    1 | NULL |    NULL |      NULL |
+  |    8.760 |   8.760 | NULL | NULL |    NULL |       8.8 |
+  +----------+---------+------+------+---------+-----------+
+  11 rows in set (0.08 sec)
 ```
 
 ### 3.3.2 字符串函数
@@ -613,48 +613,48 @@ FROM samplemath;
 字符串函数也经常被使用，为了学习字符串函数，在此我们构造 `samplestr` 表。
 
 ```sql
--- DDL ：创建表
-USE  shop;
-
-DROP TABLE IF EXISTS samplestr;
-CREATE TABLE samplestr(
-    str1 VARCHAR (40),
-    str2 VARCHAR (40),
-    str3 VARCHAR (40)
-);
-
--- DML：插入数据
-START TRANSACTION;
-INSERT INTO samplestr (str1, str2, str3) VALUES ('opx',	'rt', NULL);
-INSERT INTO samplestr (str1, str2, str3) VALUES ('abc', 'def', NULL);
-INSERT INTO samplestr (str1, str2, str3) VALUES ('太阳',	'月亮', '火星');
-INSERT INTO samplestr (str1, str2, str3) VALUES ('aaa',	NULL, NULL);
-INSERT INTO samplestr (str1, str2, str3) VALUES (NULL, 'xyz', NULL);
-INSERT INTO samplestr (str1, str2, str3) VALUES ('@!#$%', NULL, NULL);
-INSERT INTO samplestr (str1, str2, str3) VALUES ('ABC', NULL, NULL);
-INSERT INTO samplestr (str1, str2, str3) VALUES ('aBC', NULL, NULL);
-INSERT INTO samplestr (str1, str2, str3) VALUES ('abc 哈哈',  'abc', 'ABC');
-INSERT INTO samplestr (str1, str2, str3) VALUES ('abcdefabc', 'abc', 'ABC');
-INSERT INTO samplestr (str1, str2, str3) VALUES ('micmic', 'i', 'I');
-COMMIT;
--- 确认表中的内容
-SELECT * FROM samplestr;
-+-----------+------+------+
-| str1      | str2 | str3 |
-+-----------+------+------+
-| opx       | rt   | NULL |
-| abc       | def  | NULL |
-| 太阳       | 月亮 | 火星 |
-| aaa       | NULL | NULL |
-| NULL      | xyz  | NULL |
-| @!#$%     | NULL | NULL |
-| ABC       | NULL | NULL |
-| aBC       | NULL | NULL |
-| abc 哈哈   | abc  | ABC  |
-| abcdefabc | abc  | ABC  |
-| micmic    | i    | I    |
-+-----------+------+------+
-11 rows in set (0.00 sec)
+  -- DDL ：创建表
+  USE  shop;
+  
+  DROP TABLE IF EXISTS samplestr;
+  CREATE TABLE samplestr(
+      str1 VARCHAR (40),
+      str2 VARCHAR (40),
+      str3 VARCHAR (40)
+  );
+  
+  -- DML：插入数据
+  START TRANSACTION;
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('opx',	'rt', NULL);
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('abc', 'def', NULL);
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('太阳',	'月亮', '火星');
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('aaa',	NULL, NULL);
+  INSERT INTO samplestr (str1, str2, str3) VALUES (NULL, 'xyz', NULL);
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('@!#$%', NULL, NULL);
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('ABC', NULL, NULL);
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('aBC', NULL, NULL);
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('abc 哈哈',  'abc', 'ABC');
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('abcdefabc', 'abc', 'ABC');
+  INSERT INTO samplestr (str1, str2, str3) VALUES ('micmic', 'i', 'I');
+  COMMIT;
+  -- 确认表中的内容
+  SELECT * FROM samplestr;
+  +-----------+------+------+
+  | str1      | str2 | str3 |
+  +-----------+------+------+
+  | opx       | rt   | NULL |
+  | abc       | def  | NULL |
+  | 太阳       | 月亮 | 火星 |
+  | aaa       | NULL | NULL |
+  | NULL      | xyz  | NULL |
+  | @!#$%     | NULL | NULL |
+  | ABC       | NULL | NULL |
+  | aBC       | NULL | NULL |
+  | abc 哈哈   | abc  | ABC  |
+  | abcdefabc | abc  | ABC  |
+  | micmic    | i    | I    |
+  +-----------+------+------+
+  11 rows in set (0.00 sec)
 ```
 
 * CONCAT – 拼接
@@ -690,39 +690,39 @@ SELECT * FROM samplestr;
     该函数用来获取原始字符串按照分隔符分割后，第 n 个分隔符之前（或之后）的子字符串，支持正向和反向索引，索引起始值分别为 1 和 -1。
 
 ```sql
-SELECT SUBSTRING_INDEX('www.mysql.com', '.', 2);
-+------------------------------------------+
-| SUBSTRING_INDEX('www.mysql.com', '.', 2) |
-+------------------------------------------+
-| www.mysql                                |
-+------------------------------------------+
-1 row in set (0.00 sec)
-SELECT SUBSTRING_INDEX('www.mysql.com', '.', -2);
-+-------------------------------------------+
-| SUBSTRING_INDEX('www.mysql.com', '.', -2) |
-+-------------------------------------------+
-| mysql.com                                 |
-+-------------------------------------------+
-1 row in set (0.00 sec)
+  SELECT SUBSTRING_INDEX('www.mysql.com', '.', 2);
+  +------------------------------------------+
+  | SUBSTRING_INDEX('www.mysql.com', '.', 2) |
+  +------------------------------------------+
+  | www.mysql                                |
+  +------------------------------------------+
+  1 row in set (0.00 sec)
+  SELECT SUBSTRING_INDEX('www.mysql.com', '.', -2);
+  +-------------------------------------------+
+  | SUBSTRING_INDEX('www.mysql.com', '.', -2) |
+  +-------------------------------------------+
+  | mysql.com                                 |
+  +-------------------------------------------+
+  1 row in set (0.00 sec)
 ```
 
 获取第 1 个元素比较容易，获取第 2 个元素 / 第 n 个元素可以采用二次拆分的写法。
 
 ```sql
-SELECT SUBSTRING_INDEX('www.mysql.com', '.', 1);
-+------------------------------------------+
-| SUBSTRING_INDEX('www.mysql.com', '.', 1) |
-+------------------------------------------+
-| www                                      |
-+------------------------------------------+
-1 row in set (0.00 sec)
-SELECT SUBSTRING_INDEX(SUBSTRING_INDEX('www.mysql.com', '.', 2), '.', -1);
-+--------------------------------------------------------------------+
-| SUBSTRING_INDEX(SUBSTRING_INDEX('www.mysql.com', '.', 2), '.', -1) |
-+--------------------------------------------------------------------+
-| mysql                                                              |
-+--------------------------------------------------------------------+
-1 row in set (0.00 sec)
+  SELECT SUBSTRING_INDEX('www.mysql.com', '.', 1);
+  +------------------------------------------+
+  | SUBSTRING_INDEX('www.mysql.com', '.', 1) |
+  +------------------------------------------+
+  | www                                      |
+  +------------------------------------------+
+  1 row in set (0.00 sec)
+  SELECT SUBSTRING_INDEX(SUBSTRING_INDEX('www.mysql.com', '.', 2), '.', -1);
+  +--------------------------------------------------------------------+
+  | SUBSTRING_INDEX(SUBSTRING_INDEX('www.mysql.com', '.', 2), '.', -1) |
+  +--------------------------------------------------------------------+
+  | mysql                                                              |
+  +--------------------------------------------------------------------+
+  1 row in set (0.00 sec)
 ```
 
 ### 3.3.3 日期函数
@@ -732,37 +732,37 @@ SELECT SUBSTRING_INDEX(SUBSTRING_INDEX('www.mysql.com', '.', 2), '.', -1);
 * CURRENT_DATE – 获取当前日期
 
 ```sql
-SELECT CURRENT_DATE;
-+--------------+
-| CURRENT_DATE |
-+--------------+
-| 2020-08-08   |
-+--------------+
-1 row in set (0.00 sec)
+  SELECT CURRENT_DATE;
+  +--------------+
+  | CURRENT_DATE |
+  +--------------+
+  | 2020-08-08   |
+  +--------------+
+  1 row in set (0.00 sec)
 ```
 
 * CURRENT_TIME – 当前时间
 
 ```sql
-SELECT CURRENT_TIME;
-+--------------+
-| CURRENT_TIME |
-+--------------+
-| 17:26:09     |
-+--------------+
-1 row in set (0.00 sec)
+  SELECT CURRENT_TIME;
+  +--------------+
+  | CURRENT_TIME |
+  +--------------+
+  | 17:26:09     |
+  +--------------+
+  1 row in set (0.00 sec)
 ```
 
 * CURRENT_TIMESTAMP – 当前日期和时间
 
 ```sql
-SELECT CURRENT_TIMESTAMP;
-+---------------------+
-| CURRENT_TIMESTAMP   |
-+---------------------+
-| 2020-08-08 17:27:07 |
-+---------------------+
-1 row in set (0.00 sec)
+  SELECT CURRENT_TIMESTAMP;
+  +---------------------+
+  | CURRENT_TIMESTAMP   |
+  +---------------------+
+  | 2020-08-08 17:27:07 |
+  +---------------------+
+  1 row in set (0.00 sec)
 ```
 
 * EXTRACT – 截取日期元素
@@ -772,19 +772,19 @@ SELECT CURRENT_TIMESTAMP;
     使用 EXTRACT 函数可以截取出日期数据中的一部分，例如“年”，“月”，或者“小时”“秒”等。该函数的返回值并不是日期类型而是数值类型
 
 ```sql
-SELECT CURRENT_TIMESTAMP AS now,
-EXTRACT(YEAR   FROM CURRENT_TIMESTAMP) AS year,
-EXTRACT(MONTH  FROM CURRENT_TIMESTAMP) AS month,
-EXTRACT(DAY    FROM CURRENT_TIMESTAMP) AS day,
-EXTRACT(HOUR   FROM CURRENT_TIMESTAMP) AS hour,
-EXTRACT(MINUTE FROM CURRENT_TIMESTAMP) AS MINute,
-EXTRACT(SECOND FROM CURRENT_TIMESTAMP) AS second;
-+---------------------+------+-------+------+------+--------+--------+
-| now                 | year | month | day  | hour | MINute | second |
-+---------------------+------+-------+------+------+--------+--------+
-| 2020-08-08 17:34:38 | 2020 |     8 |    8 |   17 |     34 |     38 |
-+---------------------+------+-------+------+------+--------+--------+
-1 row in set (0.00 sec)
+  SELECT CURRENT_TIMESTAMP AS now,
+  EXTRACT(YEAR   FROM CURRENT_TIMESTAMP) AS year,
+  EXTRACT(MONTH  FROM CURRENT_TIMESTAMP) AS month,
+  EXTRACT(DAY    FROM CURRENT_TIMESTAMP) AS day,
+  EXTRACT(HOUR   FROM CURRENT_TIMESTAMP) AS hour,
+  EXTRACT(MINUTE FROM CURRENT_TIMESTAMP) AS MINute,
+  EXTRACT(SECOND FROM CURRENT_TIMESTAMP) AS second;
+  +---------------------+------+-------+------+------+--------+--------+
+  | now                 | year | month | day  | hour | MINute | second |
+  +---------------------+------+-------+------+------+--------+--------+
+  | 2020-08-08 17:34:38 | 2020 |     8 |    8 |   17 |     34 |     38 |
+  +---------------------+------+-------+------+------+--------+--------+
+  1 row in set (0.00 sec)
 ```
 
 ### 3.3.4 转换函数
@@ -796,22 +796,22 @@ EXTRACT(SECOND FROM CURRENT_TIMESTAMP) AS second;
     语法：`CAST（转换前的值 AS 想要转换的数据类型）`
 
 ```sql
--- 将字符串类型转换为数值类型
-SELECT CAST('0001' AS SIGNED INTEGER) AS int_col;
-+---------+
-| int_col |
-+---------+
-|       1 |
-+---------+
-1 row in set (0.00 sec)
--- 将字符串类型转换为日期类型
-SELECT CAST('2009-12-14' AS DATE) AS date_col;
-+------------+
-| date_col   |
-+------------+
-| 2009-12-14 |
-+------------+
-1 row in set (0.00 sec)
+  -- 将字符串类型转换为数值类型
+  SELECT CAST('0001' AS SIGNED INTEGER) AS int_col;
+  +---------+
+  | int_col |
+  +---------+
+  |       1 |
+  +---------+
+  1 row in set (0.00 sec)
+  -- 将字符串类型转换为日期类型
+  SELECT CAST('2009-12-14' AS DATE) AS date_col;
+  +------------+
+  | date_col   |
+  +------------+
+  | 2009-12-14 |
+  +------------+
+  1 row in set (0.00 sec)
 ```
 
 * COALESCE – 将 NULL 转换为其他值
@@ -823,16 +823,16 @@ SELECT CAST('2009-12-14' AS DATE) AS date_col;
     在 SQL 语句中将 NULL 转换为其他值时就会用到转换函数。
 
 ```sql
-SELECT 
-COALESCE(NULL, 11) AS col_1,
-COALESCE(NULL, 'hello world', NULL) AS col_2,
-COALESCE(NULL, NULL, '2020-11-01') AS col_3;
-+-------+-------------+------------+
-| col_1 | col_2       | col_3      |
-+-------+-------------+------------+
-|    11 | hello world | 2020-11-01 |
-+-------+-------------+------------+
-1 row in set (0.00 sec)
+  SELECT 
+  COALESCE(NULL, 11) AS col_1,
+  COALESCE(NULL, 'hello world', NULL) AS col_2,
+  COALESCE(NULL, NULL, '2020-11-01') AS col_3;
+  +-------+-------------+------------+
+  | col_1 | col_2       | col_3      |
+  +-------+-------------+------------+
+  |    11 | hello world | 2020-11-01 |
+  +-------+-------------+------------+
+  1 row in set (0.00 sec)
 ```
 
 
@@ -855,35 +855,34 @@ COALESCE(NULL, NULL, '2020-11-01') AS col_3;
 首先我们来创建一张表
 
 ```sql
-
--- DDL ：创建表
-CREATE TABLE samplelike(
-    strcol VARCHAR(6) NOT NULL,
-    PRIMARY KEY (strcol)
-);
-
--- DML ：插入数据
-START TRANSACTION; -- 开始事务
-INSERT INTO samplelike (strcol) VALUES ('abcddd');
-INSERT INTO samplelike (strcol) VALUES ('dddabc');
-INSERT INTO samplelike (strcol) VALUES ('abdddc');
-INSERT INTO samplelike (strcol) VALUES ('abcdd');
-INSERT INTO samplelike (strcol) VALUES ('ddabc');
-INSERT INTO samplelike (strcol) VALUES ('abddc');
-COMMIT; -- 提交事务
-
-SELECT * FROM samplelike;
-+--------+
-| strcol |
-+--------+
-| abcdd  |
-| abcddd |
-| abddc  |
-| abdddc |
-| ddabc  |
-| dddabc |
-+--------+
-6 rows in set (0.00 sec)
+  -- DDL ：创建表
+  CREATE TABLE samplelike(
+      strcol VARCHAR(6) NOT NULL,
+      PRIMARY KEY (strcol)
+  );
+  
+  -- DML ：插入数据
+  START TRANSACTION; -- 开始事务
+  INSERT INTO samplelike (strcol) VALUES ('abcddd');
+  INSERT INTO samplelike (strcol) VALUES ('dddabc');
+  INSERT INTO samplelike (strcol) VALUES ('abdddc');
+  INSERT INTO samplelike (strcol) VALUES ('abcdd');
+  INSERT INTO samplelike (strcol) VALUES ('ddabc');
+  INSERT INTO samplelike (strcol) VALUES ('abddc');
+  COMMIT; -- 提交事务
+  
+  SELECT * FROM samplelike;
+  +--------+
+  | strcol |
+  +--------+
+  | abcdd  |
+  | abcddd |
+  | abddc  |
+  | abdddc |
+  | ddabc  |
+  | dddabc |
+  +--------+
+  6 rows in set (0.00 sec)
 ```
 
 * 前方一致：选取出“dddabc”
@@ -891,15 +890,15 @@ SELECT * FROM samplelike;
 前方一致即作为查询条件的字符串（这里是“ddd”）与查询对象字符串起始部分相同。
 
 ```sql
-SELECT *
-FROM samplelike
-WHERE strcol LIKE 'ddd%';
-+--------+
-| strcol |
-+--------+
-| dddabc |
-+--------+
-1 row in set (0.00 sec)
+  SELECT *
+  FROM samplelike
+  WHERE strcol LIKE 'ddd%';
+  +--------+
+  | strcol |
+  +--------+
+  | dddabc |
+  +--------+
+  1 row in set (0.00 sec)
 ```
 
 其中的 `%` 是代表“零个或多个任意字符串”的特殊符号，本例中代表“以 ddd 开头的所有字符串”。
@@ -909,17 +908,17 @@ WHERE strcol LIKE 'ddd%';
 中间一致即查询对象字符串中含有作为查询条件的字符串，无论该字符串出现在对象字符串的最后还是中间都没有关系。
 
 ```sql
-SELECT *
-FROM samplelike
-WHERE strcol LIKE '%ddd%';
-+--------+
-| strcol |
-+--------+
-| abcddd |
-| abdddc |
-| dddabc |
-+--------+
-3 rows in set (0.00 sec)
+  SELECT *
+  FROM samplelike
+  WHERE strcol LIKE '%ddd%';
+  +--------+
+  | strcol |
+  +--------+
+  | abcddd |
+  | abdddc |
+  | dddabc |
+  +--------+
+  3 rows in set (0.00 sec)
 ```
 
 * 后方一致：选取出“abcddd“
@@ -927,15 +926,15 @@ WHERE strcol LIKE '%ddd%';
 后方一致即作为查询条件的字符串（这里是“ddd”）与查询对象字符串的末尾部分相同。
 
 ```sql
-SELECT *
-FROM samplelike
-WHERE strcol LIKE '%ddd';
-+--------+
-| strcol |
-+--------+
-| abcddd |
-+--------+
-1 row in set (0.00 sec)
+  SELECT *
+  FROM samplelike
+  WHERE strcol LIKE '%ddd';
+  +--------+
+  | strcol |
+  +--------+
+  | abcddd |
+  +--------+
+  1 row in set (0.00 sec)
 ```
 
 综合如上三种类型的查询可以看出，查询条件最宽松，也就是能够取得最多记录的是 ` 中间一致 `。这是因为它同时包含前方一致和后方一致的查询结果。
@@ -945,15 +944,15 @@ WHERE strcol LIKE '%ddd';
 使用 _（下划线）来代替 %，与 % 不同的是，它代表了“任意 1 个字符”。
 
 ```sql
-SELECT *
-FROM samplelike
-WHERE strcol LIKE 'abc__';
-+--------+
-| strcol |
-+--------+
-| abcdd  |
-+--------+
-1 row in set (0.00 sec)
+  SELECT *
+  FROM samplelike
+  WHERE strcol LIKE 'abc__';
+  +--------+
+  | strcol |
+  +--------+
+  | abcdd  |
+  +--------+
+  1 row in set (0.00 sec)
 ```
 
 ### 3.4.3 BETWEEN 谓词 – 用于范围查询
@@ -961,37 +960,37 @@ WHERE strcol LIKE 'abc__';
 使用 BETWEEN 可以进行范围查询。该谓词与其他谓词或者函数的不同之处在于它使用了 3 个参数。
 
 ```sql
--- 选取销售单价为 100～ 1000 元的商品
-SELECT product_name, sale_price
-FROM product
-WHERE sale_price BETWEEN 100 AND 1000;
-+--------------+------------+
-| product_name | sale_price |
-+--------------+------------+
-| T 恤          |       1000 |
-| 打孔器       |        500 |
-| 叉子         |        500 |
-| 擦菜板       |        880 |
-| 圆珠笔       |        100 |
-+--------------+------------+
-5 rows in set (0.00 sec)
+  -- 选取销售单价为 100～ 1000 元的商品
+  SELECT product_name, sale_price
+  FROM product
+  WHERE sale_price BETWEEN 100 AND 1000;
+  +--------------+------------+
+  | product_name | sale_price |
+  +--------------+------------+
+  | T 恤          |       1000 |
+  | 打孔器       |        500 |
+  | 叉子         |        500 |
+  | 擦菜板       |        880 |
+  | 圆珠笔       |        100 |
+  +--------------+------------+
+  5 rows in set (0.00 sec)
 ```
 
 BETWEEN 的特点就是结果中会包含 100 和 1000 这两个临界值，也就是 **闭区间**。如果不想让结果中包含临界值，那就必须使用 < 和 >。
 
 ```sql
-SELECT product_name, sale_price
-FROM product
-WHERE sale_price > 100
-AND sale_price < 1000;
-+--------------+------------+
-| product_name | sale_price |
-+--------------+------------+
-| 打孔器       |        500 |
-| 叉子         |        500 |
-| 擦菜板       |        880 |
-+--------------+------------+
-3 rows in set (0.00 sec)
+  SELECT product_name, sale_price
+  FROM product
+  WHERE sale_price > 100
+  AND sale_price < 1000;
+  +--------------+------------+
+  | product_name | sale_price |
+  +--------------+------------+
+  | 打孔器       |        500 |
+  | 叉子         |        500 |
+  | 擦菜板       |        880 |
+  +--------------+------------+
+  3 rows in set (0.00 sec)
 ```
 
 ### 3.4.4 IS NULL、 IS NOT NULL – 用于判断是否为 NULL
@@ -999,35 +998,35 @@ AND sale_price < 1000;
 为了选取出某些值为 NULL 的列的数据，不能使用 =，而只能使用特定的谓词 IS NULL。
 
 ```sql
-SELECT product_name, purchase_price
-FROM product
-WHERE purchase_price IS NULL;
-+--------------+----------------+
-| product_name | purchase_price |
-+--------------+----------------+
-| 叉子         |           NULL |
-| 圆珠笔       |           NULL |
-+--------------+----------------+
-2 rows in set (0.00 sec)
+  SELECT product_name, purchase_price
+  FROM product
+  WHERE purchase_price IS NULL;
+  +--------------+----------------+
+  | product_name | purchase_price |
+  +--------------+----------------+
+  | 叉子         |           NULL |
+  | 圆珠笔       |           NULL |
+  +--------------+----------------+
+  2 rows in set (0.00 sec)
 ```
 
 与此相反，想要选取 NULL 以外的数据时，需要使用 `IS NOT NULL`。
 
 ```sql
-SELECT product_name, purchase_price
-FROM product
-WHERE purchase_price IS NOT NULL;
-+--------------+----------------+
-| product_name | purchase_price |
-+--------------+----------------+
-| T 恤          |            500 |
-| 打孔器       |            320 |
-| 运动 T 恤      |           2800 |
-| 菜刀         |           2800 |
-| 高压锅       |           5000 |
-| 擦菜板       |            790 |
-+--------------+----------------+
-6 rows in set (0.00 sec)
+  SELECT product_name, purchase_price
+  FROM product
+  WHERE purchase_price IS NOT NULL;
+  +--------------+----------------+
+  | product_name | purchase_price |
+  +--------------+----------------+
+  | T 恤          |            500 |
+  | 打孔器       |            320 |
+  | 运动 T 恤      |           2800 |
+  | 菜刀         |           2800 |
+  | 高压锅       |           5000 |
+  | 擦菜板       |            790 |
+  +--------------+----------------+
+  6 rows in set (0.00 sec)
 ```
 
 ### 3.4.5 IN 谓词 – OR 的简便用法
@@ -1035,54 +1034,54 @@ WHERE purchase_price IS NOT NULL;
 多个查询条件取并集时可以选择使用 `or` 语句。
 
 ```sql
--- 通过 OR 指定多个进货单价进行查询
-SELECT product_name, purchase_price
-FROM product
-WHERE purchase_price = 320
-OR purchase_price = 500
-OR purchase_price = 5000;
-+--------------+----------------+
-| product_name | purchase_price |
-+--------------+----------------+
-| T 恤        |            500 |
-| 打孔器       |            320 |
-| 高压锅       |           5000 |
-+--------------+----------------+
-3 rows in set (0.00 sec)
+  -- 通过 OR 指定多个进货单价进行查询
+  SELECT product_name, purchase_price
+  FROM product
+  WHERE purchase_price = 320
+  OR purchase_price = 500
+  OR purchase_price = 5000;
+  +--------------+----------------+
+  | product_name | purchase_price |
+  +--------------+----------------+
+  | T 恤        |            500 |
+  | 打孔器       |            320 |
+  | 高压锅       |           5000 |
+  +--------------+----------------+
+  3 rows in set (0.00 sec)
 ```
 
 虽然上述方法没有问题，但还是存在一点不足之处，那就是随着希望选取的对象越来越多， SQL 语句也会越来越长，阅读起来也会越来越困难。这时， 我们就可以使用 IN 谓词  
 `IN(值 1, 值 2, 值 3, …) 来替换上述 SQL 语句。
 
 ```sql
-SELECT product_name, purchase_price
-FROM product
-WHERE purchase_price IN (320, 500, 5000);
-+--------------+----------------+
-| product_name | purchase_price |
-+--------------+----------------+
-| T 恤        |            500 |
-| 打孔器       |            320 |
-| 高压锅       |           5000 |
-+--------------+----------------+
-3 rows in set (0.00 sec)
+  SELECT product_name, purchase_price
+  FROM product
+  WHERE purchase_price IN (320, 500, 5000);
+  +--------------+----------------+
+  | product_name | purchase_price |
+  +--------------+----------------+
+  | T 恤        |            500 |
+  | 打孔器       |            320 |
+  | 高压锅       |           5000 |
+  +--------------+----------------+
+  3 rows in set (0.00 sec)
 ```
 
 上述语句简洁了很多，可读性大幅提高。  
 反之，希望选取出“进货单价不是 320 元、 500 元、 5000 元”的商品时，可以使用否定形式 NOT IN 来实现。
 
 ```sql
-SELECT product_name, purchase_price
-FROM product
-WHERE purchase_price NOT IN (320, 500, 5000);
-+--------------+----------------+
-| product_name | purchase_price |
-+--------------+----------------+
-| 运动 T 恤    |           2800 |
-| 菜刀         |           2800 |
-| 擦菜板       |            790 |
-+--------------+----------------+
-3 rows in set (0.00 sec)
+  SELECT product_name, purchase_price
+  FROM product
+  WHERE purchase_price NOT IN (320, 500, 5000);
+  +--------------+----------------+
+  | product_name | purchase_price |
+  +--------------+----------------+
+  | 运动 T 恤    |           2800 |
+  | 菜刀         |           2800 |
+  | 擦菜板       |            790 |
+  +--------------+----------------+
+  3 rows in set (0.00 sec)
 ```
 
 需要注意的是，在使用 IN 和 NOT IN 时是无法选取出 NULL 数据的。  
@@ -1098,65 +1097,65 @@ IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可�
 在此，我们创建一张新表 `shopproduct` 显示出哪些商店销售哪些商品。
 
 ```sql
--- DDL ：创建表
-DROP TABLE IF EXISTS shopproduct;
-
-CREATE TABLE shopproduct(
-    shop_id CHAR(4)     NOT NULL,
-    shop_name VARCHAR(200) NOT NULL,
-    product_id CHAR(4)      NOT NULL,
-    quantity INTEGER      NOT NULL,
-    PRIMARY KEY (shop_id, product_id) -- 指定主键
-);
-
--- DML ：插入数据
-START TRANSACTION; -- 开始事务
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000A', '东京', '0001', 30);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000A', '东京', '0002', 50);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000A', '东京', '0003', 15);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000B', '名古屋', '0002', 30);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000B', '名古屋', '0003', 120);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000B', '名古屋', '0004', 20);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000B', '名古屋', '0006', 10);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000B', '名古屋', '0007', 40);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000C', '大阪', '0003', 20);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000C', '大阪', '0004', 50);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000C', '大阪', '0006', 90);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000C', '大阪', '0007', 70);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
-VALUES ('000D', '福冈', '0001', 100);
-COMMIT; -- 提交事务
-SELECT * FROM shopproduct;
-+---------+-----------+------------+----------+
-| shop_id | shop_name | product_id | quantity |
-+---------+-----------+------------+----------+
-| 000A    | 东京      | 0001       |       30 |
-| 000A    | 东京      | 0002       |       50 |
-| 000A    | 东京      | 0003       |       15 |
-| 000B    | 名古屋    | 0002       |       30 |
-| 000B    | 名古屋    | 0003       |      120 |
-| 000B    | 名古屋    | 0004       |       20 |
-| 000B    | 名古屋    | 0006       |       10 |
-| 000B    | 名古屋    | 0007       |       40 |
-| 000C    | 大阪      | 0003       |       20 |
-| 000C    | 大阪      | 0004       |       50 |
-| 000C    | 大阪      | 0006       |       90 |
-| 000C    | 大阪      | 0007       |       70 |
-| 000D    | 福冈      | 0001       |      100 |
-+---------+-----------+------------+----------+
-13 rows in set (0.00 sec)
+  -- DDL ：创建表
+  DROP TABLE IF EXISTS shopproduct;
+  
+  CREATE TABLE shopproduct(
+      shop_id CHAR(4)     NOT NULL,
+      shop_name VARCHAR(200) NOT NULL,
+      product_id CHAR(4)      NOT NULL,
+      quantity INTEGER      NOT NULL,
+      PRIMARY KEY (shop_id, product_id) -- 指定主键
+  );
+  
+  -- DML ：插入数据
+  START TRANSACTION; -- 开始事务
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000A', '东京', '0001', 30);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000A', '东京', '0002', 50);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000A', '东京', '0003', 15);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000B', '名古屋', '0002', 30);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000B', '名古屋', '0003', 120);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000B', '名古屋', '0004', 20);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000B', '名古屋', '0006', 10);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000B', '名古屋', '0007', 40);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000C', '大阪', '0003', 20);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000C', '大阪', '0004', 50);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000C', '大阪', '0006', 90);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000C', '大阪', '0007', 70);
+  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  VALUES ('000D', '福冈', '0001', 100);
+  COMMIT; -- 提交事务
+  SELECT * FROM shopproduct;
+  +---------+-----------+------------+----------+
+  | shop_id | shop_name | product_id | quantity |
+  +---------+-----------+------------+----------+
+  | 000A    | 东京      | 0001       |       30 |
+  | 000A    | 东京      | 0002       |       50 |
+  | 000A    | 东京      | 0003       |       15 |
+  | 000B    | 名古屋    | 0002       |       30 |
+  | 000B    | 名古屋    | 0003       |      120 |
+  | 000B    | 名古屋    | 0004       |       20 |
+  | 000B    | 名古屋    | 0006       |       10 |
+  | 000B    | 名古屋    | 0007       |       40 |
+  | 000C    | 大阪      | 0003       |       20 |
+  | 000C    | 大阪      | 0004       |       50 |
+  | 000C    | 大阪      | 0006       |       90 |
+  | 000C    | 大阪      | 0007       |       70 |
+  | 000D    | 福冈      | 0001       |      100 |
+  +---------+-----------+------------+----------+
+  13 rows in set (0.00 sec)
 ```
 
 由于单独使用商店编号（shop_id）或者商品编号（product_id）不能区分表中每一行数据，因此指定了 2 列作为主键（primary key）对商店和商品进行组合，用来唯一确定每一行数据。
@@ -1168,57 +1167,57 @@ SELECT * FROM shopproduct;
 第二步，取出大阪门店在售商品的销售单价  `sale_price`
 
 ```sql
--- step1：取出大阪门店的在售商品 `product_id`
-SELECT product_id
-FROM shopproduct
-WHERE shop_id = '000C';
-+------------+
-| product_id |
-+------------+
-| 0003       |
-| 0004       |
-| 0006       |
-| 0007       |
-+------------+
-4 rows in set (0.00 sec)
+  -- step1：取出大阪门店的在售商品 `product_id`
+  SELECT product_id
+  FROM shopproduct
+  WHERE shop_id = '000C';
+  +------------+
+  | product_id |
+  +------------+
+  | 0003       |
+  | 0004       |
+  | 0006       |
+  | 0007       |
+  +------------+
+  4 rows in set (0.00 sec)
 ```
 
 上述语句取出了大阪门店的在售商品编号，接下来，我么可以使用上述语句作为第二步的查询条件来使用了。
 
 ```sql
--- step2：取出大阪门店在售商品的销售单价 `sale_price`
-SELECT product_name, sale_price
-FROM product
-WHERE product_id IN (SELECT product_id
-                     FROM shopproduct
-                     WHERE shop_id = '000C');
-+--------------+------------+
-| product_name | sale_price |
-+--------------+------------+
-| 运动 T 恤    |       4000 |
-| 菜刀         |       3000 |
-| 叉子         |        500 |
-| 擦菜板       |        880 |
-+--------------+------------+
-4 rows in set (0.00 sec)
+  -- step2：取出大阪门店在售商品的销售单价 `sale_price`
+  SELECT product_name, sale_price
+  FROM product
+  WHERE product_id IN (SELECT product_id
+                       FROM shopproduct
+                       WHERE shop_id = '000C');
+  +--------------+------------+
+  | product_name | sale_price |
+  +--------------+------------+
+  | 运动 T 恤    |       4000 |
+  | 菜刀         |       3000 |
+  | 叉子         |        500 |
+  | 擦菜板       |        880 |
+  +--------------+------------+
+  4 rows in set (0.00 sec)
 ```
 
 根据前面章节学习的知识，子查询是从最内层开始执行的（由内而外），因此，上述语句的子查询执行之后，SQL 展开成下面的语句
 
 ```sql
--- 子查询展开后的结果
-SELECT product_name, sale_price
-FROM product
-WHERE product_id IN ('0003', '0004', '0006', '0007');
-+--------------+------------+
-| product_name | sale_price |
-+--------------+------------+
-| 运动 T 恤      |       4000 |
-| 菜刀         |       3000 |
-| 叉子         |        500 |
-| 擦菜板       |        880 |
-+--------------+------------+
-4 rows in set (0.00 sec)
+  -- 子查询展开后的结果
+  SELECT product_name, sale_price
+  FROM product
+  WHERE product_id IN ('0003', '0004', '0006', '0007');
+  +--------------+------------+
+  | product_name | sale_price |
+  +--------------+------------+
+  | 运动 T 恤      |       4000 |
+  | 菜刀         |       3000 |
+  | 叉子         |        500 |
+  | 擦菜板       |        880 |
+  +--------------+------------+
+  4 rows in set (0.00 sec)
 ```
 
 可以看到，子查询转换之后变为 in 谓词用法，你理解了吗？  
@@ -1235,22 +1234,22 @@ WHERE product_id IN ('0003', '0004', '0006', '0007');
 NOT IN 同样支持子查询作为参数，用法和 in 完全一样。
 
 ```sql
--- NOT IN 使用子查询作为参数，取出未在大阪门店销售的商品的销售单价
-SELECT product_name, sale_price
-FROM product
-WHERE product_id NOT IN (SELECT product_id
-                         FROM shopproduct
-                         WHERE shop_id = '000A');
-+--------------+------------+
-| product_name | sale_price |
-+--------------+------------+
-| 菜刀         |       3000 |
-| 高压锅       |       6800 |
-| 叉子         |        500 |
-| 擦菜板       |        880 |
-| 圆珠笔       |        100 |
-+--------------+------------+
-5 rows in set (0.00 sec)
+  -- NOT IN 使用子查询作为参数，取出未在大阪门店销售的商品的销售单价
+  SELECT product_name, sale_price
+  FROM product
+  WHERE product_id NOT IN (SELECT product_id
+                           FROM shopproduct
+                           WHERE shop_id = '000A');
+  +--------------+------------+
+  | product_name | sale_price |
+  +--------------+------------+
+  | 菜刀         |       3000 |
+  | 高压锅       |       6800 |
+  | 叉子         |        500 |
+  | 擦菜板       |        880 |
+  | 圆珠笔       |        100 |
+  +--------------+------------+
+  5 rows in set (0.00 sec)
 ```
 
 ### 3.4.7 EXIST 谓词
@@ -1278,22 +1277,22 @@ EXIST（存在）谓词的主语是“记录”。
 我们继续以 IN 和子查询 中的示例，使用 EXIST 选取出大阪门店在售商品的销售单价。
 
 ```sql
-SELECT product_name, sale_price
-FROM product AS p
-WHERE EXISTS (SELECT *
-              FROM shopproduct AS sp
-              WHERE sp.shop_id = '000C'
-                    AND sp.product_id = p.product_id
-              );
-+--------------+------------+
-| product_name | sale_price |
-+--------------+------------+
-| 运动 T 恤     |       4000 |
-| 菜刀         |       3000 |
-| 叉子         |        500 |
-| 擦菜板        |        880 |
-+--------------+------------+
-4 rows in set (0.00 sec)
+  SELECT product_name, sale_price
+  FROM product AS p
+  WHERE EXISTS (SELECT *
+                FROM shopproduct AS sp
+                WHERE sp.shop_id = '000C'
+                      AND sp.product_id = p.product_id
+                );
+  +--------------+------------+
+  | product_name | sale_price |
+  +--------------+------------+
+  | 运动 T 恤     |       4000 |
+  | 菜刀         |       3000 |
+  | 叉子         |        500 |
+  | 擦菜板        |        880 |
+  +--------------+------------+
+  4 rows in set (0.00 sec)
 ```
 
 * EXIST 的参数
@@ -1316,21 +1315,21 @@ WHERE EXISTS (SELECT *
 因此，使用下面的查询语句，查询结果也不会发生变化。
 
 ```sql
-SELECT product_name, sale_price
-FROM product AS p
-WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
-              FROM shopproduct AS sp
-              WHERE sp.shop_id = '000C'
-                  AND sp.product_id = p.product_id);
-+--------------+------------+
-| product_name | sale_price |
-+--------------+------------+
-| 运动 T 恤    |       4000 |
-| 菜刀         |       3000 |
-| 叉子         |        500 |
-| 擦菜板       |        880 |
-+--------------+------------+
-4 rows in set (0.00 sec)
+  SELECT product_name, sale_price
+  FROM product AS p
+  WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
+                FROM shopproduct AS sp
+                WHERE sp.shop_id = '000C'
+                    AND sp.product_id = p.product_id);
+  +--------------+------------+
+  | product_name | sale_price |
+  +--------------+------------+
+  | 运动 T 恤    |       4000 |
+  | 菜刀         |       3000 |
+  | 叉子         |        500 |
+  | 擦菜板       |        880 |
+  +--------------+------------+
+  4 rows in set (0.00 sec)
 ```
 
 > 大家可以把在 EXIST 的子查询中书写 SELECT * 当作 SQL 的一种习惯。
@@ -1342,22 +1341,22 @@ WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
 下面的代码示例取出，不在大阪门店销售的商品的销售单价。
 
 ```sql
-SELECT product_name, sale_price
-FROM product AS p
-WHERE NOT EXISTS (SELECT *
-                  FROM shopproduct AS sp
-                  WHERE sp.shop_id = '000A'
-                      AND sp.product_id = p.product_id);
-+--------------+------------+
-| product_name | sale_price |
-+--------------+------------+
-| 菜刀         |       3000 |
-| 高压锅       |       6800 |
-| 叉子         |        500 |
-| 擦菜板       |        880 |
-| 圆珠笔       |        100 |
-+--------------+------------+
-5 rows in set (0.00 sec)
+  SELECT product_name, sale_price
+  FROM product AS p
+  WHERE NOT EXISTS (SELECT *
+                    FROM shopproduct AS sp
+                    WHERE sp.shop_id = '000A'
+                        AND sp.product_id = p.product_id);
+  +--------------+------------+
+  | product_name | sale_price |
+  +--------------+------------+
+  | 菜刀         |       3000 |
+  | 高压锅       |       6800 |
+  | 叉子         |        500 |
+  | 擦菜板       |        880 |
+  | 圆珠笔       |        100 |
+  +--------------+------------+
+  5 rows in set (0.00 sec)
 ```
 
 NOT EXIST 与 EXIST 相反，当 “不存在” 满足子查询中指定条件的记录时返回真（TRUE）。
@@ -1375,14 +1374,14 @@ CASE 表达式的语法分为简单 CASE 表达式和搜索 CASE 表达式两种
 语法：
 
 ```sql
-CASE WHEN < 求值表达式 > THEN < 表达式 >
-     WHEN < 求值表达式 > THEN < 表达式 >
-     WHEN < 求值表达式 > THEN < 表达式 >
-     .
-     .
-     .
-ELSE < 表达式 >
-END
+  CASE WHEN < 求值表达式 > THEN < 表达式 >
+       WHEN < 求值表达式 > THEN < 表达式 >
+       WHEN < 求值表达式 > THEN < 表达式 >
+       .
+       .
+       .
+  ELSE < 表达式 >
+  END
 ```
 
 上述语句执行时，依次判断 when 表达式是否为真值，是则执行 THEN 后的语句，如果所有的 when 表达式均为假，则执行 ELSE 后的语句。  
@@ -1404,29 +1403,29 @@ C ：厨房用具
 * **应用场景 1：根据不同分支得到不同列值**
 
 ```sql
-SELECT  product_name,
-        CASE 
-            WHEN product_type = '衣服'     THEN CONCAT('A ：',product_type)
-            WHEN product_type = '办公用品'  THEN CONCAT('B ：',product_type)
-            WHEN product_type = '厨房用具'  THEN CONCAT('C ：',product_type)
-            ELSE NULL
-        END 
-        
-        AS abc_product_type
-FROM  product;
-+--------------+------------------+
-| product_name | abc_product_type |
-+--------------+------------------+
-| T 恤          | A ： 衣服        |
-| 打孔器         | B ： 办公用品    |
-| 运动 T 恤      | A ： 衣服        |
-| 菜刀           | C ： 厨房用具    |
-| 高压锅         | C ： 厨房用具    |
-| 叉子           | C ： 厨房用具    |
-| 擦菜板         | C ： 厨房用具    |
-| 圆珠笔         | B ： 办公用品    |
-+--------------+------------------+
-8 rows in set (0.00 sec)
+  SELECT  product_name,
+          CASE 
+              WHEN product_type = '衣服'     THEN CONCAT('A ：',product_type)
+              WHEN product_type = '办公用品'  THEN CONCAT('B ：',product_type)
+              WHEN product_type = '厨房用具'  THEN CONCAT('C ：',product_type)
+              ELSE NULL
+          END 
+          
+          AS abc_product_type
+  FROM  product;
+  +--------------+------------------+
+  | product_name | abc_product_type |
+  +--------------+------------------+
+  | T 恤          | A ： 衣服        |
+  | 打孔器         | B ： 办公用品    |
+  | 运动 T 恤      | A ： 衣服        |
+  | 菜刀           | C ： 厨房用具    |
+  | 高压锅         | C ： 厨房用具    |
+  | 叉子           | C ： 厨房用具    |
+  | 擦菜板         | C ： 厨房用具    |
+  | 圆珠笔         | B ： 办公用品    |
+  +--------------+------------------+
+  8 rows in set (0.00 sec)
 ```
 
 ELSE 子句也可以省略不写，这时会被默认为 ELSE NULL。但为了防止有人漏读，还是希望大家能够显示地写出 ELSE 子句。  
@@ -1437,18 +1436,18 @@ ELSE 子句也可以省略不写，这时会被默认为 ELSE NULL。但为了�
 通常我们使用如下代码实现行的方向上不同种类的聚合（这里是 sum）
 
 ```sql
-SELECT product_type,
-       SUM(sale_price) AS sum_price
-FROM product
-GROUP BY product_type;  
-+--------------+-----------+
-| product_type | sum_price |
-+--------------+-----------+
-| 衣服         |      5000 |
-| 办公用品      |       600 |
-| 厨房用具      |     11180 |
-+--------------+-----------+
-3 rows in set (0.00 sec)
+  SELECT product_type,
+         SUM(sale_price) AS sum_price
+  FROM product
+  GROUP BY product_type;  
+  +--------------+-----------+
+  | product_type | sum_price |
+  +--------------+-----------+
+  | 衣服         |      5000 |
+  | 办公用品      |       600 |
+  | 厨房用具      |     11180 |
+  +--------------+-----------+
+  3 rows in set (0.00 sec)
 ```
 
 假如要在列的方向上展示不同种类额聚合值，该如何写呢？
@@ -1462,18 +1461,18 @@ sum_price_clothes | sum_price_kitchen | sum_price_office
 聚合函数 + CASE WHEN 表达式即可实现该效果
 
 ```sql
--- 对按照商品种类计算出的销售单价合计值进行行列转换
-SELECT 
-        SUM(CASE WHEN product_type = '衣服' THEN sale_price ELSE 0 END)    AS sum_price_clothes,
-        SUM(CASE WHEN product_type = '厨房用具' THEN sale_price ELSE 0 END) AS sum_price_kitchen,
-        SUM(CASE WHEN product_type = '办公用品' THEN sale_price ELSE 0 END) AS sum_price_office
-FROM product;
-+-------------------+-------------------+------------------+
-| sum_price_clothes | sum_price_kitchen | sum_price_office |
-+-------------------+-------------------+------------------+
-|              5000 |             11180 |              600 |
-+-------------------+-------------------+------------------+
-1 row in set (0.00 sec)
+  -- 对按照商品种类计算出的销售单价合计值进行行列转换
+  SELECT 
+          SUM(CASE WHEN product_type = '衣服' THEN sale_price ELSE 0 END)    AS sum_price_clothes,
+          SUM(CASE WHEN product_type = '厨房用具' THEN sale_price ELSE 0 END) AS sum_price_kitchen,
+          SUM(CASE WHEN product_type = '办公用品' THEN sale_price ELSE 0 END) AS sum_price_office
+  FROM product;
+  +-------------------+-------------------+------------------+
+  | sum_price_clothes | sum_price_kitchen | sum_price_office |
+  +-------------------+-------------------+------------------+
+  |              5000 |             11180 |              600 |
+  +-------------------+-------------------+------------------+
+  1 row in set (0.00 sec)
 ```
 
 * **（扩展内容）应用场景 3：实现行转列**
@@ -1490,39 +1489,39 @@ FROM product;
 聚合函数 + CASE WHEN 表达式即可实现该转换
 
 ```sql
--- CASE WHEN 实现数字列 score 行转列
-SELECT name,
-       SUM(CASE WHEN subject = '语文' THEN score ELSE null END) as chinese,
-       SUM(CASE WHEN subject = '数学' THEN score ELSE null END) as math,
-       SUM(CASE WHEN subject = '外语' THEN score ELSE null END) as english
-FROM score
-GROUP BY name;
-+------+---------+------+---------+
-| name | chinese | math | english |
-+------+---------+------+---------+
-| 张三 |      93 |   88 |      91 |
-| 李四 |      87 |   90 |      77 |
-+------+---------+------+---------+
-2 rows in set (0.00 sec)
+  -- CASE WHEN 实现数字列 score 行转列
+  SELECT name,
+         SUM(CASE WHEN subject = '语文' THEN score ELSE null END) as chinese,
+         SUM(CASE WHEN subject = '数学' THEN score ELSE null END) as math,
+         SUM(CASE WHEN subject = '外语' THEN score ELSE null END) as english
+  FROM score
+  GROUP BY name;
+  +------+---------+------+---------+
+  | name | chinese | math | english |
+  +------+---------+------+---------+
+  | 张三 |      93 |   88 |      91 |
+  | 李四 |      87 |   90 |      77 |
+  +------+---------+------+---------+
+  2 rows in set (0.00 sec)
 ```
 
 上述代码实现了数字列 score 的行转列，也可以实现文本列 subject 的行转列
 
 ```sql
--- CASE WHEN 实现文本列 subject 行转列
-SELECT name,
-       MAX(CASE WHEN subject = '语文' THEN subject ELSE null END) as chinese,
-       MAX(CASE WHEN subject = '数学' THEN subject ELSE null END) as math,
-       MIN(CASE WHEN subject = '外语' THEN subject ELSE null END) as english
-FROM score
-GROUP BY name;
-+------+---------+------+---------+
-| name | chinese | math | english |
-+------+---------+------+---------+
-| 张三 | 语文    | 数学 | 外语    |
-| 李四 | 语文    | 数学 | 外语    |
-+------+---------+------+---------+
-2 rows in set (0.00 sec
+  -- CASE WHEN 实现文本列 subject 行转列
+  SELECT name,
+         MAX(CASE WHEN subject = '语文' THEN subject ELSE null END) as chinese,
+         MAX(CASE WHEN subject = '数学' THEN subject ELSE null END) as math,
+         MIN(CASE WHEN subject = '外语' THEN subject ELSE null END) as english
+  FROM score
+  GROUP BY name;
+  +------+---------+------+---------+
+  | name | chinese | math | english |
+  +------+---------+------+---------+
+  | 张三 | 语文    | 数学 | 外语    |
+  | 李四 | 语文    | 数学 | 外语    |
+  +------+---------+------+---------+
+  2 rows in set (0.00 sec)
 ```
 
 **总结：**
@@ -1544,18 +1543,19 @@ GROUP BY name;
 对本章中使用的 product（商品）表执行如下 2 条 SELECT 语句，能够得到什么样的结果呢？
 
 1. 第一条
+
 ```sql
-SELECT product_name, purchase_price
-FROM product
-WHERE purchase_price NOT IN (500, 2800, 5000);
+  SELECT product_name, purchase_price
+  FROM product
+  WHERE purchase_price NOT IN (500, 2800, 5000);
 ```
 
 2. 第二条
 
 ```sql
-SELECT product_name, purchase_price
-FROM product
-WHERE purchase_price NOT IN (500, 2800, 5000, NULL);
+  SELECT product_name, purchase_price
+  FROM product
+  WHERE purchase_price NOT IN (500, 2800, 5000, NULL);
 ```
 
 ### 练习 3.7
@@ -1577,12 +1577,9 @@ low_price | mid_price | high_price
 ```
 
 ```sql
-SELECT 
-SUM(CASE WHEN sale_price <= 1000 THEN 1 ELSE 0 END) AS low_price,
-
-SUM(CASE WHEN sale_price BETWEEN 1001 AND 3000 THEN 1 ELSE 0 END) AS mid_price,
-
-SUM(CASE WHEN sale_price >= 3001 THEN 1 ELSE 0 END) AS high_price
-
-FROM product;
+  SELECT 
+  SUM(CASE WHEN sale_price <= 1000 THEN 1 ELSE 0 END) AS low_price,
+  SUM(CASE WHEN sale_price BETWEEN 1001 AND 3000 THEN 1 ELSE 0 END) AS mid_price,
+  SUM(CASE WHEN sale_price >= 3001 THEN 1 ELSE 0 END) AS high_price
+  FROM product;
 ```

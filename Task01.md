@@ -84,6 +84,7 @@ DBMS 主要通过数据的保存格式（数据库的种类）来进行分类，
 行和列交汇的地方称为**单元格**，一个单元格中只能输入一条记录。
 
 ![Ev8crF](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/Ev8crF.jpg)
+
 主键 (primary key) 一列(或一组列)，其值能够唯一标识表中每一行。表中的任何列都可以作为主键，只要它满足以下条件：
 
 * 任意两行都不具有相同的主键值;
@@ -97,13 +98,13 @@ DBMS 主要通过数据的保存格式（数据库的种类）来进行分类，
 
 SQL 是结构化查询语言 (Structured Query Language) 的缩写。SQL 是为操作数据库而开发的语言。国际标准化组织（ISO）为 SQL 制定了相应的标准，以此为基准的 SQL 称为标准 SQL（相关信息请参考专栏——标准 SQL 和特定的 SQL）。
 
-SQL 语句的优点
+**SQL 语句的优点**
 
 * SQL 不是某个特定数据库供应商专有的语言。几乎所有重要的 DBMS 都支持 SQL，所以，学习此语言使你几乎能与所有数据库打交道;
-* SQL 简单易学。它的语句全都是由描述性很强的英语单词组成，而且这些单词的数目不多;
+* SQL 简单易学。它的语句全都是由描述性很强的英语单词组成，而且这些单词的数目不多;可以参考[这个文档](SQL-关键词一文解决.md)
 * SQL 尽管看上去很简单，但它实际上是一种强有力的语言，灵活使用其语言元素，可以进行非常复杂和高级的数据库操作。
 
-完全基于标准 SQL 的 RDBMS 很少，通常需要根据不同的 RDBMS 来编写特定的 SQL 语句，原则上，本课程介绍的是标准 SQL 的书写方式。
+<span style="color: rgb(255, 102, 0);">完全基于标准 SQL 的 RDBMS 很少，通常需要根据不同的 RDBMS 来编写特定的 SQL 语句，原则上，本课程介绍的是标准 SQL 的书写方式。</span>
 
 根据对 RDBMS 赋予的指令种类的不同，SQL 语句可以分为以下三类.
 
@@ -148,6 +149,7 @@ SQL 语句的优点
 数据类型 (datatype) 所容许的数据的类型。每个表列都有相应的数据类型，它限制(或容许) 该列中存储的数据，常见的数据类型有字符串、数值、日期和时间、二进制数据类型。
 
 ![lY9mQi](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/lY9mQi.jpg)
+
 * 字符串数据类型
 
 
@@ -217,7 +219,7 @@ SQL 语句的优点
 
 * 单词需要用半角空格或者换行来分隔
 
-SQL 语句的单词之间需使用半角空格或换行符来进行分隔，且不能使用全角空格作为单词的分隔符，否则会发生错误，出现无法预期的结果。
+<span style="color: rgb(255, 102, 0);">SQL 语句的单词之间需使用半角空格或换行符来进行分隔，且不能使用全角空格作为单词的分隔符，否则会发生错误，出现无法预期的结果。</span>
 
 请大家认真查阅《附录 1 - SQL 语法规范》，养成规范的书写习惯。
 
@@ -260,11 +262,11 @@ CREATE TABLE 'author' (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 ```
 
-MySQL 中两种数据库引擎   
-ENGINE = MyISAM   
-ENGINE = InnoDB
+MySQL 中两种数据库引擎
+* ENGINE = MyISAM   
+* ENGINE = InnoDB
 
-### MySQL 存储引擎 MyISAM 与 InnoDB 如何选择？
+### MySQL 存储引擎 MyISAM 与 InnoDB 如何选择？(面试题，程序员适用）
 
 虽然 MySQL 里的存储引擎不只是 MyISAM 与 InnoDB 这两个，但常用的就是它俩了。
 
@@ -430,6 +432,7 @@ TRUNCATE TABLE TABLE_NAME;
     -- 修改所有的注册时间
     UPDATE product
     SET regist_date = '2009-10-10';
+    
     -- 仅修改部分商品的单价
     UPDATE product
     SET sale_price = sale_price * 10
@@ -496,8 +499,7 @@ CREATE TABLE productins(
 INSERT INTO < 表名 > (列 1, 列 2, 列 3, ……) VALUES (值 1, 值 2, 值 3, ……);  
 ```
 
-对表进行全列 `INSERT` 时，可以省略表名后的列清单。
-这时 `VALUES` 子句的值会默认按照从左到右的顺序赋给每一列。
+对表进行全列 `INSERT` 时，可以省略表名后的列清单。 这时 `VALUES` 子句的值会默认按照从左到右的顺序赋给每一列。
 
 ```sql
 -- 包含列清单
@@ -535,9 +537,11 @@ VALUES (
 INSERT INTO productins 
 VALUES (
 '0002', '打孔器', '办公用品', 500, 320, '2009-09-11');
+
 INSERT INTO productins 
 VALUES (
 '0003', '运动 T 恤', '衣服', 4000, 2800, NULL);
+
 INSERT INTO productins 
 VALUES (
 '0004', '菜刀', '厨房用具', 3000, 2800, '2009-09-20');
@@ -556,7 +560,8 @@ VALUES ('0002', '打孔器', '办公用品', 500, 320, '2009-09-11')
 INTO productins 
 VALUES ('0003', '运动 T 恤', '衣服', 4000, 2800, NULL)
 INTO productins 
-VALUES ('0004', '菜刀', '厨房用具', 3000, 2800, '2009-09-20')
+VALUES ('0004', '菜刀', '厨房用具', 3000, 2800, '2009-09-20');
+
 SELECT * FROM DUAL;  
 -- DUAL 是 Oracle 特有（安装时的必选项）的一种临时表 A。
 -- 因此“SELECT * FROM DUAL” 部分也只是临时性的，并没有实际意义。  
@@ -648,7 +653,6 @@ FROM Product;
 ![TtH4XH](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/TtH4XH.png)
 
 ```sql
-
 CREATE TABLE ai_test(
     ai_id int not null AUTO_INCREMENT,
     ai_unique varchar(20) not null,
@@ -743,10 +747,13 @@ CREATE TABLE Addressbook(
 ```sql
 -- [MySQL]
 ALTER TABLE Addressbook ADD COLUMN postal_code CHAR(8) NOT NULL ;
+
 -- [Oracle]
 ALTER TABLE Addressbook ADD (postal_code CHAR(8)) NOT NULL;
+
 -- [SQL Server]
 ALTER TABLE Addressbook ADD postal_code CHAR(8) NOT NULL;
+
 /*
  [DB2] 无法添加。
  在 DB2 中，如果要为添加的列设定 NOT NULL 约束，
@@ -756,6 +763,7 @@ ALTER TABLE Addressbook ADD postal_code CHAR(8) NOT NULL;
 -- [DB2 修正版]
 ALTER TABLE Addressbook ADD COLUMN postal_code CHAR(8) NOT NULL DEFAULT '0000-000';
 ```
+
 ### 3.3 删除表
 
 编写 SQL 语句来删除 Addressbook 表。
@@ -768,4 +776,4 @@ DROP TALBE Addressbook;
 
 编写 SQL 语句来恢复删除掉的 Addressbook 表。
 
-删除后的表无法使用命令进行恢复，请使用习题 3.1 答案中的 ` CREATE TABLE ` 语句再次创建所需的表。
+删除后的表无法使用命令进行恢复（**其实对 DBA 来说是可以的，这个超纲了**），请使用习题 3.1 答案中的 ` CREATE TABLE ` 语句再次创建所需的表。

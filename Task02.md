@@ -10,13 +10,15 @@
 
 **SELECT 语句**  
 
-从表中选取数据时需要使用 SELECT 语句，也就是只从表中选出（SELECT）必要数据的意思。通过 SELECT 语句查询并选取出必要数据的过程称为匹配查询或查询（query）。
+从表中选取数据时需要使用 SELECT 语句，也就是只从表中选出（SELECT）必要数据的意思。
+
+通过 SELECT 语句查询并选取出必要数据的过程称为匹配查询或查询（query）。
 
 基本 `SELECT` 语句包含了 `SELECT` 和 `FROM` 两个子句（clause）。示例如下：
 
 ```sql
-SELECT < 列名 >,< 列名 >
-FROM < 表名 >;
+    SELECT < 列名 >,< 列名 >
+    FROM < 表名 >;
 ```
 
 其中，SELECT 子句中列举了希望从表中查询出的列的名称，而 FROM 子句则指定了选取出数据的表的名称。
@@ -27,47 +29,52 @@ FROM < 表名 >;
   
 当不需要取出全部数据，而是选取出满足“商品种类为衣服”“销售单价在 1000 日元以上”等某些条件的数据时，使用 WHERE 语句。
 
-SELECT 语句通过 WHERE 子句来指定查询数据的条件。在 WHERE 子句中可以指定“某一列的值和这个字符串相等”或者“某一列的值大于这个数字”等条件。执行含有这些条件的 SELECT 语句，就可以查询出只符合该条件的记录了。
+SELECT 语句通过 WHERE 子句来指定查询数据的条件。在 WHERE 子句中可以指定“某一列的值和这个字符串相等”或者“某一列的值大于这个数字”等条件。
+
+执行含有这些条件的 SELECT 语句，就可以查询出只符合该条件的记录了。
 
 ```sql
-SELECT < 列名 >, ……
-FROM < 表名 >
-WHERE < 条件表达式 >;
+    SELECT < 列名 >, ……
+    FROM < 表名 >
+    WHERE < 条件表达式 >;
 ```
 
 比较下面两者输出结果的不同：
 
 ```sql
--- 用来选取 product_type 列为衣服的记录的 SELECT 语句
-SELECT product_name, product_type
-FROM product
-WHERE product_type = '衣服';
--- 也可以选取出不是查询条件的列（条件列与输出列不同）
-SELECT product_name
-FROM product
-WHERE product_type = '衣服';
+    -- 用来选取 product_type 列为衣服的记录的 SELECT 语句
+    SELECT product_name, product_type
+    FROM product
+    WHERE product_type = '衣服';
+    
+    -- 也可以选取出不是查询条件的列（条件列与输出列不同）
+    SELECT product_name
+    FROM product
+    WHERE product_type = '衣服';
 ```
 
 ### 1.3 相关法则
 
 * 星号（*）代表全部列的意思。
 * SQL 中可以随意使用换行符，不影响语句执行（但不可插入空行）。
-* 设定汉语别名时需要使用双引号（"）括起来。
+* 设定汉语别名时需要使用双引号（**"**）括起来。
 * 在 SELECT 语句中使用 **DISTINCT** 可以删除重复行。
 * 注释是 SQL 语句中用来标识说明或者注意事项的部分。分为单行注释 "--" 和多行注释两种 "/*  */"。
 
 ```sql
--- 想要查询出全部列时，可以使用代表所有列的星号（*）。
-SELECT *
-FROM < 表名 >;
--- SQL 语句可以使用 AS 关键字为列设定别名（用中文时需要双引号（""））。
-SELECT product_id     AS id,
-       product_name   AS name,
-       purchase_price AS "进货单价"
-FROM product;
--- 使用 DISTINCT 删除 product_type 列中重复的数据
-SELECT DISTINCT product_type
-FROM product;
+    -- 想要查询出全部列时，可以使用代表所有列的星号（*）。
+    SELECT *
+    FROM < 表名 >;
+    
+    -- SQL 语句可以使用 AS 关键字为列设定别名（用中文时需要双引号（""））。
+    SELECT product_id     AS id,
+           product_name   AS name,
+           purchase_price AS "进货单价"
+    FROM product;
+    
+    -- 使用 DISTINCT 删除 product_type 列中重复的数据
+    SELECT DISTINCT product_type
+    FROM product;
 ```
 
 ## 二、算术运算符和比较运算符
@@ -86,10 +93,10 @@ SQL 语句中可以使用的四则运算的主要运算符如下：
 ### 2.2 比较运算符
 
 ```sql
--- 选取出 sale_price 列为 500 的记录
-SELECT product_name, product_type
-FROM product
-WHERE sale_price = 500;
+    -- 选取出 sale_price 列为 500 的记录
+    SELECT product_name, product_type
+    FROM product
+    WHERE sale_price = 500;
 ```
 
 SQL 常见比较运算符如下：
@@ -113,43 +120,45 @@ SQL 常见比较运算符如下：
 相关代码如下：
 
 ```sql
--- SQL 语句中也可以使用运算表达式
-SELECT 
-    product_name, 
-    sale_price, 
-    sale_price * 2 AS "sale_price x2"
-FROM product;
--- WHERE 子句的条件表达式中也可以使用计算表达式
-SELECT product_name, sale_price, purchase_price
-FROM product
-WHERE sale_price-purchase_price >= 500;
+    -- SQL 语句中也可以使用运算表达式
+    SELECT 
+        product_name, 
+        sale_price, 
+        sale_price * 2 AS "sale_price x2"
+    FROM product;
+    
+    -- WHERE 子句的条件表达式中也可以使用计算表达式
+    SELECT product_name, sale_price, purchase_price
+    FROM product
+    WHERE sale_price-purchase_price >= 500;
 ```
 
 ```sql 
-/* 对字符串使用不等号
-首先创建 chars 并插入数据
-选取出大于'2'的 SELECT 语句 */
-
--- DDL：创建表
-CREATE TABLE chars(
-    chr CHAR（3）NOT NULL，
-    PRIMARY KEY(chr)
-);
--- 选取出大于 '2' 的数据的 SELECT 语句 ('2' 为字符串)
-SELECT chr
-FROM chars
-WHERE chr > '2';
+    /* 对字符串使用不等号
+    首先创建 chars 并插入数据
+    选取出大于'2'的 SELECT 语句 */
+    
+    -- DDL：创建表
+    CREATE TABLE chars(
+        chr CHAR（3）NOT NULL，
+        PRIMARY KEY(chr)
+    );
+    -- 选取出大于 '2' 的数据的 SELECT 语句 ('2' 为字符串)
+    SELECT chr
+    FROM chars
+    WHERE chr > '2';
 ```
 
 ```sql
--- 选取 NULL 的记录
-SELECT product_name，purchase_price
-FROM product
-WHERE purchase_price IS NULL;
--- 选取不为 NULL 的记录
-SELECT product_name，purchase_price
-FROM product
-WHERE purchase_price IS NOT NULL;
+    -- 选取 NULL 的记录
+    SELECT product_name，purchase_price
+    FROM product
+    WHERE purchase_price IS NULL;
+    
+    -- 选取不为 NULL 的记录
+    SELECT product_name，purchase_price
+    FROM product
+    WHERE purchase_price IS NOT NULL;
 ```
 
 ## 三、逻辑运算符
@@ -161,15 +170,15 @@ WHERE purchase_price IS NOT NULL;
 **NOT** 不能单独使用，如下例：
 
 ```sql
--- 选取出销售单价大于等于 1000 日元的记录
-SELECT product_name, product_type, sale_price
-FROM product
-WHERE sale_price >= 1000;
-
--- 向上面代码清单的查询条件中添加 NOT 运算符
-SELECT product_name, product_type, sale_price
-FROM product
-WHERE NOT sale_price >= 1000;
+    -- 选取出销售单价大于等于 1000 日元的记录
+    SELECT product_name, product_type, sale_price
+    FROM product
+    WHERE sale_price >= 1000;
+    
+    -- 向上面代码清单的查询条件中添加 NOT 运算符
+    SELECT product_name, product_type, sale_price
+    FROM product
+    WHERE NOT sale_price >= 1000;
 ```
 
 ### 3.2 AND 运算符和 OR 运算符
@@ -197,23 +206,23 @@ WHERE NOT sale_price >= 1000;
 > 理想结果为“打孔器”，但当你输入以下信息时，会得到错误结果
 
 ```sql
--- 将查询条件原封不动地写入条件表达式，会得到错误结果
-SELECT product_name, product_type, regist_date
-FROM product
-WHERE product_type = '办公用品'
-AND regist_date = '2009-09-11'
-OR regist_date = '2009-09-20';
+    -- 将查询条件原封不动地写入条件表达式，会得到错误结果
+    SELECT product_name, product_type, regist_date
+    FROM product
+    WHERE product_type = '办公用品'
+    AND regist_date = '2009-09-11'
+    OR regist_date = '2009-09-20';
 ```
 
 错误的原因是 **是 AND 运算符优先于 OR 运算符**，想要优先执行 OR 运算，可以使用 **括号**：
 
 ```sql
--- 通过使用括号让 OR 运算符先于 AND 运算符执行
-SELECT product_name, product_type, regist_date
-FROM product
-WHERE product_type = '办公用品'
-AND ( regist_date = '2009-09-11'
-OR regist_date = '2009-09-20');
+    -- 通过使用括号让 OR 运算符先于 AND 运算符执行
+    SELECT product_name, product_type, regist_date
+    FROM product
+    WHERE product_type = '办公用品'
+    AND ( regist_date = '2009-09-11'
+    OR regist_date = '2009-09-20');
 ```
 
 ### 3.4 真值表
@@ -263,9 +272,9 @@ NULL 的真值结果既不为真，也不为假，因为并不知道这样一个
 编写一条 SQL 语句，从 product（商品）表中选取出“登记日期（regist 在 2009 年 4 月 28 日之后”的商品，查询结果要包含 product_name 和 regist_date 两列。
 
 ```sql
-SELECT product_name, regist_date
-FROM product
-WHERE regist_date > '2009-04-28';
+    SELECT product_name, regist_date
+    FROM product
+    WHERE regist_date > '2009-04-28';
 ```
 
 ### 练习题 2
@@ -273,21 +282,21 @@ WHERE regist_date > '2009-04-28';
 请说出对 product 表执行如下 3 条 SELECT 语句时的返回结果。
 
 ```sql
-SELECT *
-FROM product
-WHERE purchase_price = NULL;
+    SELECT *
+    FROM product
+    WHERE purchase_price = NULL;
 ```
 
 ```sql
-SELECT *
-FROM product
-WHERE purchase_price <> NULL;
+    SELECT *
+    FROM product
+    WHERE purchase_price <> NULL;
 ```
 
 ```sql
-SELECT *
-FROM product
-WHERE product_name > NULL;
+    SELECT *
+    FROM product
+    WHERE product_name > NULL;
 ```
 
 ### 练习题 3
@@ -303,15 +312,15 @@ T 恤衫        | 　 1000    | 500
 ```
 
 ```sql
--- SELECT 语句 1
-SELECT product_name, sale_price, purchase_price
-FROM product
-WHERE sale_price >= purchase_price + 500;
- 
--- SELECT 语句 2
-SELECT product_name, sale_price, purchase_price
-FROM product
-WHERE sale_price - 500 >= purchase_price;
+    -- SELECT 语句 1
+    SELECT product_name, sale_price, purchase_price
+    FROM product
+    WHERE sale_price >= purchase_price + 500;
+     
+    -- SELECT 语句 2
+    SELECT product_name, sale_price, purchase_price
+    FROM product
+    WHERE sale_price - 500 >= purchase_price;
 ```
 
 
@@ -322,19 +331,19 @@ WHERE sale_price - 500 >= purchase_price;
 提示：销售单价打九折，可以通过 saleprice 列的值乘以 0.9 获得，利润可以通过该值减去 purchase_price 列的值获得。
 
 ```sql
-SELECT product_name, product_type,
-       sale_price * 0.9 - purchase_price AS profit
-FROM product
-WHERE sale_price * 0.9 - purchase_price > 100
-   AND (   product_type = '办公用品'
-        OR product_type = '厨房用具');
+    SELECT product_name, product_type,
+           sale_price * 0.9 - purchase_price AS profit
+    FROM product
+    WHERE sale_price * 0.9 - purchase_price > 100
+       AND (   product_type = '办公用品'
+            OR product_type = '厨房用具');
 ```
 
 ```sql
-SELECT product_type, SUM(sale_price), SUM(purchase_price)
-FROM product
-GROUP BY product_type
-HAVING SUM(sale_price) > SUM(purchase_price) * 1.5;
+    SELECT product_type, SUM(sale_price), SUM(purchase_price)
+    FROM product
+    GROUP BY product_type
+    HAVING SUM(sale_price) > SUM(purchase_price) * 1.5;
 ```
 
 上面这段代码是什么意思呢？如何翻译成中文！
@@ -356,78 +365,113 @@ SQL 中用于汇总的函数叫做聚合函数。以下五个是最常用的聚�
 请沿用第一章的数据，使用以下操作熟练函数：
 
 ```sql
--- 计算全部数据的行数（包含 NULL）
-SELECT COUNT(*)
-FROM product;
-
--- 计算 NULL 以外数据的行数
-SELECT COUNT(purchase_price)
-FROM product;
-
--- 计算销售单价和进货单价的合计值
-SELECT SUM(sale_price), SUM(purchase_price) 
-FROM product;
-
--- 计算销售单价和进货单价的平均值
-SELECT AVG(sale_price), AVG(purchase_price)
-FROM product;
-
--- MAX 和 MIN 也可用于非数值型数据
-SELECT MAX(regist_date), MIN(regist_date)
-FROM product;
+    -- 计算全部数据的行数（包含 NULL）
+    SELECT COUNT(*)
+    FROM product;
+    
+    -- 计算 NULL 以外数据的行数
+    SELECT COUNT(purchase_price)
+    FROM product;
+    
+    -- 计算销售单价和进货单价的合计值
+    SELECT SUM(sale_price), SUM(purchase_price) 
+    FROM product;
+    
+    -- 计算销售单价和进货单价的平均值
+    SELECT AVG(sale_price), AVG(purchase_price)
+    FROM product;
+    
+    -- MAX 和 MIN 也可用于非数值型数据
+    SELECT MAX(regist_date), MIN(regist_date)
+    FROM product;
 ```
 
 
 MySQL 聚合函数主要用于数据统计，比如计数、求和、求平均数等。聚合函数结合分组操作，您可以在更多的维度统计数据。
 
 * AVG
-MySQL AVG() 函数计算并返回表达式的平均值。
+
+    MySQL AVG() 函数计算并返回表达式的平均值。
+
 * BIT_AND
-MySQL BIT_AND() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位与"运算。
+
+  MySQL BIT_AND() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位与"运算。
+
 * BIT_OR
-MySQL BIT_OR() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位或"运算。
+
+  MySQL BIT_OR() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位或"运算。
+
 * BIT_XOR
-MySQL BIT_XOR() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位异或"运算。
+
+  MySQL BIT_XOR() 函数是一个聚合函数，它对所有的非 null 输入值执行"按位异或"运算。
+
 * COUNT
-MySQL COUNT() 函数用于统计表达式的数量。
+
+  MySQL COUNT() 函数用于统计表达式的数量。
+
 * GROUP_CONCAT
-MySQL GROUP_CONCAT() 函数将一个分组中指定的列或表达式的值连接成一个字符串并返回。
+
+  MySQL GROUP_CONCAT() 函数将一个分组中指定的列或表达式的值连接成一个字符串并返回。
+
 * JSON_ARRAYAGG
-MySQL JSON_ARRAYAGG() 函数将指定的列或者表达式的值聚合为一个 JSON 数组。
+
+  MySQL JSON_ARRAYAGG() 函数将指定的列或者表达式的值聚合为一个 JSON 数组。
+
 * JSON_OBJECTAGG
-MySQL JSON_OBJECTAGG() 函数将由第一个参数作为键和第二个参数作为值的键值对聚合为一个 JSON 对象。
+
+  MySQL JSON_OBJECTAGG() 函数将由第一个参数作为键和第二个参数作为值的键值对聚合为一个 JSON 对象。
+
 * MAX
-MySQL MAX() 函数返回表达式的最大值。
+
+  MySQL MAX() 函数返回表达式的最大值。
+
 * MIN
-MySQL MIN() 函数返回表达式的最小值。
+
+  MySQL MIN() 函数返回表达式的最小值。
+
 * STD
-MySQL STD() 计算所有非 null 输入值的总体标准差并返回结果。
+
+  MySQL STD() 计算所有非 null 输入值的总体标准差并返回结果。
+
 * STDDEV
-MySQL STDDEV() 函数计算所有非 null 输入值的总体标准差并返回结果。
+
+  MySQL STDDEV() 函数计算所有非 null 输入值的总体标准差并返回结果。
+
 * STDDEV_POP
-MySQL STDDEV_POP() 函数计算所有非 null 输入值的总体标准差并返回结果。
+
+  MySQL STDDEV_POP() 函数计算所有非 null 输入值的总体标准差并返回结果。
+
 * STDDEV_SAMP
-MySQL STDDEV_SAMP() 函数计算所有非 null 输入值的样本标准差并返回结果。
+
+  MySQL STDDEV_SAMP() 函数计算所有非 null 输入值的样本标准差并返回结果。
+
 * SUM
-MySQL SUM() 函数计算所有指定的非 NULL 值的总和并返回。
+
+  MySQL SUM() 函数计算所有指定的非 NULL 值的总和并返回。
+
 * VAR_POP
-MySQL VAR_POP() 函数计算所有非 null 输入值的总体方差（总体标准差的平方）并返回结果。
+
+  MySQL VAR_POP() 函数计算所有非 null 输入值的总体方差（总体标准差的平方）并返回结果。
+
 * VAR_SAMP
-MySQL VAR_SAMP() 函数计算所有非 null 输入值的样本方差（样本标准差的平方）并返回结果。
+
+  MySQL VAR_SAMP() 函数计算所有非 null 输入值的样本方差（样本标准差的平方）并返回结果。
+
 * VARIANCE
-MySQL VARIANCE() 函数计算所有非 null 输入值的总体方差（总体标准差的平方）并返回结果。
+
+  MySQL VARIANCE() 函数计算所有非 null 输入值的总体方差（总体标准差的平方）并返回结果。
 
 
 ### 4.2 使用聚合函数删除重复值
 
 ```sql
--- 计算去除重复数据后的数据行数
-SELECT COUNT(DISTINCT product_type)
-FROM product;
-
--- 是否使用 DISTINCT 时的动作差异（SUM 函数）
-SELECT SUM(sale_price), SUM(DISTINCT sale_price)
-FROM product;
+    -- 计算去除重复数据后的数据行数
+    SELECT COUNT(DISTINCT product_type)
+    FROM product;
+    
+    -- 是否使用 DISTINCT 时的动作差异（SUM 函数）
+    SELECT SUM(sale_price), SUM(DISTINCT sale_price)
+    FROM product;
 ```
 
 ### 4.3 常用法则
@@ -445,22 +489,22 @@ FROM product;
 之前使用聚合函数都是会整个表的数据进行处理，当你想将进行分组汇总时（即：将现有的数据按照某列来汇总统计），GROUP BY 可以帮助你：
 
 ```sql
-SELECT < 列名 1>,< 列名 2>, < 列名 3>, ……
-FROM < 表名 >
-GROUP BY < 列名 1>, < 列名 2>, < 列名 3>, ……;
+    SELECT < 列名 1>,< 列名 2>, < 列名 3>, ……
+    FROM < 表名 >
+    GROUP BY < 列名 1>, < 列名 2>, < 列名 3>, ……;
 ```
 
 看一看是否使用 GROUP BY 语句的差异：
 
 ```sql
--- 按照商品种类统计数据行数
-SELECT product_type, COUNT(*)
-FROM product
-GROUP BY product_type;
-
--- 不含 GROUP BY
-SELECT product_type, COUNT(*)
-FROM product
+    -- 按照商品种类统计数据行数
+    SELECT product_type, COUNT(*)
+    FROM product
+    GROUP BY product_type;
+    
+    -- 不含 GROUP BY
+    SELECT product_type, COUNT(*)
+    FROM product
 ```
 
 按照商品种类对表进行切分
@@ -474,9 +518,9 @@ FROM product
 将进货单价（purchase_price）作为聚合键举例：
 
 ```sql
-SELECT purchase_price, COUNT(*)
-FROM product
-GROUP BY purchase_price;
+    SELECT purchase_price, COUNT(*)
+    FROM product
+    GROUP BY purchase_price;
 ```
 此时会将 NULL 作为一组特殊数据进行处理
 
@@ -491,10 +535,10 @@ GROUP BY purchase_price;
 ### 5.4 在 WHERE 子句中使用 GROUP BY
 
 ```sql
-SELECT purchase_price, COUNT(*)
-FROM product
-WHERE product_type = '衣服'
-GROUP BY purchase_price;
+    SELECT purchase_price, COUNT(*)
+    FROM product
+    WHERE product_type = '衣服'
+    GROUP BY purchase_price;
 ```
 
 ### 5.5 常见错误
@@ -524,17 +568,17 @@ HAVING 的用法类似 WHERE
 **HAVING 子句用于对分组进行过滤，可以使用数字、聚合函数和 GROUP BY 中指定的列名（聚合键）。**
 
 ```sql
--- 数字
-SELECT product_type, COUNT(*)
-FROM product
-GROUP BY product_type
-HAVING COUNT(*) = 2;
-
--- 错误形式（因为 product_name 不包含在 GROUP BY 聚合键中）
-SELECT product_type, COUNT(*)
-FROM product
-GROUP BY product_type
-HAVING product_name = '圆珠笔';
+    -- 数字
+    SELECT product_type, COUNT(*)
+    FROM product
+    GROUP BY product_type
+    HAVING COUNT(*) = 2;
+    
+    -- 错误形式（因为 product_name 不包含在 GROUP BY 聚合键中）
+    SELECT product_type, COUNT(*)
+    FROM product
+    GROUP BY product_type
+    HAVING product_name = '圆珠笔';
 ```
 
 ## 七、对查询结果进行排序
@@ -544,28 +588,28 @@ HAVING product_name = '圆珠笔';
 SQL 中的执行结果是随机排列的，当需要按照特定顺序排序时，可已使用 **ORDER BY** 子句。
 
 ```sql
-SELECT < 列名 1>, < 列名 2>, < 列名 3>, ……
-FROM < 表名 >
-ORDER BY < 排序基准列 1>, < 排序基准列 2>, ……
+    SELECT < 列名 1>, < 列名 2>, < 列名 3>, ……
+    FROM < 表名 >
+    ORDER BY < 排序基准列 1>, < 排序基准列 2>, ……
 ```
 
 默认为升序排列，降序排列为 DESC
 
 ```sql
--- 降序排列
-SELECT product_id, product_name, sale_price, purchase_price
-FROM product
-ORDER BY sale_price DESC;
-
--- 多个排序键
-SELECT product_id, product_name, sale_price, purchase_price
-FROM product
-ORDER BY sale_price, product_id;
-
--- 当用于排序的列名中含有 NULL 时，NULL 会在开头或末尾进行汇总。
-SELECT product_id, product_name, sale_price, purchase_price
-FROM product
-ORDER BY purchase_price;
+    -- 降序排列
+    SELECT product_id, product_name, sale_price, purchase_price
+    FROM product
+    ORDER BY sale_price DESC;
+    
+    -- 多个排序键
+    SELECT product_id, product_name, sale_price, purchase_price
+    FROM product
+    ORDER BY sale_price, product_id;
+    
+    -- 当用于排序的列名中含有 NULL 时，NULL 会在开头或末尾进行汇总。
+    SELECT product_id, product_name, sale_price, purchase_price
+    FROM product
+    ORDER BY purchase_price;
 ```
 
 ### 7.2 ORDER BY 中列名可使用别名
@@ -585,11 +629,11 @@ ORDER BY purchase_price;
 请指出下述 SELECT 语句中所有的语法错误。
 
 ```sql
--- 本 SELECT 语句中存在错误。
-SELECT product_id, SUM（product_name）
-FROM product 
-GROUP BY product_type 
-WHERE regist_date > '2009-09-01';
+    -- 本 SELECT 语句中存在错误。
+    SELECT product_id, SUM（product_name）
+    FROM product 
+    GROUP BY product_type 
+    WHERE regist_date > '2009-09-01';
 ```
 
 
@@ -607,10 +651,10 @@ GROUP BY  字段（product_type ）与  SELECT  字段不同（product_id ）
 ![sxE3zO](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/sxE3zO.jpg)
 
 ```sql
-SELECT product_type, SUM(sale_price),SUM(purchase_price)
-FROM product
-GROUP BY product_type
-HAVING SUM(sale_price) > SUM(purchase_price) * 1.5;
+    SELECT product_type, SUM(sale_price),SUM(purchase_price)
+    FROM product
+    GROUP BY product_type
+    HAVING SUM(sale_price) > SUM(purchase_price) * 1.5;
 ```
 
 ### 练习题 7
@@ -620,7 +664,7 @@ HAVING SUM(sale_price) > SUM(purchase_price) * 1.5;
 ![DwKApk](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/DwKApk.jpg)
 
 ```sql
-SELECT *
-FROM product
-ORDER BY regist_date DESC, sale_price;
+    SELECT *
+    FROM product
+    ORDER BY regist_date DESC, sale_price;
 ```

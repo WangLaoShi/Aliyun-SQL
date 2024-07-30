@@ -30,13 +30,13 @@
 接下来我们演示 UNION 的具体用法及查询结果:
 
 ```sql
-SELECT product_id, product_name
-FROM product
-
-UNION
-
-SELECT product_id, product_name
-FROM product2;
+    SELECT product_id, product_name
+    FROM product
+    
+    UNION
+    
+    SELECT product_id, product_name
+    FROM product2;
 ```
 
 上述结果包含了两张表中的全部商品. 你会发现, 这就是我们在学校学过的集合中的并集运算, 通过文氏图会看得更清晰（图 7-1):  
@@ -56,29 +56,29 @@ FROM product2;
 ![LSIB81](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/LSIB81.jpg)
 
 ```sql
--- 参考答案:
-SELECT  product_id,product_name,product_type
-       ,sale_price,purchase_price
-FROM product 
-WHERE sale_price<800
-
-UNION
-
-SELECT  product_id,product_name,product_type
-       ,sale_price,purchase_price
-FROM product 
-WHERE sale_price>1.5*purchase_price;
+    -- 参考答案:
+    SELECT  product_id,product_name,product_type
+           ,sale_price,purchase_price
+    FROM product 
+    WHERE sale_price<800
+    
+    UNION
+    
+    SELECT  product_id,product_name,product_type
+           ,sale_price,purchase_price
+    FROM product 
+    WHERE sale_price>1.5*purchase_price;
 ```
 
 思考: 如果不使用 UNION 该怎么写查询语句?
 
 ```sql
--- 参考答案:
-SELECT  product_id,product_name,product_type
-       ,sale_price,purchase_price
-FROM product 
-WHERE sale_price < 800 
-    OR sale_price > 1.5 * purchase_price;
+    -- 参考答案:
+    SELECT  product_id,product_name,product_type
+           ,sale_price,purchase_price
+    FROM product 
+    WHERE sale_price < 800 
+        OR sale_price > 1.5 * purchase_price;
 ```
 
 #### 4.1.2.2 UNION 与 OR 谓词
@@ -96,24 +96,24 @@ WHERE sale_price < 800
 参考答案:
 
 ```sql
--- 使用 OR 谓词
-SELECT * 
-FROM product 
-WHERE sale_price / purchase_price < 1.3 
-    OR sale_price / purchase_price IS NULL;
+    -- 使用 OR 谓词
+    SELECT * 
+    FROM product 
+    WHERE sale_price / purchase_price < 1.3 
+        OR sale_price / purchase_price IS NULL;
 ```
 
 ```sql
--- 使用 UNION
-SELECT * 
-FROM product 
-WHERE sale_price / purchase_price < 1.3
-
-UNION
-
-SELECT * 
-FROM product 
-WHERE sale_price / purchase_price IS NULL;
+    -- 使用 UNION
+    SELECT * 
+    FROM product 
+    WHERE sale_price / purchase_price < 1.3
+    
+    UNION
+    
+    SELECT * 
+    FROM product 
+    WHERE sale_price / purchase_price IS NULL;
 ```
 
 #### 4.1.2.3 包含重复行的集合运算 UNION ALL
@@ -123,14 +123,14 @@ WHERE sale_price / purchase_price IS NULL;
 例如,  想要知道 product 和 product2 中所包含的商品种类及每种商品的数量, 第一步, 就需要将两个表的商品种类字段选出来, 然后使用 UNION ALL 进行不去重地合并. 接下来再对两个表的结果按 product_type 字段分组计数.
 
 ```sql
--- 保留重复行
-SELECT product_id, product_name
-FROM product
-
-UNION ALL
-
-SELECT product_id, product_name
-FROM product2;
+    -- 保留重复行
+    SELECT product_id, product_name
+    FROM product
+    
+    UNION ALL
+    
+    SELECT product_id, product_name
+    FROM product2;
 ```
 
 查询结果如下:  
@@ -146,15 +146,15 @@ FROM product2;
 参考答案
 
 ```sql
-SELECT * 
-FROM product 
-WHERE sale_price < 1000
-
-UNION ALL
-
-SELECT * 
-FROM product 
-WHERE sale_price > 1.5 * purchase_price
+    SELECT * 
+    FROM product 
+    WHERE sale_price < 1000
+    
+    UNION ALL
+    
+    SELECT * 
+    FROM product 
+    WHERE sale_price > 1.5 * purchase_price
 ```
 
 #### 4.1.2.4 [扩展阅读]bag 模型与 set 模型
@@ -176,11 +176,11 @@ Bag 是和 set 类似的一种数学结构, 不一样的地方在于: bag 里面
 通常来说, 我们会把类型完全一致, 并且代表相同属性的列使用 UNION 合并到一起显示, 但有时候, 即使数据类型不完全相同, 也会通过隐式类型转换来将两个类型不同的列放在一列里显示, 例如字符串和数值类型:
 
 ```sql
-SELECT product_id, product_name, '1'
-FROM product
-UNION
-SELECT product_id, product_name,sale_price
-FROM product2;
+    SELECT product_id, product_name, '1'
+    FROM product
+    UNION
+    SELECT product_id, product_name,sale_price
+    FROM product2;
 ```
 
 上述查询能够正确执行, 得到如下结果:  
@@ -194,11 +194,11 @@ FROM product2;
 例如, 以下代码可以正确执行, 说明时间日期类型和字符串, 数值以及缺失值均能兼容.
 
 ```sql
-SELECT SYSDATE(), SYSDATE(), SYSDATE()
-
-UNION
-
-SELECT 'chars', 123,  null
+    SELECT SYSDATE(), SYSDATE(), SYSDATE()
+    
+    UNION
+    
+    SELECT 'chars', 123,  null
 ```
 
 上述代码的查询结果:  
@@ -212,13 +212,13 @@ SELECT 'chars', 123,  null
 虽然集合的交运算在 SQL 标准中已经出现多年了, 然而很遗憾的是, 截止到 MySQL 8.0 版本, MySQL 仍然不支持 INTERSECT 操作.
 
 ```sql
-SELECT product_id, product_name
-FROM product
-
-INTERSECT
-
-SELECT product_id, product_name
-FROM product2
+    SELECT product_id, product_name
+    FROM product
+    
+    INTERSECT
+    
+    SELECT product_id, product_name
+    FROM product2
 ```
 
 > 错误代码：1064  
@@ -250,11 +250,11 @@ MySQL 8.0 还不支持 表的减法运算符 EXCEPT. 不过, 借助第六章学�
 找出只存在于 product 表但不存在于 product2 表的商品.
 
 ```sql
--- 使用 IN 子句的实现方法
-SELECT * 
-FROM product
-WHERE product_id NOT IN (SELECT product_id 
-                            FROM product2)
+    -- 使用 IN 子句的实现方法
+    SELECT * 
+    FROM product
+    WHERE product_id NOT IN (SELECT product_id 
+                                FROM product2)
 ```
 
 #### 4.1.4.2 EXCEPT 与 NOT 谓词
@@ -270,13 +270,13 @@ WHERE product_id NOT IN (SELECT product_id
 参考答案:
 
 ```sql
-SELECT * 
-FROM product
-WHERE sale_price > 2000 
-   AND product_id NOT IN (
-        SELECT product_id 
-        FROM product 
-        WHERE sale_price < 1.3*purchase_price)
+    SELECT * 
+    FROM product
+    WHERE sale_price > 2000 
+       AND product_id NOT IN (
+            SELECT product_id 
+            FROM product 
+            WHERE sale_price < 1.3*purchase_price)
 ```
 
 #### 4.1.4.3 EXCEPT ALL 与 bag 的差
@@ -304,10 +304,10 @@ WHERE sale_price > 2000
 参考答案
 
 ```sql
-SELECT * 
-FROM product
-WHERE sale_price > 1.5 * purchase_price 
-   AND sale_price < 1500
+    SELECT * 
+    FROM product
+    WHERE sale_price > 1.5 * purchase_price 
+       AND sale_price < 1500
 ```
 
 ### 4.1.5 对称差
@@ -327,18 +327,18 @@ WHERE sale_price > 1.5 * purchase_price
 **参考答案:**
 
 ```sql
--- 使用 NOT IN 实现两个表的差集
-SELECT * 
-FROM product
-WHERE product_id NOT IN (
-    SELECT product_id FROM product2)
-
-UNION
-
-SELECT * 
-FROM product2
-WHERE product_id NOT IN (
-    SELECT product_id FROM product)
+    -- 使用 NOT IN 实现两个表的差集
+    SELECT * 
+    FROM product
+    WHERE product_id NOT IN (
+        SELECT product_id FROM product2)
+    
+    UNION
+    
+    SELECT * 
+    FROM product2
+    WHERE product_id NOT IN (
+        SELECT product_id FROM product)
 ```
 
 #### 4.1.5.1 借助并集和差集迂回实现交集运算 INTERSECT
@@ -368,8 +368,8 @@ SQL 中的连结有多种分类方法, 我们这里使用最基础的内连结�
 内连结的语法格式是:
 
 ```sql
--- 内连结
-FROM <tb_1> INNER JOIN <tb_2> ON <condition(s)>
+    -- 内连结
+    FROM <tb_1> INNER JOIN <tb_2> ON <condition(s)>
 ```
 
 其中 INNER 关键词表示使用了内连结, 至于内连结的涵义, 目前暂时可以不必细究.  
@@ -408,16 +408,16 @@ FROM <tb_1> INNER JOIN <tb_2> ON <condition(s)>
 按照内连结的语法, 在 FROM 子句中使用 INNER JOIN 将两张表连接起来, 并为 ON 子句指定连结条件为 `shop_product.product_id=product.product_id`, 就得到了如下的查询语句:
 
 ```sql
-SELECT SP.shop_id
-       ,SP.shop_name
-       ,SP.product_id
-       ,P.product_name
-       ,P.product_type
-       ,P.sale_price
-       ,SP.quantity
-FROM shop_product AS SP
-INNER JOIN product AS P
-ON SP.product_id = P.product_id;
+    SELECT SP.shop_id
+           ,SP.shop_name
+           ,SP.product_id
+           ,P.product_name
+           ,P.product_type
+           ,P.sale_price
+           ,SP.quantity
+    FROM shop_product AS SP
+    INNER JOIN product AS P
+    ON SP.product_id = P.product_id;
 ```
 
 在上述查询中, 我们分别为两张表指定了简单的别名, 这种操作在使用连结时是非常常见的, 通过别名会让我们在编写查询时少打很多字, 并且更重要的是, 会让查询语句看起来更加简洁.  
@@ -434,7 +434,7 @@ ON SP.product_id = P.product_id;
 之前的 FROM 子句中只有一张表, 而这次我们同时使用了 shopproduct 和 product 两张表, 使用关键字 INNER JOIN 就可以将两张表连结在一起了:
 
 ```sql
-FROM shop_product AS SP INNER JOIN product AS P
+    FROM shop_product AS SP INNER JOIN product AS P
 ```
 
 **要点二: 必须使用 ON 子句来指定连结条件.**
@@ -462,20 +462,20 @@ ON 子句是专门用来指定连结条件的, 我们在上述查询的 ON 之�
 第一种增加 WEHRE 子句的方式, 就是把上述查询作为子查询, 用括号封装起来, 然后在外层查询增加筛选条件.
 
 ```sql
-SELECT *
-FROM (-- 第一步查询的结果
-        SELECT SP.shop_id
-               ,SP.shop_name
-               ,SP.product_id
-               ,P.product_name
-               ,P.product_type
-               ,P.sale_price
-               ,SP.quantity
-         FROM shop_product AS SP
-         INNER JOIN product AS P
-            ON SP.product_id = P.product_id) AS STEP1
-WHERE shop_name = '东京'
-    AND product_type = '衣服' ;
+    SELECT *
+    FROM (-- 第一步查询的结果
+            SELECT SP.shop_id
+                   ,SP.shop_name
+                   ,SP.product_id
+                   ,P.product_name
+                   ,P.product_type
+                   ,P.sale_price
+                   ,SP.quantity
+             FROM shop_product AS SP
+             INNER JOIN product AS P
+                ON SP.product_id = P.product_id) AS STEP1
+    WHERE shop_name = '东京'
+        AND product_type = '衣服' ;
 ```
 
 还记得我们学习子查询时的认识吗? 子查询的结果其实也是一张表, 只不过是一张虚拟的表, 它并不真实存在于数据库中, 只是数据库中其他表经过筛选, 聚合等查询操作后得到的一个 "视图".  
@@ -484,18 +484,18 @@ WHERE shop_name = '东京'
 但实际上, 如果我们熟知 WHERE 子句将在 FROM 子句之后执行, 也就是说, 在做完 INNER JOIN … ON 得到一个新表后, 才会执行 WHERE 子句, 那么就得到标准的写法:
 
 ```sql
-SELECT  SP.shop_id
-       ,SP.shop_name
-       ,SP.product_id
-       ,P.product_name
-       ,P.product_type
-       ,P.sale_price
-       ,SP.quantity
-FROM shopproduct AS SP
-INNER JOIN product AS P
-    ON SP.product_id = P.product_id
-WHERE SP.shop_name = '东京'
-   AND P.product_type = '衣服' ;
+    SELECT  SP.shop_id
+           ,SP.shop_name
+           ,SP.product_id
+           ,P.product_name
+           ,P.product_type
+           ,P.sale_price
+           ,SP.quantity
+    FROM shopproduct AS SP
+    INNER JOIN product AS P
+        ON SP.product_id = P.product_id
+    WHERE SP.shop_name = '东京'
+       AND P.product_type = '衣服' ;
 ```
 
 我们首先给出上述查询的执行顺序:  
@@ -507,41 +507,41 @@ WHERE SP.shop_name = '东京'
 此外, 一种不是很常见的做法是, 还可以将 WHERE 子句中的条件直接添加在 ON 子句中, 这时候 ON 子句后最好用括号将连结条件和筛选条件括起来.
 
 ```sql
-SELECT SP.shop_id
-       ,SP.shop_name
-       ,SP.product_id
-       ,P.product_name
-       ,P.product_type
-       ,P.sale_price
-       ,SP.quantity
-FROM shop_product AS SP
-INNER JOIN product AS P
-    ON (SP.product_id = P.product_id
-   AND SP.shop_name = '东京'
-   AND P.product_type = '衣服') ;
+    SELECT SP.shop_id
+           ,SP.shop_name
+           ,SP.product_id
+           ,P.product_name
+           ,P.product_type
+           ,P.sale_price
+           ,SP.quantity
+    FROM shop_product AS SP
+    INNER JOIN product AS P
+        ON (SP.product_id = P.product_id
+       AND SP.shop_name = '东京'
+       AND P.product_type = '衣服') ;
 ```
 ![dyUNfr](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/dyUNfr.png)
 但上述这种把筛选条件和连结条件都放在 ON 子句的写法, 不是太容易阅读, 不建议大家使用.  
 另外, 先连结再筛选的标准写法的执行顺序是, 两张完整的表做了连结之后再做筛选, 如果要连结多张表, 或者需要做的筛选比较复杂时, 在写 SQL 查询时会感觉比较吃力. 在结合 WHERE 子句使用内连结的时候, 我们也可以更改任务顺序, 并采用任务分解的方法, 先分别在两个表使用 WHERE 进行筛选, 然后把上述两个子查询连结起来.
 
 ```sql
-SELECT SP.shop_id
-       ,SP.shop_name
-       ,SP.product_id
-       ,P.product_name
-       ,P.product_type
-       ,P.sale_price
-       ,SP.quantity
-FROM (-- 子查询 1: 从 shopproduct 表筛选出东京商店的信息
-        SELECT *
-        FROM shop_product
-        WHERE shop_name = '东京' ) AS SP
-INNER JOIN -- 子查询 2: 从 product 表筛选出衣服类商品的信息
-    (SELECT *
-     FROM product
-     WHERE product_type = '衣服') AS P
-
-ON SP.product_id = P.product_id;
+    SELECT SP.shop_id
+           ,SP.shop_name
+           ,SP.product_id
+           ,P.product_name
+           ,P.product_type
+           ,P.sale_price
+           ,SP.quantity
+    FROM (-- 子查询 1: 从 shopproduct 表筛选出东京商店的信息
+            SELECT *
+            FROM shop_product
+            WHERE shop_name = '东京' ) AS SP
+    INNER JOIN -- 子查询 2: 从 product 表筛选出衣服类商品的信息
+        (SELECT *
+         FROM product
+         WHERE product_type = '衣服') AS P
+    
+    ON SP.product_id = P.product_id;
 ```
 ![Jc7ngf](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/Jc7ngf.png)
 先分别在两张表里做筛选, 把复杂的筛选条件按表分拆, 然后把筛选结果 (作为表) 连接起来, 避免了写复杂的筛选条件, 因此这种看似复杂的写法, 实际上整体的逻辑反而非常清晰. 在写查询的过程中, 首先要按照最便于自己理解的方式来写, 先把问题解决了, 再思考优化的问题.  
@@ -555,44 +555,44 @@ ON SP.product_id = P.product_id;
 ![zo6faK](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/zo6faK.jpg)
 
 ```sql
--- 参考答案 1-- 不使用子查询
-SELECT  SP.shop_id,
+    -- 参考答案 1-- 不使用子查询
+    SELECT  SP.shop_id,
+            SP.shop_name,
+            SP.product_id,
+            P.product_name,
+            P.product_type,
+            P.purchase_price
+    FROM shopproduct  AS SP 
+    
+    INNER JOIN product AS P 
+    
+    ON SP.product_id = P.product_id
+    
+    WHERE P.product_type = '衣服';
+```
+
+```sql
+    -- 参考答案 2-- 使用子查询
+    
+    SELECT  
+        SP.shop_id,
         SP.shop_name,
         SP.product_id,
         P.product_name,
         P.product_type,
         P.purchase_price
-FROM shopproduct  AS SP 
-
-INNER JOIN product AS P 
-
-ON SP.product_id = P.product_id
-
-WHERE P.product_type = '衣服';
-```
-
-```sql
--- 参考答案 2-- 使用子查询
-
-SELECT  
-    SP.shop_id,
-    SP.shop_name,
-    SP.product_id,
-    P.product_name,
-    P.product_type,
-    P.purchase_price
-FROM shopproduct AS SP 
-
-INNER JOIN -- 从 product 表找出衣服类商品的信息
-  (SELECT 
-      product_id, 
-      product_name, 
-      product_type, 
-      purchase_price
-    FROM product	
-    WHERE product_type = '衣服') AS P 
+    FROM shopproduct AS SP 
     
-ON SP.product_id = P.product_id;
+    INNER JOIN -- 从 product 表找出衣服类商品的信息
+      (SELECT 
+          product_id, 
+          product_name, 
+          product_type, 
+          purchase_price
+        FROM product	
+        WHERE product_type = '衣服') AS P 
+        
+    ON SP.product_id = P.product_id;
 ```
 
 上述第二种写法虽然包含了子查询, 并且代码行数更多, 但由于每一层的目的很明确, 更适于阅读, 并且在外连结的情形下, 还能避免错误使用 WHERE 子句导致外连结失效的问题, 相关示例见后文中的 "**结合 WHERE 子句使用外连结**" 章节.  
@@ -604,16 +604,16 @@ ON SP.product_id = P.product_id;
 ![4kwdmD](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/4kwdmD.jpg)
 
 ```sql
--- 参考答案
--- 不使用子查询
-SELECT SP.*, P.*
-FROM shopproduct AS SP 
-
-INNER JOIN product AS P 
-
-ON SP.product_id = P.product_id
-
-WHERE shop_id = '000A' AND sale_price < 2000;
+    -- 参考答案
+    -- 不使用子查询
+    SELECT SP.*, P.*
+    FROM shopproduct AS SP 
+    
+    INNER JOIN product AS P 
+    
+    ON SP.product_id = P.product_id
+    
+    WHERE shop_id = '000A' AND sale_price < 2000;
 ```
 
 #### 4.2.1.3 结合 GROUP BY 子句使用内连结
@@ -629,17 +629,17 @@ WHERE shop_id = '000A' AND sale_price < 2000;
 每个商店中, 售价最高的商品的售价分别是多少?
 
 ```sql
--- 参考答案
-SELECT SP.shop_id
-      ,SP.shop_name
-      ,MAX(P.sale_price) AS max_price
-FROM shopproduct AS SP
-
-INNER JOIN product AS P
-
-ON SP.product_id = P.product_id
-
-GROUP BY SP.shop_id,SP.shop_name
+    -- 参考答案
+    SELECT SP.shop_id
+          ,SP.shop_name
+          ,MAX(P.sale_price) AS max_price
+    FROM shopproduct AS SP
+    
+    INNER JOIN product AS P
+    
+    ON SP.product_id = P.product_id
+    
+    GROUP BY SP.shop_id,SP.shop_name
 ```
 
 **思考题:** 上述查询得到了每个商品售价最高的商品, 但并不知道售价最高的商品是哪一个. 如何获取每个商店里售价最高的商品的名称和售价?
@@ -655,84 +655,84 @@ GROUP BY SP.shop_id,SP.shop_name
 回忆第五章第三节关联子查询中的问题: 找出每个商品种类当中售价高于该类商品的平均售价的商品. 当时我们是使用关联子查询来实现的.
 
 ```sql
-SELECT 
-    product_type, 
-    product_name, 
-    sale_price
-FROM product AS P1
-
-WHERE sale_price > (SELECT AVG(sale_price)
-                    FROM product AS P2
-                    WHERE P1.product_type = P2.product_type
-                    GROUP BY product_type);
+    SELECT 
+        product_type, 
+        product_name, 
+        sale_price
+    FROM product AS P1
+    
+    WHERE sale_price > (SELECT AVG(sale_price)
+                        FROM product AS P2
+                        WHERE P1.product_type = P2.product_type
+                        GROUP BY product_type);
 ```
 
 使用内连结同样可以解决这个问题:  
 首先, 使用 GROUP BY 按商品类别分类计算每类商品的平均价格.
 
 ```sql
-SELECT  
-        product_type,
-        AVG(sale_price) AS avg_price 
-FROM product 
-GROUP BY product_type;
+    SELECT  
+            product_type,
+            AVG(sale_price) AS avg_price 
+    FROM product 
+    GROUP BY product_type;
 ```
 
 接下来, 将上述查询与表 product 按照 product_type (商品种类)进行内连结.
 
 ```sql
-SELECT  P1.product_id,
-        P1.product_name,
-        P1.product_type,
-        P1.sale_price,
-        P2.avg_price
-FROM product AS P1 
-
-INNER JOIN 
-   (SELECT product_type,AVG(sale_price) AS avg_price 
-    FROM product 
-    GROUP BY product_type) AS P2 
-
-ON P1.product_type = P2.product_type;
+    SELECT  P1.product_id,
+            P1.product_name,
+            P1.product_type,
+            P1.sale_price,
+            P2.avg_price
+    FROM product AS P1 
+    
+    INNER JOIN 
+       (SELECT product_type,AVG(sale_price) AS avg_price 
+        FROM product 
+        GROUP BY product_type) AS P2 
+    
+    ON P1.product_type = P2.product_type;
 ```
 
 最后, 增加 WHERE 子句, 找出那些售价高于该类商品平均价格的商品. 完整的代码如下:
 
 ```sql
-SELECT  P1.product_id,
-        P1.product_name,
-        P1.product_type,
-        P1.sale_price,
-        P2.avg_price
-FROM product AS P1
-
-INNER JOIN (SELECT product_type,AVG(sale_price) AS avg_price 
-            FROM product 
-            GROUP BY product_type) AS P2 
-
-ON P1.product_type = P2.product_type
-
-WHERE P1.sale_price > P2.avg_price;
+    SELECT  P1.product_id,
+            P1.product_name,
+            P1.product_type,
+            P1.sale_price,
+            P2.avg_price
+    FROM product AS P1
+    
+    INNER JOIN (SELECT product_type,AVG(sale_price) AS avg_price 
+                FROM product 
+                GROUP BY product_type) AS P2 
+    
+    ON P1.product_type = P2.product_type
+    
+    WHERE P1.sale_price > P2.avg_price;
 ```
 
 仅仅从代码量上来看, 上述方法似乎比关联子查询更加复杂, 但这并不意味着这些代码更难理解. 通过上述分析, 很容易发现上述代码的逻辑实际上更符合我们的思路, 因此尽管看起来复杂, 但思路实际上更加清晰.  
 作为对比, 试分析如下代码:
 
 ```sql
-SELECT  
-        P1.product_id,
-        P1.product_name,
-        P1.product_type,
-        P1.sale_price,AVG(P2.sale_price) AS avg_price
-FROM product AS P1
-
-INNER JOIN product AS P2
-
-ON P1.product_type=P2.product_type
-
-WHERE P1.sale_price > P2.sale_price
-
-GROUP BY P1.product_id,P1.product_name,P1.product_type,P1.sale_price,P2.product_type
+    SELECT  
+            P1.product_id,
+            P1.product_name,
+            P1.product_type,
+            P1.sale_price,AVG(P2.sale_price) AS avg_price
+    FROM product AS P1
+    
+    INNER JOIN product AS P2
+    
+    ON P1.product_type=P2.product_type
+    
+    WHERE P1.sale_price > P2.sale_price
+    
+    GROUP BY P1.product_id,P1.product_name,P1.product_type,P1.sale_price,P2.product_type
 ```
 
 虽然去掉了子查询, 查询语句的层次更少, 而且代码行数似乎更少, 但实际上这个方法可能更加难以写出来. 在实践中, 一定要按照易于让自己理解的思路去分层次写代码, 而不要花费很长世间写出一个效率可能更高但自己和他人理解起来难度更高的代码.
@@ -742,7 +742,7 @@ GROUP BY P1.product_id,P1.product_name,P1.product_type,P1.sale_price,P2.product_
 自然连结并不是区别于内连结和外连结的第三种连结, 它其实是内连结的一种特例–当两个表进行自然连结时, 会按照两个表中都包含的列名来进行等值内连结, 此时无需使用 ON 来指定连接条件.
 
 ```sql
-SELECT *  FROM shopproduct NATURAL JOIN product
+    SELECT *  FROM shopproduct NATURAL JOIN product
 ```
 
 上述查询得到的结果, 会把两个表的公共列 (这里是 product_id, 可以有多个公共列) 放在第一列, 然后按照两个表的顺序和表中列的顺序, 将两个表中的其他列都罗列出来.  
@@ -754,29 +754,29 @@ SELECT *  FROM shopproduct NATURAL JOIN product
 试写出与上述自然连结等价的内连结.
 
 ```sql
--- 参考答案
-SELECT  
-        SP.product_id,
-        SP.shop_id,
-        SP.shop_name,
-        SP.quantity,
-        P.product_name,
-        P.product_type,
-        P.sale_price,
-        P.purchase_price,
-        P.regist_date  
-
-FROM shopproduct AS SP 
-
-INNER JOIN product AS P 
-
-ON SP.product_id = P.product_id
+    -- 参考答案
+    SELECT  
+            SP.product_id,
+            SP.shop_id,
+            SP.shop_name,
+            SP.quantity,
+            P.product_name,
+            P.product_type,
+            P.sale_price,
+            P.purchase_price,
+            P.regist_date  
+    
+    FROM shopproduct AS SP 
+    
+    INNER JOIN product AS P 
+    
+    ON SP.product_id = P.product_id
 ```
 
 使用自然连结还可以求出两张表或子查询的公共部分, 例如教材中 7-1 选取表中公共部分–INTERSECT 一节中的问题: 求表 product 和表 product2 中的公共部分, 也可以用自然连结来实现:
 
 ```sql
-SELECT * FROM product NATURAL JOIN product2
+    SELECT * FROM product NATURAL JOIN product2
 ```
 
 ![ZQlPHy](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/ZQlPHy.jpg)
@@ -786,18 +786,18 @@ SELECT * FROM product NATURAL JOIN product2
 如果我们将查询语句进行修改:
 
 ```sql
-SELECT * 
-FROM (SELECT 
-        product_id, 
-        product_name
-      FROM product ) AS A 
-      
-NATURAL JOIN 
-
-   (SELECT 
-        product_id, 
-        product_name 
-    FROM product2) AS B;
+    SELECT * 
+    FROM (SELECT 
+            product_id, 
+            product_name
+          FROM product ) AS A 
+          
+    NATURAL JOIN 
+    
+       (SELECT 
+            product_id, 
+            product_name 
+        FROM product2) AS B;
 ```
 
 那就可以得到正确的结果了:  
@@ -811,17 +811,17 @@ NATURAL JOIN
 练习题: 使用内连结求 product 表和 product2 表的交集.
 
 ```sql
-SELECT P1.*
-
-FROM product AS P1
-
-INNER JOIN product2 AS P2
-
-ON (P1.product_id  = P2.product_id
-   AND P1.product_name = P2.product_name
-   AND P1.product_type = P2.product_type
-   AND P1.sale_price   = P2.sale_price
-   AND P1.regist_date  = P2.regist_date)
+    SELECT P1.*
+    
+    FROM product AS P1
+    
+    INNER JOIN product2 AS P2
+    
+    ON (P1.product_id  = P2.product_id
+       AND P1.product_name = P2.product_name
+       AND P1.product_type = P2.product_type
+       AND P1.sale_price   = P2.sale_price
+       AND P1.regist_date  = P2.regist_date)
 ```
 
 得到如下结果  
@@ -834,12 +834,12 @@ ON (P1.product_id  = P2.product_id
 如果我们仅仅用 product_id 来进行连结:
 
 ```sql
-SELECT P1.*
-
-FROM product AS P1
-
-INNER JOIN product2 AS P2
-    ON P1.product_id = P2.product_id
+    SELECT P1.*
+    
+    FROM product AS P1
+    
+    INNER JOIN product2 AS P2
+        ON P1.product_id = P2.product_id
 ```
 
 查询结果:  
@@ -860,12 +860,14 @@ INNER JOIN product2 AS P2
 三种外连结的对应语法分别为:
 
 ```sql
--- 左连结     
-FROM <tb_1> LEFT  OUTER JOIN <tb_2> ON <condition(s)>
--- 右连结     
-FROM <tb_1> RIGHT OUTER JOIN <tb_2> ON <condition(s)>
--- 全外连结
-FROM <tb_1> FULL  OUTER JOIN <tb_2> ON <condition(s)>
+    -- 左连结     
+    FROM <tb_1> LEFT  OUTER JOIN <tb_2> ON <condition(s)>
+    
+    -- 右连结     
+    FROM <tb_1> RIGHT OUTER JOIN <tb_2> ON <condition(s)>
+    
+    -- 全外连结
+    FROM <tb_1> FULL  OUTER JOIN <tb_2> ON <condition(s)>
 ```
 
 #### 4.2.2.1 左连结与右连接
@@ -881,18 +883,18 @@ FROM <tb_1> FULL  OUTER JOIN <tb_2> ON <condition(s)>
 使用左连结的代码如下(注意区别于书上的右连结):
 
 ```sql
-SELECT 
-        SP.shop_id,
-        SP.shop_name,
-        SP.product_id,
-        P.product_name,
-        P.sale_price
-        
-FROM product AS P
-
-LEFT OUTER JOIN shopproduct AS SP
-
-ON SP.product_id = P.product_id;
+    SELECT 
+            SP.shop_id,
+            SP.shop_name,
+            SP.product_id,
+            P.product_name,
+            P.sale_price
+            
+    FROM product AS P
+    
+    LEFT OUTER JOIN shopproduct AS SP
+    
+    ON SP.product_id = P.product_id;
 
 ```
 
@@ -951,20 +953,20 @@ ON SP.product_id = P.product_id;
 按照 "结合 WHERE 子句使用内连结" 的思路, 我们很自然会写出如下代码
 
 ```sql
-SELECT 
-        P.product_id,
-        P.product_name,
-        P.sale_price,
-        SP.shop_id,
-        SP.shop_name,
-        SP.quantity
-FROM product AS P
-
-LEFT OUTER JOIN shopproduct AS SP
-
-ON SP.product_id = P.product_id
-
-WHERE quantity< 50
+    SELECT 
+            P.product_id,
+            P.product_name,
+            P.sale_price,
+            SP.shop_id,
+            SP.shop_name,
+            SP.quantity
+    FROM product AS P
+    
+    LEFT OUTER JOIN shopproduct AS SP
+    
+    ON SP.product_id = P.product_id
+    
+    WHERE quantity< 50
 ```
 
 然而不幸的是, 得到的却是如下的结果:  
@@ -983,21 +985,21 @@ WHERE quantity< 50
 我们把上述思路写成 SQL 查询语句:
 
 ```sql
-SELECT 
-        P.product_id,
-        P.product_name,
-        P.sale_price,
-        SP.shop_id,
-        SP.shop_name,
-        SP.quantity 
-FROM product AS P
-
-LEFT OUTER JOIN-- 先筛选 quantity<50 的商品
-   (SELECT *
-    FROM shopproduct
-    WHERE quantity < 50 ) AS SP
-     
-ON SP.product_id = P.product_id
+    SELECT 
+            P.product_id,
+            P.product_name,
+            P.sale_price,
+            SP.shop_id,
+            SP.shop_name,
+            SP.quantity 
+    FROM product AS P
+    
+    LEFT OUTER JOIN-- 先筛选 quantity<50 的商品
+       (SELECT *
+        FROM shopproduct
+        WHERE quantity < 50 ) AS SP
+         
+    ON SP.product_id = P.product_id
 ```
 
 得到的结果如下:  
@@ -1024,74 +1026,74 @@ ON SP.product_id = P.product_id
 建表语句如下:
 
 ```sql
-CREATE TABLE Inventoryproduct(
-    inventory_id       CHAR(4) NOT NULL,
-    product_id         CHAR(4) NOT NULL,
-    inventory_quantity INTEGER NOT NULL,
-    PRIMARY KEY (inventory_id, product_id));
+    CREATE TABLE Inventoryproduct(
+        inventory_id       CHAR(4) NOT NULL,
+        product_id         CHAR(4) NOT NULL,
+        inventory_quantity INTEGER NOT NULL,
+        PRIMARY KEY (inventory_id, product_id));
 ```
 
 然后插入一些数据:
 
 ```sql
---- DML：插入数据
-START TRANSACTION;
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P001', '0001', 0);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P001', '0002', 120);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P001', '0003', 200);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P001', '0004', 3);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P001', '0005', 0);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P001', '0006', 99);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P001', '0007', 999);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P001', '0008', 200);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P002', '0001', 10);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P002', '0002', 25);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P002', '0003', 34);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P002', '0004', 19);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P002', '0005', 99);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P002', '0006', 0);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P002', '0007', 0);
-INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
-VALUES ('P002', '0008', 18);
-COMMIT;
+    --- DML：插入数据
+    START TRANSACTION;
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P001', '0001', 0);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P001', '0002', 120);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P001', '0003', 200);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P001', '0004', 3);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P001', '0005', 0);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P001', '0006', 99);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P001', '0007', 999);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P001', '0008', 200);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P002', '0001', 10);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P002', '0002', 25);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P002', '0003', 34);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P002', '0004', 19);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P002', '0005', 99);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P002', '0006', 0);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P002', '0007', 0);
+    INSERT INTO Inventoryproduct (inventory_id, product_id, inventory_quantity)
+    VALUES ('P002', '0008', 18);
+    COMMIT;
 ```
 
 接下来, 我们根据上表及 shopproduct 表和 product 表, 使用内连接找出每个商店都有那些商品, 每种商品的库存总量分别是多少.
 
 ```sql
-SELECT 
-        SP.shop_id,
-        SP.shop_name,
-        SP.product_id,
-        P.product_name,
-        P.sale_price,
-        IP.inventory_quantity
-FROM shopproduct AS SP
-
-INNER JOIN product AS P
-
-ON SP.product_id = P.product_id
-
-INNER JOIN Inventoryproduct AS IP
-
-ON SP.product_id = IP.product_id
-
-WHERE IP.inventory_id = 'P001';
+    SELECT 
+            SP.shop_id,
+            SP.shop_name,
+            SP.product_id,
+            P.product_name,
+            P.sale_price,
+            IP.inventory_quantity
+    FROM shopproduct AS SP
+    
+    INNER JOIN product AS P
+    
+    ON SP.product_id = P.product_id
+    
+    INNER JOIN Inventoryproduct AS IP
+    
+    ON SP.product_id = IP.product_id
+    
+    WHERE IP.inventory_id = 'P001';
 ```
 
 得到如下结果
@@ -1109,22 +1111,22 @@ WHERE IP.inventory_id = 'P001';
 例如,
 
 ```sql
-SELECT 
-        P.product_id,
-        P.product_name,
-        P.sale_price,
-        SP.shop_id,
-        SP.shop_name,
-        IP.inventory_quantity
-FROM product AS P
-
-LEFT OUTER JOIN shopproduct AS SP
-
-ON SP.product_id = P.product_id
-
-LEFT OUTER JOIN Inventoryproduct AS IP
-
-ON SP.product_id = IP.product_id
+    SELECT 
+            P.product_id,
+            P.product_name,
+            P.sale_price,
+            SP.shop_id,
+            SP.shop_name,
+            IP.inventory_quantity
+    FROM product AS P
+    
+    LEFT OUTER JOIN shopproduct AS SP
+    
+    ON SP.product_id = P.product_id
+    
+    LEFT OUTER JOIN Inventoryproduct AS IP
+    
+    ON SP.product_id = IP.product_id
 ```
 
 查询结果  
@@ -1145,29 +1147,29 @@ ON SP.product_id = IP.product_id
 希望对 product 表中的商品按照售价赋予排名. 一个从集合论出发, 使用自左连结的思路是, 对每一种商品, 找出售价不低于它的所有商品, 然后对售价不低于它的商品使用 COUNT 函数计数. 例如, 对于价格最高的商品,
 
 ```sql
-SELECT  
-        product_id,
-        product_name,
-        sale_price,
-        COUNT(p2_id) AS rank_id
-FROM (-- 使用自左连结对每种商品找出价格不低于它的商品
-        SELECT 
-                P1.product_id,
-                P1.product_name,
-                P1.sale_price,
-                P2.product_id AS P2_id,
-                P2.product_name AS P2_name,
-                P2.sale_price AS P2_price 
-        FROM product AS P1 
-        
-        LEFT OUTER JOIN product AS P2 
-        
-        ON P1.sale_price <= P2.sale_price 
-        ) AS X
-        
-GROUP BY product_id, product_name, sale_price
-
-ORDER BY rank_id;
+    SELECT  
+            product_id,
+            product_name,
+            sale_price,
+            COUNT(p2_id) AS rank_id
+    FROM (-- 使用自左连结对每种商品找出价格不低于它的商品
+            SELECT 
+                    P1.product_id,
+                    P1.product_name,
+                    P1.sale_price,
+                    P2.product_id AS P2_id,
+                    P2.product_name AS P2_name,
+                    P2.sale_price AS P2_price 
+            FROM product AS P1 
+            
+            LEFT OUTER JOIN product AS P2 
+            
+            ON P1.sale_price <= P2.sale_price 
+            ) AS X
+            
+    GROUP BY product_id, product_name, sale_price
+    
+    ORDER BY rank_id;
 ```
 
 注 1: COUNT 函数的参数是列名时, 会忽略该列中的缺失值, 参数为 * 时则不忽略缺失值.  
@@ -1187,20 +1189,20 @@ ORDER BY rank_id;
 首先, 按照题意, 对每种商品使用自左连结, 找出比该商品售价价格更低或相等的商品
 
 ```sql
-SELECT  
-        P1.product_id,
-        P1.product_name,
-        P1.sale_price,
-        P2.product_id AS P2_id,
-        P2.product_name AS P2_name,
-        P2.sale_price AS P2_price 
-FROM product AS P1 
-
-LEFT OUTER JOIN product AS P2 
-
-ON P1.sale_price >= P2.sale_price
-
-ORDER BY P1.sale_price,P1.product_id
+    SELECT  
+            P1.product_id,
+            P1.product_name,
+            P1.sale_price,
+            P2.product_id AS P2_id,
+            P2.product_name AS P2_name,
+            P2.sale_price AS P2_price 
+    FROM product AS P1 
+    
+    LEFT OUTER JOIN product AS P2 
+    
+    ON P1.sale_price >= P2.sale_price
+    
+    ORDER BY P1.sale_price,P1.product_id
 ```
 
 查看查询结果  
@@ -1213,27 +1215,27 @@ ORDER BY P1.sale_price,P1.product_id
 下一步, 按照 P1.product_Id 分组, 对 P2_price 求和:
 
 ```sql
-SELECT  
-        product_id,
-        product_name,
-        sale_price,
-        SUM(P2_price) AS cum_price 
-        
-FROM (SELECT  
-            P1.product_id,
-            P1.product_name,
-            P1.sale_price,
-            P2.product_id AS P2_id,
-            P2.product_name AS P2_name,
-            P2.sale_price AS P2_price 
-        FROM product AS P1 
-        LEFT OUTER JOIN product AS P2 
-        ON P1.sale_price >= P2.sale_price
-        ORDER BY P1.sale_price,P1.product_id ) AS X
-        
-GROUP BY product_id, product_name, sale_price
-
-ORDER BY sale_price,product_id;
+    SELECT  
+            product_id,
+            product_name,
+            sale_price,
+            SUM(P2_price) AS cum_price 
+            
+    FROM (SELECT  
+                P1.product_id,
+                P1.product_name,
+                P1.sale_price,
+                P2.product_id AS P2_id,
+                P2.product_name AS P2_name,
+                P2.sale_price AS P2_price 
+            FROM product AS P1 
+            LEFT OUTER JOIN product AS P2 
+            ON P1.sale_price >= P2.sale_price
+            ORDER BY P1.sale_price,P1.product_id ) AS X
+            
+    GROUP BY product_id, product_name, sale_price
+    
+    ORDER BY sale_price,product_id;
 ```
 
 得到的查询结果为:  
@@ -1250,30 +1252,30 @@ ORDER BY sale_price,product_id;
 3. 如果 A 和 B 两种商品售价相等, 则建立连结时, 如果 P1.A 和 P2.A,P2.B 建立了连接, 则 P1.B 不再和 P2.A 建立连结, 因此根据上述约束条件, 利用 ID 的有序性, 进一步将上述查询改写为:
 
 ```sql
-SELECT	
-        product_id, 
-        product_name, 
-        sale_price,
-        SUM(P2_price) AS cum_price 
-FROM
-        (SELECT  
-                P1.product_id, 
-                P1.product_name, 
-                P1.sale_price,
-                P2.product_id AS P2_id,
-                P2.product_name AS P2_name,
-                P2.sale_price AS P2_price 
-        FROM product AS P1 
-        
-        LEFT OUTER JOIN product AS P2 
-        ON ((P1.sale_price > P2.sale_price)
-            OR (P1.sale_price = P2.sale_price 
-            AND P1.product_id<=P2.product_id))
-            ORDER BY P1.sale_price,P1.product_id) AS X
+    SELECT	
+            product_id, 
+            product_name, 
+            sale_price,
+            SUM(P2_price) AS cum_price 
+    FROM
+            (SELECT  
+                    P1.product_id, 
+                    P1.product_name, 
+                    P1.sale_price,
+                    P2.product_id AS P2_id,
+                    P2.product_name AS P2_name,
+                    P2.sale_price AS P2_price 
+            FROM product AS P1 
             
-GROUP BY product_id, product_name, sale_price
-
-ORDER BY sale_price,cum_price;
+            LEFT OUTER JOIN product AS P2 
+            ON ((P1.sale_price > P2.sale_price)
+                OR (P1.sale_price = P2.sale_price 
+                AND P1.product_id<=P2.product_id))
+                ORDER BY P1.sale_price,P1.product_id) AS X
+                
+    GROUP BY product_id, product_name, sale_price
+    
+    ORDER BY sale_price,cum_price;
 ```
 
 这次结果就正确了.  
@@ -1289,28 +1291,26 @@ ORDER BY sale_price,cum_price;
 交叉连结的语法有如下几种形式:
 
 ```sql
--- 1. 使用关键字 CROSS JOIN 显式地进行交叉连结
-
-SELECT 
-        SP.shop_id,
-        SP.shop_name,
-        SP.product_id,
-        P.product_name,
-        P.sale_price
-        
-FROM shopproduct AS SP
-
-CROSS JOIN product AS P;
- 
---2. 使用逗号分隔两个表, 并省略 ON 子句
-
-SELECT 
-        SP.shop_id,
-        SP.shop_name,
-        SP.product_id,
-        P.product_name,
-        P.sale_price
-FROM shopproduct AS SP ,product AS P;
+    -- 1. 使用关键字 CROSS JOIN 显式地进行交叉连结
+    SELECT 
+            SP.shop_id,
+            SP.shop_name,
+            SP.product_id,
+            P.product_name,
+            P.sale_price
+            
+    FROM shopproduct AS SP
+    
+    CROSS JOIN product AS P;
+     
+    --2. 使用逗号分隔两个表, 并省略 ON 子句
+    SELECT 
+            SP.shop_id,
+            SP.shop_name,
+            SP.product_id,
+            P.product_name,
+            P.sale_price
+    FROM shopproduct AS SP ,product AS P;
 ```
 
 请大家试着执行一下以上语句.  
@@ -1329,11 +1329,11 @@ FROM shopproduct AS SP ,product AS P;
 例如, 对于 shopproduct 表和 product 表, 首先建立笛卡尔乘积:
 
 ```sql
-SELECT SP.*, P.*
-
-FROM shopproduct AS SP 
-
-CROSS JOIN product AS P;
+    SELECT SP.*, P.*
+    
+    FROM shopproduct AS SP 
+    
+    CROSS JOIN product AS P;
 ```
 
 查询结果的一部分如下:  
@@ -1343,13 +1343,13 @@ CROSS JOIN product AS P;
 然后对上述笛卡尔乘积增加筛选条件 **SP.product_id=P.product_id**, 就得到了和内连结一致的结果:
 
 ```sql
-SELECT SP.*, P.*
-
-FROM shopproduct AS SP 
-
-CROSS JOIN product AS P
-
-WHERE SP.product_id = P.product_id;
+    SELECT SP.*, P.*
+    
+    FROM shopproduct AS SP 
+    
+    CROSS JOIN product AS P
+    
+    WHERE SP.product_id = P.product_id;
 ```
 
 查询结果如下:  
@@ -1365,15 +1365,15 @@ WHERE SP.product_id = P.product_id;
 试执行以下查询, 并将查询结果与内连结一节第一个例子的结果做对比.
 
 ```sql
-SELECT 
-        SP.shop_id,
-        SP.shop_name,
-        SP.product_id,
-        P.product_name,
-        P.sale_price
-FROM shopproduct AS SP
-CROSS JOIN product AS P
-WHERE SP.product_id = P.product_id;
+    SELECT 
+            SP.shop_id,
+            SP.shop_name,
+            SP.product_id,
+            P.product_name,
+            P.sale_price
+    FROM shopproduct AS SP
+    CROSS JOIN product AS P
+    WHERE SP.product_id = P.product_id;
 ```
 
 我们发现, 这两个语句得到的结果是相同的.  
@@ -1385,14 +1385,14 @@ SQL 是一门特定语法及过时语法非常多的语言, 虽然之前本书�
 使用过时语法的内连结（结果与代码清单 7-9 相同）
 
 ```sql
-SELECT 
-        SP.shop_id,
-        SP.shop_name,
-        SP.product_id,
-        P.product_name,
-        P.sale_price
-FROM shopproduct SP,product P
-WHERE SP.product_id = P.product_id AND SP.shop_id = '000A';
+    SELECT 
+            SP.shop_id,
+            SP.shop_name,
+            SP.product_id,
+            P.product_name,
+            P.sale_price
+    FROM shopproduct SP,product P
+    WHERE SP.product_id = P.product_id AND SP.shop_id = '000A';
 ```
 
 这样的书写方式所得到的结果与标准语法完全相同, 并且这样的语法可以在所有的 DBMS 中执行, 并不能算是特定的语法, 只是过时了而已.  

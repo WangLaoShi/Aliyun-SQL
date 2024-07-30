@@ -129,14 +129,14 @@ _[]_ 中的内容可以省略。
 举个🌰:
 
 ```sql
-SELECT 
-        product_name,
-        product_type,
-        sale_price,
-        RANK() OVER (
-            PARTITION BY product_type
-            ORDER BY sale_price) AS ranking
-FROM product
+    SELECT 
+            product_name,
+            product_type,
+            sale_price,
+            RANK() OVER (
+                PARTITION BY product_type
+                ORDER BY sale_price) AS ranking
+    FROM product
 ```
 
 得到的结果是:
@@ -158,12 +158,12 @@ FROM product
 window_name：给窗口指定一个别名，如果SQL中涉及的窗口较多，采用别名可以看起来更清晰易读。上面例子中如果指定一个别名w，则改写如下：
 
 ```sql
-select * from(
-    select row_number()over w as row_num,
-    order_id,user_no,amount,create_date
-    from order_tab
-    WINDOW w AS (partition by user_no order by amount desc)
-)t ;
+    select * from(
+        select row_number()over w as row_num,
+        order_id,user_no,amount,create_date
+        from order_tab
+        WINDOW w AS (partition by user_no order by amount desc)
+    ) t ;
 ```
 
 * partition子句：窗口按照那些字段进行分组，窗口函数在不同的分组上分别执行。上面的例子就按照用户id进行了分组。在每个用户id上，按照order by的顺序分别生成从1开始的顺序编号。
@@ -208,17 +208,17 @@ select * from(
     运行以下代码：
 
 ```sql
-SELECT  
-        product_name,
-        product_type,
-        sale_price,
-        RANK() OVER (
-            ORDER BY sale_price) AS ranking,
-        DENSE_RANK() OVER (
-            ORDER BY sale_price) AS dense_ranking ,
-        ROW_NUMBER() OVER (
-            ORDER BY sale_price) AS row_num
-FROM product
+    SELECT  
+            product_name,
+            product_type,
+            sale_price,
+            RANK() OVER (
+                ORDER BY sale_price) AS ranking,
+            DENSE_RANK() OVER (
+                ORDER BY sale_price) AS dense_ranking ,
+            ROW_NUMBER() OVER (
+                ORDER BY sale_price) AS row_num
+    FROM product
 ```
 
 ![mJkouF](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/mJkouF.jpg)
@@ -231,13 +231,13 @@ FROM product
 运行以下代码：
 
 ```sql
-SELECT  
-        product_id,
-        product_name,
-        sale_price,
-        SUM(sale_price) OVER (ORDER BY product_id) AS current_sum,
-        AVG(sale_price) OVER (ORDER BY product_id) AS current_avg  
-FROM product;
+    SELECT  
+            product_id,
+            product_name,
+            sale_price,
+            SUM(sale_price) OVER (ORDER BY product_id) AS current_sum,
+            AVG(sale_price) OVER (ORDER BY product_id) AS current_avg  
+    FROM product;
 ```
 
 ![cV2SWL](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/cV2SWL.jpg)
@@ -289,11 +289,11 @@ FROM product;
 语法
 
 ```sql
-<窗口函数> OVER (ORDER BY <排序用列名>
-                 ROWS n PRECEDING )  
-
-<窗口函数> OVER (ORDER BY <排序用列名>
-                 ROWS BETWEEN n PRECEDING AND n FOLLOWING)
+    <窗口函数> OVER (ORDER BY <排序用列名>
+                     ROWS n PRECEDING )  
+    
+    <窗口函数> OVER (ORDER BY <排序用列名>
+                     ROWS BETWEEN n PRECEDING AND n FOLLOWING)
 ```
 
 PRECEDING（“之前”）， 将框架指定为 “截止到之前 n 行”，加上自身行
@@ -305,18 +305,18 @@ BETWEEN 1 PRECEDING AND 1 FOLLOWING，将框架指定为 “之前 1 行” + �
 执行以下代码：
 
 ```sql
-SELECT  
-        product_id,
-        product_name,
-        sale_price,
-        AVG(sale_price) OVER (
-                            ORDER BY product_id
-                               ROWS 2 PRECEDING) AS moving_avg,
-        AVG(sale_price) OVER (
-                            ORDER BY product_id
-                               ROWS BETWEEN 1 PRECEDING 
-                                        AND 1 FOLLOWING) AS moving_avg  
-FROM product
+    SELECT  
+            product_id,
+            product_name,
+            sale_price,
+            AVG(sale_price) OVER (
+                                ORDER BY product_id
+                                   ROWS 2 PRECEDING) AS moving_avg,
+            AVG(sale_price) OVER (
+                                ORDER BY product_id
+                                   ROWS BETWEEN 1 PRECEDING 
+                                            AND 1 FOLLOWING) AS moving_avg  
+    FROM product
 ```
 
 **执行结果：**
@@ -343,15 +343,15 @@ ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING：
 常规的 GROUP BY 只能得到每个分类的小计，有时候还需要计算分类的合计，可以用 ROLLUP 关键字。
 
 ```sql
-SELECT  
-        product_type,
-        regist_date,
-        SUM(sale_price) AS sum_price
-        
-FROM product
-
-GROUP BY product_type, regist_date 
-WITH ROLLUP;
+    SELECT  
+            product_type,
+            regist_date,
+            SUM(sale_price) AS sum_price
+            
+    FROM product
+    
+    GROUP BY product_type, regist_date 
+    WITH ROLLUP;
 ```
 
 得到的结果为：
@@ -410,7 +410,6 @@ cume_dist()
 
 应用场景：大于等于当前订单金额的订单比例有多少。
 
-
 SQL如下：
 
 ![vfY56p](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/vfY56p.jpg)
@@ -447,8 +446,6 @@ SQL如下：
 
 ## 5.9 其他函数
 
- 
-
 其他函数——nth_value(expr,n)/nfile(n）。
 
 nth_value(expr,n)
@@ -461,13 +458,11 @@ SQL如下：
 
 ![hNPTk0](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/hNPTk0.jpg)
 
-
 nfile(n)
 
 用途：将分区中的有序数据分为n个桶，记录桶号。
 
 应用场景：将每个用户的订单按照订单金额分成3组。
-
 
 SQL如下：
 
@@ -482,12 +477,12 @@ SQL如下：
 请说出针对本章中使用的 product（商品）表执行如下 SELECT 语句所能得到的结果。
 
 ```sql
-SELECT  
-        product_id,
-        product_name,
-        sale_price,
-        MAX(sale_price) OVER (ORDER BY product_id) AS Current_max_price
-FROM product
+    SELECT  
+            product_id,
+            product_name,
+            sale_price,
+            MAX(sale_price) OVER (ORDER BY product_id) AS Current_max_price
+    FROM product
 ```
 
 > 按照 product_id 升序排列，计算出截⾄当前⾏的最⾼ sale_price 。
@@ -499,27 +494,26 @@ FROM product
 如下两种⽅法都可以实现：
 
 ```sql
--- ①regist_date为NULL时，显示“1年1⽉1⽇”。 
-
-SELECT 
-    regist_date, 
-    product_name, 
-    sale_price, 
-    SUM(sale_price) OVER (
-        ORDER BY COALESCE(regist_date, CAST('0001-01-01' AS DATE))) AS current_sum_price 
-
-FROM Product;
-
--- ②regist_date为NULL时，将该记录放在最前显示。 
-
-SELECT 
-    regist_date, 
-    product_name, 
-    sale_price, 
-    SUM(sale_price) OVER (
-        ORDER BY regist_date NULLS FIRST) AS current_sum_price 
-FROM Product;
-
+    -- ①regist_date为NULL时，显示“1年1⽉1⽇”。 
+    
+    SELECT 
+        regist_date, 
+        product_name, 
+        sale_price, 
+        SUM(sale_price) OVER (
+            ORDER BY COALESCE(regist_date, CAST('0001-01-01' AS DATE))) AS current_sum_price 
+    
+    FROM Product;
+    
+    -- ②regist_date为NULL时，将该记录放在最前显示。 
+    
+    SELECT 
+        regist_date, 
+        product_name, 
+        sale_price, 
+        SUM(sale_price) OVER (
+            ORDER BY regist_date NULLS FIRST) AS current_sum_price 
+    FROM Product;
 ```
 
 ### 练习 5.3
