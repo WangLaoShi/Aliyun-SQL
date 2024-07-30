@@ -46,7 +46,7 @@ FROM
 
 参考以下图解 - 
 
-![3eIaPk](https://oss.images.shujudaka.com/uPic/3eIaPk.jpg)
+![3eIaPk](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/3eIaPk.jpg)
 
 DISTINCT 子句用于在连接分组之前消除组中的重复值。
 
@@ -95,7 +95,7 @@ FROM
 
 执行上面查询语句，得到以下结果 - 
 
-![w6Nnk9](https://oss.images.shujudaka.com/uPic/w6Nnk9.jpg)
+![w6Nnk9](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/w6Nnk9.jpg)
 
 然而，一些客户位于同一个国家。要删除重复的国家 / 地区名称，请将 `DISTINCT` 子句添加到函数，如下查询：
 
@@ -219,7 +219,7 @@ ORDER BY firstName , lastname;
 
 上面查询语句，执行结果如下 - 
 
-![dMCcZF](https://oss.images.shujudaka.com/uPic/dMCcZF.jpg)
+![dMCcZF](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/dMCcZF.jpg)
 
 如下所示的结果更容易阅读。
 

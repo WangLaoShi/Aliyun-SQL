@@ -18,7 +18,7 @@ END IF;
 
 以下流程图演示了 `IF` 语句的执行过程：
 
-![x3cEt6](https://oss.images.shujudaka.com/uPic/x3cEt6.jpg)
+![x3cEt6](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/x3cEt6.jpg)
 
 ### MySQL IF ELSE 语句
 
@@ -34,7 +34,7 @@ END IF;
 
 以下流程图说明了 `IF ELSE` 语句的执行过程：
 
-![er4EYO](https://oss.images.shujudaka.com/uPic/er4EYO.jpg)
+![er4EYO](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/er4EYO.jpg)
 
 ## MySQL IF ELSEIF ELSE 语句
 
@@ -53,7 +53,7 @@ END IF;
 
 如果表达式 (`expression`) 求值为 `TRUE`，则 `IF` 分支中的语句 (`statements`) 将执行；如果表达式求值为 `FALSE`，则如果 `elseif_expression` 的计算结果为 `TRUE`，MySQL 将执行 `elseif-expression`，否则执行 `ELSE` 分支中的 `else-statements` 语句。具体流程如下 - 
 
-![L2FxOS](https://oss.images.shujudaka.com/uPic/L2FxOS.jpg)
+![L2FxOS](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/L2FxOS.jpg)
 
 ## MySQL IF 语句示例
 
@@ -92,6 +92,6 @@ END$$
 
 以下流程图演示了确定客户级别的逻辑 - 
 
-![zfUaDa](https://oss.images.shujudaka.com/uPic/zfUaDa.jpg)
+![zfUaDa](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/zfUaDa.jpg)
 
 在本教程中，您已经学会了如何使用 MySQL `IF` 语句根据条件执行一个 SQL 代码块。

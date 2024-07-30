@@ -205,7 +205,7 @@ WHERE
 
 执行查询分析，得到以下结果 - 
 
-![P8ei6S](https://oss.images.shujudaka.com/uPic/P8ei6S.jpg)
+![P8ei6S](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/P8ei6S.jpg)
 
 下面使用 `INSTR` 函数执行查询分析，以进行比较，参考以下语句 - 
 
@@ -220,7 +220,7 @@ WHERE
 
 执行查询分析，得到以下结果 - 
 
-![6ydg6X](https://oss.images.shujudaka.com/uPic/6ydg6X.jpg)
+![6ydg6X](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/6ydg6X.jpg)
 
 即使 `productname` 列具有索引，`INSTR` 函数也执行表扫描。 这是因为 MySQL 不能对 `INSTR` 函数的语义做任何假设，MySQL 可以利用其对 `LIKE` 运算符语义的理解。
 

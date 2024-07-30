@@ -97,7 +97,7 @@
 
 下面是一个窗口函数的简单例子：
 
-![BT7D11](https://oss.images.shujudaka.com/uPic/BT7D11.jpg)
+![BT7D11](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/BT7D11.jpg)
 
 按照功能划分，可以把MySQL支持的窗口函数分为如下几类：
 
@@ -172,7 +172,7 @@ select * from(
 
 * frame子句：frame是当前分区的一个子集，子句用来定义子集的规则，通常用来作为滑动窗口使用。比如要根据每个订单动态计算包括本订单和按时间顺序前后两个订单的平均订单金额，则可以设置如下frame子句来创建滑动窗口：
 
- ![WDHDUk](https://oss.images.shujudaka.com/uPic/WDHDUk.jpg)
+ ![WDHDUk](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/WDHDUk.jpg)
 
 从结果可以看出，order_id为5订单属于边界值，没有前一行，因此平均订单金额为(900+800)/2=850；order_id为4的订单前后都有订单，所以平均订单金额为（900+800+300）/3=666.6667，以此类推就可以得到一个基于滑动窗口的动态平均订单值。此例中，窗口函数用到了传统的聚合函数avg()，用来计算动态的平均值。
 
@@ -374,7 +374,7 @@ ROLLUP 可以对多列进行汇总求小计和合计。
 
 使用场景：希望查询每个用户订单金额最高的前三个订单
 
-![BQMIpR](https://oss.images.shujudaka.com/uPic/BQMIpR.jpg)
+![BQMIpR](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/BQMIpR.jpg)
 
 此时可以使用ROW_NUMBER()函数按照用户进行分组并按照订单日期进行由大到小排序，最后查找每组中序号<=3的记录。
 
@@ -384,7 +384,7 @@ ROLLUP 可以对多列进行汇总求小计和合计。
 
 上面例子我们稍微改一下，需要查询不同用户的订单中，按照订单金额进行排序，显示出相应的排名序号，SQL中用row_number() / rank() / dense_rank()分别显示序号，我们看一下有什么差别：
 
-![XPkXyH](https://oss.images.shujudaka.com/uPic/XPkXyH.jpg)
+![XPkXyH](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/XPkXyH.jpg)
 
 上面红色粗体显示了三个函数的区别，row_number()在amount都是800的两条记录上随机排序，但序号按照1、2递增，后面amount为600的的序号继续递增为3，中间不会产生序号间隙；rank()/dense_rank()则把amount为800的两条记录序号都设置为1，但后续amount为600的需要则分别设置为3（rank）和2（dense_rank）。即rank（）会产生序号相同的记录，同时可能产生序号间隙；而dense_rank（）也会产生序号相同的记录，但不会产生序号间隙。
 
@@ -400,7 +400,7 @@ percent_rank()
 
 其中，rank为RANK()函数产生的序号，rows为当前窗口的记录总行数。
 
-![Fxt9WQ](https://oss.images.shujudaka.com/uPic/Fxt9WQ.jpg)
+![Fxt9WQ](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/Fxt9WQ.jpg)
 
 从结果看出，percent列按照公式(rank - 1) / (rows - 1)带入rank值（row_num列）和rows值（user_no为‘001’和‘002’的值均为5）。
 
@@ -413,7 +413,7 @@ cume_dist()
 
 SQL如下：
 
-![vfY56p](https://oss.images.shujudaka.com/uPic/vfY56p.jpg)
+![vfY56p](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/vfY56p.jpg)
 
 列cume显示了预期的数据分布结果。
 
@@ -427,7 +427,7 @@ SQL如下：
 
 SQL如下：
 
-![nsPbBE](https://oss.images.shujudaka.com/uPic/nsPbBE.jpg)
+![nsPbBE](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/nsPbBE.jpg)
 
 内层SQL先通过lag函数得到上一次订单的日期，外层SQL再将本次订单和上次订单日期做差得到时间间隔diff。
 
@@ -441,7 +441,7 @@ SQL如下：
 
 SQL如下：
 
-![dtJk8H](https://oss.images.shujudaka.com/uPic/dtJk8H.jpg)
+![dtJk8H](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/dtJk8H.jpg)
 
 结果和预期一致，比如order_id为4的记录，first_amount和last_amount分别记录了用户‘001’截止到时间2018-01-03 00:00:00为止，第一条订单金额100和最后一条订单金额800，注意这里是按时间排序的最早订单和最晚订单，并不是最小金额和最大金额订单。
 
@@ -459,7 +459,7 @@ nth_value(expr,n)
 
 SQL如下：
 
-![hNPTk0](https://oss.images.shujudaka.com/uPic/hNPTk0.jpg)
+![hNPTk0](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/hNPTk0.jpg)
 
 
 nfile(n)
@@ -471,7 +471,7 @@ nfile(n)
 
 SQL如下：
 
-![73v7aH](https://oss.images.shujudaka.com/uPic/73v7aH.jpg)
+![73v7aH](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/73v7aH.jpg)
 
 此函数在数据分析中应用较多，比如由于数据量大，需要将数据平均分配到N个并行的进程分别计算，此时就可以用NFILE(N)对数据进行分组，由于记录数不一定被N整除，所以数据不一定完全平均，然后将不同桶号的数据再分配。
 

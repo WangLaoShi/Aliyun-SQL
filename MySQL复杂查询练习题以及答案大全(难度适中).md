@@ -43,15 +43,15 @@ INSERT INTO SALGRADE VALUES (5,3001,9999);
 
 ### dept表：
 
-![VzL2Xy](https://oss.images.shujudaka.com/uPic/VzL2Xy.jpg)
+![VzL2Xy](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/VzL2Xy.jpg)
 
 ### emp表：
 
-![TdStju](https://oss.images.shujudaka.com/uPic/TdStju.png)
+![TdStju](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/TdStju.png)
 
 ### salgrade表：
 
-![ExOzoP](https://oss.images.shujudaka.com/uPic/ExOzoP.jpg)
+![ExOzoP](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/ExOzoP.jpg)
 
 ## 测试题
 

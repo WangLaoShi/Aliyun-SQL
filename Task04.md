@@ -345,7 +345,7 @@ WHERE product_id NOT IN (
 
 通过观察集合运算的文氏图, 我们发现, 两个集合的交可以看作是两个集合的并去掉两个集合的对称差。
 
-![huNmct](https://oss.images.shujudaka.com/uPic/huNmct.png)
+![huNmct](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/huNmct.png)
 
 ## 4.2 连结(JOIN)
 

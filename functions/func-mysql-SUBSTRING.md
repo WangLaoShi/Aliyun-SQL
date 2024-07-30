@@ -16,7 +16,7 @@ SUBSTRING(string FROM position);
 
 如果`position`为正，则`SUBSTRING`函数从字符串的开始处提取子字符串。请参阅以下字符串。
 
-![fx1U87](https://oss.images.shujudaka.com/uPic/fx1U87.jpg)
+![fx1U87](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/fx1U87.jpg)
 
 例如，要从“`MySQL SUBSTRING`”字符串中获取子字符串：“`SUBSTRING`”，子串的位置必须从`7`开始，如以下SELECT语句：
 
@@ -76,7 +76,7 @@ SUBSTRING(string FROM position FOR length);
 
 例如，要从`"MySQL SUBSTRING"`获取`"MySQL"`，请使用以下语句：
 
-![ZGZwYF](https://oss.images.shujudaka.com/uPic/ZGZwYF.jpg)
+![ZGZwYF](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/ZGZwYF.jpg)
 
 ```sql
 mysql> SELECT SUBSTRING('MySQL SUBSTRING',1,5);

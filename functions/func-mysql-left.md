@@ -200,6 +200,6 @@ FROM
 
 执行上面代码，得到以下结果 - 
 
-![bp8YMP](https://oss.images.shujudaka.com/uPic/bp8YMP.jpg)
+![bp8YMP](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/bp8YMP.jpg)
 
 在本教程中，您已经学习了如何使用`LEFT`函数返回具有指定长度的字符串的左侧部分。

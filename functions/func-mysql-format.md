@@ -155,7 +155,7 @@ ORDER BY stock_value;
 
 执行上面查询语句，得到以下结果(部分) - 
 
-![jGIVWN](https://oss.images.shujudaka.com/uPic/jGIVWN.jpg)
+![jGIVWN](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/jGIVWN.jpg)
 
 要以数字方式对 `stock_value` 值进行排序，请将表达式放在 `ORDER BY` 子句中，如下所示：
 

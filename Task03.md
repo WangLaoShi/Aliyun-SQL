@@ -126,7 +126,7 @@ FROM product,shop_product
 WHERE product.product_id = shop_product.product_id;
 ```
 
-![bPSvEa](https://oss.images.shujudaka.com/uPic/bPSvEa.png)
+![bPSvEa](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/bPSvEa.png)
 
 创建的视图如下图所示
 
