@@ -1,9 +1,7 @@
-21分钟MySQL基础入门
+21 分钟 MySQL 基础入门
 ===
 
 为什么只需要21分钟呢？因为在我们大天朝有句话叫做三七二十一，你可以不管三七二十一开始使用 `MySQL` 及快速的方式入门 `MySQL`。其实21分钟把下面语句执行一遍是没有问题的，要理解的话估计不止21分钟，对于初学者来说只需满足自己需求可以增删改查等简易的维护即可。
-
-<!--idoc:ignore:start-->
 
 目录
 ---
@@ -63,7 +61,6 @@
 - [参考手册](#参考手册)
 
 <!-- /TOC -->
-<!--idoc:ignore:end-->
 
 ## 开始使用
 
@@ -71,7 +68,7 @@
 
 MySQL 为关系型数据库(Relational Database Management System)，一个关系型数据库由一个或数个表格组成, 如图所示的一个表格：
 
-<img alt="21分钟MySQL基础入门" height="221" src="img/data.jpg">
+![QTcJZh](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/QTcJZh.png)
 
 - `表头(header)`: 每一列的名称;
 - `列(col)`: 具有相同数据类型的数据的集合;
@@ -92,7 +89,7 @@ mysql> show global variables like 'port'; # 查看MySQL端口号
 
 ### 创建数据库
 
-对于表的操作需要先进入库`use 库名;`
+对于表的操作需要先进入库，可以使用 `use 库名;` 选择要操作的数据库。
 
 ```sql
 -- 创建一个名为 samp_db 的数据库，数据库字符编码指定为 gbk
@@ -107,18 +104,19 @@ delete from 表名;       -- 清空表中记录
 
 ### 创建数据库表
 
-> `CREATE TABLE 语法` 语句用于从表中选取数据。 
-> ```sql
-> CREATE TABLE 表名称 (
->   列名称1  数据类型,
->   列名称2  数据类型,
->   列名称3  数据类型,
->   ....
-> );
-> ```
+`CREATE TABLE 语法` 语句用于创建数据库表。 
 
 ```sql
--- 如果数据库中存在user_accounts表，就把它从数据库中drop掉
+CREATE TABLE 表名称 (
+  列名称1  数据类型,
+  列名称2  数据类型,
+  列名称3  数据类型,
+  ....
+);
+```
+
+```sql
+-- 如果数据库中存在user_accounts表，就把它从数据库中 drop 掉
 DROP TABLE IF EXISTS `user_accounts`;
 CREATE TABLE `user_accounts` (
   `id`             int(100) unsigned NOT NULL AUTO_INCREMENT primary key,
@@ -147,11 +145,14 @@ COMMENT='用户表信息';
 
 ### 删除数据库表
 
-> `DROP/TRUNCATE TABLE 语法` 语句用于删除数据库中的现有表。
-> ```sql
-> DROP TABLE 表名称;     -- 用于删除数据库中的现有表。
-> TRUNCATE TABLE 表名称; -- 用于删除表内的数据，但不删除表本身。
-> ```
+`DROP TABLE 语法` 语句用于删除数据库中的现有表。
+
+`TRUNCATE TABLE 语法` 语句用于清空数据库中的现有表。
+
+```sql
+DROP TABLE 表名称;     -- 用于删除数据库中的现有表。
+TRUNCATE TABLE 表名称; -- 用于删除表内的数据，但不删除表本身。
+```
 
 ```sql
 -- 删除现有表 Shippers：
@@ -164,11 +165,12 @@ TRUNCATE TABLE Shippers;
 
 ### SELECT
  
-> `SELECT 语法` 语句用于从表中选取数据。 
-> ```sql
-> SELECT 列名称1, 列名称2, ... FROM 表名称;
-> SELECT * FROM 表名称;
-> ```
+`SELECT 语法` 语句用于从表中选取数据。 
+
+```sql
+SELECT 列名称1, 列名称2, ... FROM 表名称;
+SELECT * FROM 表名称;
+```
 
 ```sql
 -- 从 Customers 表中选择 CustomerName 和 City 列：
@@ -193,10 +195,11 @@ SELECT tag, COUNT(tag) from news GROUP BY tag order by convert(tag using utf8) c
 
 ### UPDATE
  
-> `Update 语法` 语句用于修改表中的数据。
-> ```sql
-> UPDATE 表名称 SET 列名称1 = 值1, 列名称2 = 值2, ... WHERE 条件;
-> ```
+`Update 语法` 语句用于修改表中的数据。
+
+```sql
+UPDATE 表名称 SET 列名称1 = 值1, 列名称2 = 值2, ... WHERE 条件;
+```
 
 ```sql 
 -- update语句设置字段值为另一个结果取出来的字段
@@ -209,11 +212,12 @@ UPDATE `orders` set title='这里是标题' WHERE id=1;
 
 ### INSERT
  
-> `INSERT 语法` 用于向表格中插入新的行。 
-> ```sql
-> INSERT INTO 表名称 (列名称1, 列名称2, 列名称3, ...) VALUES (值1, 值2, 值3, ...);
-> INSERT INTO 表名称 VALUES (值1, 值2, 值3, ...);
-> ```
+`INSERT 语法` 用于向表格中插入新的行。 
+
+```sql
+INSERT INTO 表名称 (列名称1, 列名称2, 列名称3, ...) VALUES (值1, 值2, 值3, ...);
+INSERT INTO 表名称 VALUES (值1, 值2, 值3, ...);
+```
 
 ```sql
 -- 向表 Persons 插入一条字段 LastName = JSLite 字段 Address = shanghai
