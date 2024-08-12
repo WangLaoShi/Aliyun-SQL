@@ -1,5 +1,3 @@
-本笔记为阿里云天池龙珠计划 SQL 训练营的学习内容，链接为：https://tianchi.aliyun.com/specials/promotion/aicampsql
-
 # Task01：初识数据库与 SQL
 
 [TOC]

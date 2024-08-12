@@ -1,5 +1,3 @@
-本笔记为阿里云天池龙珠计划 SQL 训练营的学习内容，链接为：https://tianchi.aliyun.com/specials/promotion/aicampsql
-
 # Task00：为什么要学习 SQL
 
 学习 SQL 的意义，就在于你学会以后，将掌握数据分析应聘中的 SQL 能力，并找到一份数据分析工作。
