@@ -4,7 +4,7 @@
 
 Student(SId,Sname,Sage,Ssex) 
 
---SId 学生编号,Sname 学生姓名,Sage 出生年月,Ssex 学生性别
+--SId 学生编号，Sname 学生姓名,Sage 出生年月,Ssex 学生性别
 
 --2.课程表  
 

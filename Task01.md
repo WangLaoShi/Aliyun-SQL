@@ -14,7 +14,7 @@ SQL 训练营页面地址：[https://tianchi.aliyun.com/specials/promotion/aicam
 
 ### 1.1 DBMS 的种类
 
-DBMS 主要通过数据的保存格式（数据库的种类）来进行分类，现阶段主要有以下 5 种类型.
+DBMS 主要通过数据的保存格式（数据库的种类）来进行分类，现阶段主要有以下 5 种类型。
 
 * 层次数据库（Hierarchical Database，HDB）
 * 关系数据库（Relational Database，RDB）
@@ -50,7 +50,7 @@ DBMS 主要通过数据的保存格式（数据库的种类）来进行分类，
 [阿里云 MySQL 服务器使用介绍.pdf](http://tianchi-media.oss-cn-beijing.aliyuncs.com/dragonball/SQL/other/%E9%98%BF%E9%87%8C%E4%BA%91MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D.pdf?spm=5176.21852664.0.0.459e2e40OvggyN&file=%E9%98%BF%E9%87%8C%E4%BA%91MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D.pdf)  
 
 **优点：** 操作使用方便，未来趋势（数据上云），导入、导出数据方便，运行速度快。  
-**缺点：** ~~需要付费购买，不过现在对开发者有优惠活动，基础版本 1 核 1G，存储空间 20G 的，目前优惠价半年只需 9.9 元，一杯奶茶钱不到。~~ 2023 年 01 月 02 日这个优惠已经取消掉了.
+**缺点：** ~~需要付费购买，不过现在对开发者有优惠活动，基础版本 1 核 1G，存储空间 20G 的，目前优惠价半年只需 9.9 元，一杯奶茶钱不到。~~ 2023 年 01 月 02 日这个优惠已经取消掉了。
 
 #### 1.3.2 本地 MySQL 环境搭建方法介绍
 
@@ -104,7 +104,7 @@ SQL 是结构化查询语言 (Structured Query Language) 的缩写。SQL 是为�
 
 <span style="color: rgb(255, 102, 0);">完全基于标准 SQL 的 RDBMS 很少，通常需要根据不同的 RDBMS 来编写特定的 SQL 语句，原则上，本课程介绍的是标准 SQL 的书写方式。</span>
 
-根据对 RDBMS 赋予的指令种类的不同，SQL 语句可以分为以下三类.
+根据对 RDBMS 赋予的指令种类的不同，SQL 语句可以分为以下三类。
 
 * DDL
 

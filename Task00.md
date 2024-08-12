@@ -20,15 +20,15 @@ Excel 对十万条以内的数据处理起来没有问题，但是大数据时�
 最常见的考 SQL 的方法给你一个虚拟的数据库表结构，然后让你按给出的条件查询出数据，并用手写的形式写出在纸上。所以面试前把常用的 SQL 语句记清楚就行了。
 
 
-## 如何购买一个可以使用的云数据库.
+## 如何购买一个可以使用的云数据库。
 
-通过 [网址](https://www.aliyun.com/minisite/goods?userCode=orje4xat&share_source=copy_link) 注册阿里云.
+通过 [网址](https://www.aliyun.com/minisite/goods?userCode=orje4xat&share_source=copy_link) 注册阿里云。
 
-1. 必须是新用户,新用户,新用户
-2. 用一个跟之前你登录阿里云不一样的账户.
-3. 完成实名认证.
+1. 必须是新用户，新用户，新用户
+2. 用一个跟之前你登录阿里云不一样的账户。
+3. 完成实名认证。
 
 ![2JQMIa](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/2JQMIa.png)
 
-也可以通过[链接](https://www.aliyun.com/database/dbfirstbuy)来注册.
+也可以通过[链接](https://www.aliyun.com/database/dbfirstbuy)来注册。
 
