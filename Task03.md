@@ -10,7 +10,9 @@
   SELECT stu_name FROM view_students_info;
 ```
 
-单从表面上看起来这个语句是和正常的从数据表中查询数据是完全相同的，但其实我们操作的是一个视图。所以从 SQL 的角度来说操作视图与操作表看起来是完全相同的，那么为什么还会有视图的存在呢？视图到底是什么？视图与表有什么不同呢？
+单从表面上看起来这个语句是和正常的从数据表中查询数据是完全相同的，但其实我们操作的是一个视图。
+
+所以从 SQL 的角度来说操作视图与操作表看起来是完全相同的，那么为什么还会有视图的存在呢？视图到底是什么？视图与表有什么不同呢？
 
 ### 3.1.1 什么是视图
 
@@ -40,10 +42,11 @@
 说了这么多视图与表的区别，下面我们就一起来看一下如何创建视图吧。创建视图的基本语法如下：
 
 ```sql
-  CREATE VIEW < 视图名称 >(< 列名 1>,< 列名 2>,...) AS <SELECT 语句 >
+  CREATE VIEW < 视图名称 >(< 列名 1>,< 列名 2>,...) 
+  AS <SELECT 语句 >
 ```
 
-其中 SELECT 语句需要书写在 AS 关键字之后。 SELECT 语句中列的排列顺序和视图中列的排列顺序相同， SELECT 语句中的第 1 列就是视图中的第 1 列， SELECT 语句中的第 2 列就是视图中的第 2 列，以此类推。而且视图的列名是在视图名称之后的列表中定义的。  
+其中 SELECT 语句需要书写在 AS 关键字之后。 SELECT 语句中列的排列顺序和视图中列的排列顺序相同，SELECT 语句中的第 1 列就是视图中的第 1 列，SELECT 语句中的第 2 列就是视图中的第 2 列，以此类推。而且视图的列名是在视图名称之后的列表中定义的。  
 需要注意的是视图名在数据库中需要是唯一的，不能与其他视图和表重名。
 
 视图不仅可以基于真实表，我们也可以在视图的基础上继续创建视图。
@@ -52,7 +55,7 @@
 
 图片来源：《SQL 基础教程第 2 版》
 
-虽然在视图上继续创建视图的语法没有错误，但是我们还是应该尽量避免这种操作。这是因为对多数 DBMS 来说， 多重视图会降低 SQL 的性能。
+<span style="color: rgb(255, 102, 0);">"虽然在视图上继续创建视图的语法没有错误，但是我们还是应该尽量避免这种操作。这是因为对多数 DBMS 来说，多重视图会降低 SQL 的性能。</span>
 
 * 注意事项
 
@@ -183,7 +186,9 @@
 * UNION 或 UNION ALL 运算符
 * FROM 子句中包含多个表
 
-视图归根结底还是从表派生出来的，因此，如果原表可以更新，那么视图中的数据也可以更新。反之亦然，如果视图发生了改变，而原表没有进行相应更新的话，就无法保证数据的一致性了。
+视图归根结底还是从表派生出来的，因此，如果原表可以更新，那么视图中的数据也可以更新。
+
+反之亦然，如果视图发生了改变，而原表没有进行相应更新的话，就无法保证数据的一致性了。
 
 * 更新视图
 
@@ -251,7 +256,7 @@
 
 ### 3.2.2 子查询和视图的关系
 
-子查询就是将用来定义视图的 SELECT 语句直接用于 FROM 子句当中。其中 AS studentSum 可以看作是子查询的名称，而且由于子查询是一次性的，所以**子查询不会像视图那样保存在存储介质中**， 而是在 SELECT 语句执行之后就消失了。
+子查询就是将用来定义视图的 SELECT 语句直接用于 FROM 子句当中。其中 AS studentSum 可以看作是子查询的名称，而且由于子查询是一次性的，所以**子查询不会像视图那样保存在存储介质中**，而是在 SELECT 语句执行之后就消失了。
 
 ### 3.2.3 嵌套子查询
 
@@ -261,8 +266,7 @@
   SELECT product_type, cnt_product
   FROM (SELECT *
         FROM (  
-                SELECT product_type, 
-                COUNT(*) AS cnt_product
+                SELECT product_type, COUNT(*) AS cnt_product
                 FROM product 
                 GROUP BY product_type
               ) AS productsum
@@ -271,12 +275,20 @@
 ```
 
 其中最内层的子查询我们将其命名为 productSum，这条语句根据 product_type 分组并查询个数，第二层查询中将个数为 4 的商品查询出来，最外层查询 product_type 和 cnt_product 两列。 
- 
-**虽然嵌套子查询可以查询出结果，但是随着子查询嵌套的层数的叠加，SQL 语句不仅会难以理解而且执行效率也会很差，所以要尽量避免这样的使用。**
+
+<span style="color: rgb(255, 102, 0);">"虽然嵌套子查询可以查询出结果，但是随着子查询嵌套的层数的叠加，SQL 语句不仅会难以理解而且执行效率也会很差，所以要尽量避免这样的使用。</span>
 
 ### 3.2.4 标量子查询
 
 标量就是单一的意思，那么标量子查询也就是单一的子查询，那什么叫做单一的子查询呢？
+
+**标量子查询的含义：**
+
+在 SQL 查询中，标量子查询可以用来：
+- **在 SELECT 语句中充当一个值**，将结果作为字段的一部分。
+- **在 WHERE 或 HAVING 子句中用作条件**，返回一个单一值用于条件判断。
+- **在计算表达式中充当操作数**，作为计算中的一部分参与运算。
+
 
 所谓单一就是要求我们执行的 SQL 语句只能返回一个值，也就是要返回表中具体的 **某一行的某一列**。例如我们有下面这样一张表
 
@@ -312,7 +324,7 @@ product_id | product_name | sale_price
 ```
 
 上面的这条语句首先后半部分查询出 product 表中的平均售价，前面的 SQL 语句在根据 WHERE 条件挑选出合适的商品。  
-由于标量子查询的特性，导致标量子查询不仅仅局限于 WHERE 子句中，通常任何可以使用单一值的位置都可以使用。也就是说， 能够使用常数或者列名的地方，无论是 SELECT 子句、GROUP BY 子句、HAVING 子句，还是 ORDER BY 子句，几乎所有的地方都可以使用。
+由于标量子查询的特性，导致标量子查询不仅仅局限于 WHERE 子句中，通常任何可以使用单一值的位置都可以使用。也就是说，能够使用常数或者列名的地方，无论是 SELECT 子句、GROUP BY 子句、HAVING 子句，还是 ORDER BY 子句，几乎所有的地方都可以使用。
 
 我们还可以这样使用标量子查询：
 
@@ -371,6 +383,7 @@ product_id | product_name | sale_price
 ```
 
 可以看出上面这两个语句的区别吗？  
+
 在第二条 SQL 语句也就是关联子查询中我们将外面的 product 表标记为 p1，将内部的 product 设置为 p2，而且通过 WHERE 语句连接了两个查询。
 
 但是如果刚接触的话一定会比较疑惑关联查询的执行过程，这里有一个 [博客](https://zhuanlan.zhihu.com/p/41844742) 讲的比较清楚。在这里我们简要的概括为：
@@ -391,7 +404,7 @@ product_id | product_name | sale_price
 
 创建出满足下述三个条件的视图（视图名称为 ViewPractice5_1）。使用 product（商品）表作为参照表，假设表中包含初始状态的 8 行数据。
 
-* 条件 1：销售单价大于等于 1000 日元。
+* 条件 1：销售单价大于等于 1000 元。
 * 条件 2：登记日期是 2009 年 9 月 20 日。
 * 条件 3：包含商品名称、销售单价和登记日期三列。
 
@@ -500,8 +513,8 @@ SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
 
 函数大致分为如下几类：
 
-* 算术函数    （用来进行数值计算的函数）
-* 字符串函数  （用来进行字符串操作的函数）
+* 算术函数      （用来进行数值计算的函数）
+* 字符串函数    （用来进行字符串操作的函数）
 * 日期函数     （用来进行日期操作的函数）
 * 转换函数     （用来转换数据类型和值的函数）
 * 聚合函数     （用来进行数据聚合的函数）
@@ -559,27 +572,6 @@ SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
   11 rows in set (0.00 sec)
 ```
 
-* ABS – 绝对值
-
-    语法：`ABS(数值)`
-    
-    ABS 函数用于计算一个数字的绝对值，表示一个数到原点的距离。
-    当 ABS 函数的参数为 `NULL` 时，返回值也是 `NULL`。
-
-* MOD – 求余数
-
-    语法：`MOD(被除数，除数)`
-    
-    MOD 是计算除法余数（求余）的函数，是 modulo 的缩写。小数没有余数的概念，只能对整数列求余数。
-    注意：主流的 DBMS 都支持 MOD 函数，只有 SQL Server 不支持该函数，其使用 `%` 符号来计算余数。
-
-* ROUND – 四舍五入
-
-    语法：`ROUND(对象数值，保留小数的位数)`
-    
-    ROUND 函数用来进行四舍五入操作。
-    注意：当参数 **保留小数的位数** 为变量时，可能会遇到错误，请谨慎使用变量。
-
 ```sql
   SELECT 
   m,
@@ -606,6 +598,23 @@ SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
   +----------+---------+------+------+---------+-----------+
   11 rows in set (0.08 sec)
 ```
+
+#### 常用 MySQL 数学函数
+
+| 函数    | 语法                             | 说明                                                         |
+|---------|----------------------------------|--------------------------------------------------------------|
+| **ABS** | `ABS(数值)`                      | 计算一个数字的**绝对值**，表示一个数到原点的距离。若参数为 `NULL`，返回值为 `NULL`。|
+| **MOD** | `MOD(被除数，除数)`               | 计算除法的余数，`MOD` 是 modulo 的缩写。注意：SQL Server 不支持此函数，使用 `%` 符号计算余数。|
+| **ROUND** | `ROUND(对象数值，保留小数的位数)` | 对数值进行**四舍五入**操作。注意：当**保留小数的位数**为变量时，可能会出现错误，请谨慎使用。|
+| **CEIL** | `CEIL(数值)`                     | 返回大于或等于给定数值的最小整数。                           |
+| **FLOOR** | `FLOOR(数值)`                    | 返回小于或等于给定数值的最大整数。                           |
+| **POW**  | `POW(底数, 指数)`                 | 返回底数的指数次方，即计算 `底数^指数`。                     |
+| **SQRT** | `SQRT(数值)`                     | 计算一个数的**平方根**。若数值为负，返回 `NULL`。            |
+| **PI**   | `PI()`                           | 返回圆周率常数 `π`，精确值为 `3.141592653589793`。             |
+| **RADIANS** | `RADIANS(角度)`                 | 将角度转换为弧度。                                           |
+| **DEGREES** | `DEGREES(弧度)`                | 将弧度转换为角度。                                           |
+| **LOG**  | `LOG(数值)`                      | 返回自然对数 `ln(x)`，即 `log_e(x)`。                        |
+| **LOG10** | `LOG10(数值)`                    | 返回以 10 为底的对数 `log10(x)`。                            |
 
 ### 3.3.2 字符串函数
 
@@ -668,7 +677,7 @@ SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
 
 * LOWER – 小写转换
 
-    LOWER 函数只能针对英文字母使用，它会将参数中的字符串全都转换为小写。该函数不适用于英文字母以外的场合，不影响原本就是小写的字符。 类似的， UPPER 函数用于大写转换。
+    LOWER 函数只能针对英文字母使用，它会将参数中的字符串全都转换为小写。该函数不适用于英文字母以外的场合，不影响原本就是小写的字符。 类似的，UPPER 函数用于大写转换。
 
 * REPLACE – 字符串的替换
 
@@ -684,7 +693,7 @@ SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
 
 * **（扩展内容）SUBSTRING_INDEX – 字符串按索引截取**
 
-    语法：`SUBSTRING_INDEX (原始字符串， 分隔符，n)`
+    语法：`SUBSTRING_INDEX (原始字符串，分隔符，n)`
 
     该函数用来获取原始字符串按照分隔符分割后，第 n 个分隔符之前（或之后）的子字符串，支持正向和反向索引，索引起始值分别为 1 和 -1。
 
@@ -840,6 +849,7 @@ SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
 ### 3.4.1 什么是谓词
 
 谓词就是返回值为真值的函数。包括 `TRUE / FALSE / UNKNOWN`。
+
 谓词主要有以下几个：
 
 * LIKE
@@ -1049,7 +1059,7 @@ BETWEEN 的特点就是结果中会包含 100 和 1000 这两个临界值，也�
   3 rows in set (0.00 sec)
 ```
 
-虽然上述方法没有问题，但还是存在一点不足之处，那就是随着希望选取的对象越来越多， SQL 语句也会越来越长，阅读起来也会越来越困难。这时， 我们就可以使用 IN 谓词  
+虽然上述方法没有问题，但还是存在一点不足之处，那就是随着希望选取的对象越来越多，SQL 语句也会越来越长，阅读起来也会越来越困难。这时，我们就可以使用 IN 谓词  
 `IN(值 1, 值 2, 值 3, …) 来替换上述 SQL 语句。
 
 ```sql
@@ -1093,13 +1103,13 @@ BETWEEN 的特点就是结果中会包含 100 和 1000 这两个临界值，也�
 
 IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可以使用子查询作为其参数。我们已经在前面的章节中学习过了，子查询就是 SQL 内部生成的表，因此也可以说“能够将表作为 IN 的参数”。同理，我们还可以说“能够将视图作为 IN 的参数”。
 
-在此，我们创建一张新表 `shopproduct` 显示出哪些商店销售哪些商品。
+在此，我们创建一张新表 `shop_product` 显示出哪些商店销售哪些商品。
 
 ```sql
   -- DDL ：创建表
-  DROP TABLE IF EXISTS shopproduct;
+  DROP TABLE IF EXISTS shop_product;
   
-  CREATE TABLE shopproduct(
+  CREATE TABLE shop_product(
       shop_id CHAR(4)     NOT NULL,
       shop_name VARCHAR(200) NOT NULL,
       product_id CHAR(4)      NOT NULL,
@@ -1109,34 +1119,34 @@ IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可�
   
   -- DML ：插入数据
   START TRANSACTION; -- 开始事务
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000A', '东京', '0001', 30);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000A', '东京', '0002', 50);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000A', '东京', '0003', 15);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000B', '名古屋', '0002', 30);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000B', '名古屋', '0003', 120);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000B', '名古屋', '0004', 20);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000B', '名古屋', '0006', 10);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000B', '名古屋', '0007', 40);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000C', '大阪', '0003', 20);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000C', '大阪', '0004', 50);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000C', '大阪', '0006', 90);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000C', '大阪', '0007', 70);
-  INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+  INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
   VALUES ('000D', '福冈', '0001', 100);
   COMMIT; -- 提交事务
-  SELECT * FROM shopproduct;
+  SELECT * FROM shop_product;
   +---------+-----------+------------+----------+
   | shop_id | shop_name | product_id | quantity |
   +---------+-----------+------------+----------+
@@ -1168,7 +1178,7 @@ IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可�
 ```sql
   -- step1：取出大阪门店的在售商品 `product_id`
   SELECT product_id
-  FROM shopproduct
+  FROM shop_product
   WHERE shop_id = '000C';
   +------------+
   | product_id |
@@ -1188,7 +1198,7 @@ IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可�
   SELECT product_name, sale_price
   FROM product
   WHERE product_id IN (SELECT product_id
-                       FROM shopproduct
+                       FROM shop_product
                        WHERE shop_id = '000C');
   +--------------+------------+
   | product_name | sale_price |
@@ -1237,7 +1247,7 @@ NOT IN 同样支持子查询作为参数，用法和 in 完全一样。
   SELECT product_name, sale_price
   FROM product
   WHERE product_id NOT IN (SELECT product_id
-                           FROM shopproduct
+                           FROM shop_product
                            WHERE shop_id = '000A');
   +--------------+------------+
   | product_name | sale_price |
@@ -1279,7 +1289,7 @@ EXIST（存在）谓词的主语是“记录”。
   SELECT product_name, sale_price
   FROM product AS p
   WHERE EXISTS (SELECT *
-                FROM shopproduct AS sp
+                FROM shop_product AS sp
                 WHERE sp.shop_id = '000C'
                       AND sp.product_id = p.product_id
                 );
@@ -1300,16 +1310,16 @@ EXIST（存在）谓词的主语是“记录”。
 
 ```sql
 (SELECT *
- FROM shopproduct AS sp
+ FROM shop_product AS sp
  WHERE sp.shop_id = '000C'
        AND sp.product_id = p.product_id)
 ```
 
-上面这样的子查询就是唯一的参数。确切地说，由于通过条件 “SP.product_id = P.product_id” 将 product 表和 shopproduct 表进行了联接，因此作为参数的是关联子查询。 EXIST 通常会使用关联子查询作为参数。
+上面这样的子查询就是唯一的参数。确切地说，由于通过条件 “SP.product_id = P.product_id” 将 product 表和 shop_product 表进行了联接，因此作为参数的是关联子查询。 EXIST 通常会使用关联子查询作为参数。
 
 * 子查询中的 SELECT
 
-由于 EXIST 只关心记录是否存在，因此返回哪些列都没有关系。 EXIST 只会判断是否存在满足子查询中 WHERE 子句指定的条件“商店编号（shop_id）为 '000C'，商品（product）表和商店商品（shopproduct）表中商品编号（product_id）相同”的记录，只有存在这样的记录时才返回真（TRUE）。
+由于 EXIST 只关心记录是否存在，因此返回哪些列都没有关系。 EXIST 只会判断是否存在满足子查询中 WHERE 子句指定的条件“商店编号（shop_id）为 '000C'，商品（product）表和商店商品（shop_product）表中商品编号（product_id）相同”的记录，只有存在这样的记录时才返回真（TRUE）。
 
 因此，使用下面的查询语句，查询结果也不会发生变化。
 
@@ -1317,7 +1327,7 @@ EXIST（存在）谓词的主语是“记录”。
   SELECT product_name, sale_price
   FROM product AS p
   WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
-                FROM shopproduct AS sp
+                FROM shop_product AS sp
                 WHERE sp.shop_id = '000C'
                     AND sp.product_id = p.product_id);
   +--------------+------------+
@@ -1335,7 +1345,7 @@ EXIST（存在）谓词的主语是“记录”。
 
 * 使用 NOT EXIST 替换 NOT IN
 
-就像 EXIST 可以用来替换 IN 一样， NOT IN 也可以用 NOT EXIST 来替换。
+就像 EXIST 可以用来替换 IN 一样，NOT IN 也可以用 NOT EXIST 来替换。
 
 下面的代码示例取出，不在大阪门店销售的商品的销售单价。
 
@@ -1343,7 +1353,7 @@ EXIST（存在）谓词的主语是“记录”。
   SELECT product_name, sale_price
   FROM product AS p
   WHERE NOT EXISTS (SELECT *
-                    FROM shopproduct AS sp
+                    FROM shop_product AS sp
                     WHERE sp.shop_id = '000A'
                         AND sp.product_id = p.product_id);
   +--------------+------------+
@@ -1428,7 +1438,7 @@ C ：厨房用具
 ```
 
 ELSE 子句也可以省略不写，这时会被默认为 ELSE NULL。但为了防止有人漏读，还是希望大家能够显示地写出 ELSE 子句。  
-此外， CASE 表达式最后的“END”是不能省略的，请大家特别注意不要遗漏。忘记书写 END 会发生语法错误，这也是初学时最容易犯的错误。
+此外，CASE 表达式最后的“END”是不能省略的，请大家特别注意不要遗漏。忘记书写 END 会发生语法错误，这也是初学时最容易犯的错误。
 
 * **应用场景 2：实现列方向上的聚合**
 
@@ -1561,9 +1571,9 @@ sum_price_clothes | sum_price_kitchen | sum_price_office
 
 按照销售单价（ sale_price）对练习 6.1 中的 product（商品）表中的商品进行如下分类。
 
-* 低档商品：销售单价在 1000 日元以下（T 恤衫、办公用品、叉子、擦菜板、 圆珠笔）
-* 中档商品：销售单价在 1001 日元以上 3000 日元以下（菜刀）
-* 高档商品：销售单价在 3001 日元以上（运动 T 恤、高压锅）
+* 低档商品：销售单价在 1000 元以下（T 恤衫、办公用品、叉子、擦菜板、 圆珠笔）
+* 中档商品：销售单价在 1001 元以上 3000 元以下（菜刀）
+* 高档商品：销售单价在 3001 元以上（运动 T 恤、高压锅）
 
 请编写出统计上述商品种类中所包含的商品数量的 SELECT 语句，结果如下所示。
 

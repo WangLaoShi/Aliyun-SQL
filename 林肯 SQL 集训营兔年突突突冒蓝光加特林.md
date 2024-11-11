@@ -509,7 +509,7 @@ TRUNCATE TABLE TABLE_NAME;
     WHERE product_id = '0008';  
 ```
 
-和 INSERT 语句一样， UPDATE 语句也可以将 NULL 作为一个值来使用。**但是，只有未设置 NOT NULL 约束和主键约束的列才可以清空为 NULL。** 如果将设置了上述约束的列更新为 NULL，就会出错，这点与 INSERT 语句相同。
+和 INSERT 语句一样，UPDATE 语句也可以将 NULL 作为一个值来使用。**但是，只有未设置 NOT NULL 约束和主键约束的列才可以清空为 NULL。** 如果将设置了上述约束的列更新为 NULL，就会出错，这点与 INSERT 语句相同。
 
 * 多列更新
 
@@ -861,7 +861,7 @@ FROM < 表名 >;
 
 **WHERE 语句**
   
-当不需要取出全部数据，而是选取出满足“商品种类为衣服”“销售单价在 1000 日元以上”等某些条件的数据时，使用 WHERE 语句。
+当不需要取出全部数据，而是选取出满足“商品种类为衣服”“销售单价在 1000 元以上”等某些条件的数据时，使用 WHERE 语句。
 
 SELECT 语句通过 WHERE 子句来指定查询数据的条件。在 WHERE 子句中可以指定“某一列的值和这个字符串相等”或者“某一列的值大于这个数字”等条件。执行含有这些条件的 SELECT 语句，就可以查询出只符合该条件的记录了。
 
@@ -997,7 +997,7 @@ WHERE purchase_price IS NOT NULL;
 **NOT** 不能单独使用，如下例：
 
 ```sql
--- 选取出销售单价大于等于 1000 日元的记录
+-- 选取出销售单价大于等于 1000 元的记录
 SELECT product_name, product_type, sale_price
 FROM product
 WHERE sale_price >= 1000;
@@ -1128,7 +1128,7 @@ WHERE product_name > NULL;
 
 ### 练习题 3
 
-代码清单 2-22（2-2 节）中的 SELECT 语句能够从 product 表中取出“销售单价（saleprice）比进货单价（purchase price）高出 500 日元以上”的商品。请写出两条可以得到相同结果的 SELECT 语句。执行结果如下所示。
+代码清单 2-22（2-2 节）中的 SELECT 语句能够从 product 表中取出“销售单价（saleprice）比进货单价（purchase price）高出 500 元以上”的商品。请写出两条可以得到相同结果的 SELECT 语句。执行结果如下所示。
 
 ```
 product_name | sale_price | purchase_price 
@@ -1153,7 +1153,7 @@ WHERE sale_price - 500 >= purchase_price;
 
 ### 练习题 4
 
-请写出一条 SELECT 语句，从 product 表中选取出满足“销售单价打九折之后利润高于 100 日元的办公用品和厨房用具”条件的记录。查询结果要包括 product_name 列、product_type 列以及销售单价打九折之后的利润（别名设定为 profit）。
+请写出一条 SELECT 语句，从 product 表中选取出满足“销售单价打九折之后利润高于 100 元的办公用品和厨房用具”条件的记录。查询结果要包括 product_name 列、product_type 列以及销售单价打九折之后的利润（别名设定为 profit）。
 
 提示：销售单价打九折，可以通过 saleprice 列的值乘以 0.9 获得，利润可以通过该值减去 purchase_price 列的值获得。
 
@@ -1507,7 +1507,7 @@ SELECT stu_name FROM view_students_info;
 CREATE VIEW < 视图名称 >(< 列名 1>,< 列名 2>,...) AS <SELECT 语句 >
 ```
 
-其中 SELECT 语句需要书写在 AS 关键字之后。 SELECT 语句中列的排列顺序和视图中列的排列顺序相同， SELECT 语句中的第 1 列就是视图中的第 1 列， SELECT 语句中的第 2 列就是视图中的第 2 列，以此类推。而且视图的列名是在视图名称之后的列表中定义的。  
+其中 SELECT 语句需要书写在 AS 关键字之后。 SELECT 语句中列的排列顺序和视图中列的排列顺序相同，SELECT 语句中的第 1 列就是视图中的第 1 列，SELECT 语句中的第 2 列就是视图中的第 2 列，以此类推。而且视图的列名是在视图名称之后的列表中定义的。  
 需要注意的是视图名在数据库中需要是唯一的，不能与其他视图和表重名。
 
 视图不仅可以基于真实表，我们也可以在视图的基础上继续创建视图。
@@ -1516,7 +1516,7 @@ CREATE VIEW < 视图名称 >(< 列名 1>,< 列名 2>,...) AS <SELECT 语句 >
 
 图片来源：《SQL 基础教程第 2 版》
 
-虽然在视图上继续创建视图的语法没有错误，但是我们还是应该尽量避免这种操作。这是因为对多数 DBMS 来说， 多重视图会降低 SQL 的性能。
+虽然在视图上继续创建视图的语法没有错误，但是我们还是应该尽量避免这种操作。这是因为对多数 DBMS 来说，多重视图会降低 SQL 的性能。
 
 * 注意事项
 
@@ -1715,7 +1715,7 @@ FROM (SELECT stu_name, COUNT(*) AS stu_cnt
 
 ### 3.2.2 子查询和视图的关系
 
-子查询就是将用来定义视图的 SELECT 语句直接用于 FROM 子句当中。其中 AS studentSum 可以看作是子查询的名称，而且由于子查询是一次性的，所以**子查询不会像视图那样保存在存储介质中**， 而是在 SELECT 语句执行之后就消失了。
+子查询就是将用来定义视图的 SELECT 语句直接用于 FROM 子句当中。其中 AS studentSum 可以看作是子查询的名称，而且由于子查询是一次性的，所以**子查询不会像视图那样保存在存储介质中**，而是在 SELECT 语句执行之后就消失了。
 
 ### 3.2.3 嵌套子查询
 
@@ -1776,7 +1776,7 @@ WHERE sale_price > (
 ```
 
 上面的这条语句首先后半部分查询出 product 表中的平均售价，前面的 SQL 语句在根据 WHERE 条件挑选出合适的商品。  
-由于标量子查询的特性，导致标量子查询不仅仅局限于 WHERE 子句中，通常任何可以使用单一值的位置都可以使用。也就是说， 能够使用常数或者列名的地方，无论是 SELECT 子句、GROUP BY 子句、HAVING 子句，还是 ORDER BY 子句，几乎所有的地方都可以使用。
+由于标量子查询的特性，导致标量子查询不仅仅局限于 WHERE 子句中，通常任何可以使用单一值的位置都可以使用。也就是说，能够使用常数或者列名的地方，无论是 SELECT 子句、GROUP BY 子句、HAVING 子句，还是 ORDER BY 子句，几乎所有的地方都可以使用。
 
 我们还可以这样使用标量子查询：
 
@@ -1855,7 +1855,7 @@ WHERE sale_price > (SELECT AVG(sale_price)
 
 创建出满足下述三个条件的视图（视图名称为 ViewPractice5_1）。使用 product（商品）表作为参照表，假设表中包含初始状态的 8 行数据。
 
-* 条件 1：销售单价大于等于 1000 日元。
+* 条件 1：销售单价大于等于 1000 元。
 * 条件 2：登记日期是 2009 年 9 月 20 日。
 * 条件 3：包含商品名称、销售单价和登记日期三列。
 
@@ -2132,7 +2132,7 @@ SELECT * FROM samplestr;
 
 * LOWER – 小写转换
 
-    LOWER 函数只能针对英文字母使用，它会将参数中的字符串全都转换为小写。该函数不适用于英文字母以外的场合，不影响原本就是小写的字符。 类似的， UPPER 函数用于大写转换。
+    LOWER 函数只能针对英文字母使用，它会将参数中的字符串全都转换为小写。该函数不适用于英文字母以外的场合，不影响原本就是小写的字符。 类似的，UPPER 函数用于大写转换。
 
 * REPLACE – 字符串的替换
 
@@ -2148,7 +2148,7 @@ SELECT * FROM samplestr;
 
 * **（扩展内容）SUBSTRING_INDEX – 字符串按索引截取**
 
-    语法：`SUBSTRING_INDEX (原始字符串， 分隔符，n)`
+    语法：`SUBSTRING_INDEX (原始字符串，分隔符，n)`
 
     该函数用来获取原始字符串按照分隔符分割后，第 n 个分隔符之前（或之后）的子字符串，支持正向和反向索引，索引起始值分别为 1 和 -1。
 
@@ -2514,7 +2514,7 @@ OR purchase_price = 5000;
 3 rows in set (0.00 sec)
 ```
 
-虽然上述方法没有问题，但还是存在一点不足之处，那就是随着希望选取的对象越来越多， SQL 语句也会越来越长，阅读起来也会越来越困难。这时， 我们就可以使用 IN 谓词  
+虽然上述方法没有问题，但还是存在一点不足之处，那就是随着希望选取的对象越来越多，SQL 语句也会越来越长，阅读起来也会越来越困难。这时，我们就可以使用 IN 谓词  
 `IN(值 1, 值 2, 值 3, …) 来替换上述 SQL 语句。
 
 ```sql
@@ -2558,13 +2558,13 @@ WHERE purchase_price NOT IN (320, 500, 5000);
 
 IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可以使用子查询作为其参数。我们已经在前面的章节中学习过了，子查询就是 SQL 内部生成的表，因此也可以说“能够将表作为 IN 的参数”。同理，我们还可以说“能够将视图作为 IN 的参数”。
 
-在此，我们创建一张新表 `shopproduct` 显示出哪些商店销售哪些商品。
+在此，我们创建一张新表 `shop_product` 显示出哪些商店销售哪些商品。
 
 ```sql
 -- DDL ：创建表
-DROP TABLE IF EXISTS shopproduct;
+DROP TABLE IF EXISTS shop_product;
 
-CREATE TABLE shopproduct(
+CREATE TABLE shop_product(
     shop_id CHAR(4)     NOT NULL,
     shop_name VARCHAR(200) NOT NULL,
     product_id CHAR(4)      NOT NULL,
@@ -2574,34 +2574,34 @@ CREATE TABLE shopproduct(
 
 -- DML ：插入数据
 START TRANSACTION; -- 开始事务
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000A', '东京', '0001', 30);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000A', '东京', '0002', 50);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000A', '东京', '0003', 15);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000B', '名古屋', '0002', 30);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000B', '名古屋', '0003', 120);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000B', '名古屋', '0004', 20);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000B', '名古屋', '0006', 10);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000B', '名古屋', '0007', 40);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000C', '大阪', '0003', 20);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000C', '大阪', '0004', 50);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000C', '大阪', '0006', 90);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000C', '大阪', '0007', 70);
-INSERT INTO shopproduct (shop_id, shop_name, product_id, quantity) 
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity) 
 VALUES ('000D', '福冈', '0001', 100);
 COMMIT; -- 提交事务
-SELECT * FROM shopproduct;
+SELECT * FROM shop_product;
 +---------+-----------+------------+----------+
 | shop_id | shop_name | product_id | quantity |
 +---------+-----------+------------+----------+
@@ -2633,7 +2633,7 @@ SELECT * FROM shopproduct;
 ```sql
 -- step1：取出大阪门店的在售商品 `product_id`
 SELECT product_id
-FROM shopproduct
+FROM shop_product
 WHERE shop_id = '000C';
 +------------+
 | product_id |
@@ -2653,7 +2653,7 @@ WHERE shop_id = '000C';
 SELECT product_name, sale_price
 FROM product
 WHERE product_id IN (SELECT product_id
-                     FROM shopproduct
+                     FROM shop_product
                      WHERE shop_id = '000C');
 +--------------+------------+
 | product_name | sale_price |
@@ -2702,7 +2702,7 @@ NOT IN 同样支持子查询作为参数，用法和 in 完全一样。
 SELECT product_name, sale_price
 FROM product
 WHERE product_id NOT IN (SELECT product_id
-                         FROM shopproduct
+                         FROM shop_product
                          WHERE shop_id = '000A');
 +--------------+------------+
 | product_name | sale_price |
@@ -2744,7 +2744,7 @@ EXIST（存在）谓词的主语是“记录”。
 SELECT product_name, sale_price
 FROM product AS p
 WHERE EXISTS (SELECT *
-              FROM shopproduct AS sp
+              FROM shop_product AS sp
               WHERE sp.shop_id = '000C'
                     AND sp.product_id = p.product_id
               );
@@ -2765,16 +2765,16 @@ WHERE EXISTS (SELECT *
 
 ```sql
 (SELECT *
- FROM shopproduct AS sp
+ FROM shop_product AS sp
  WHERE sp.shop_id = '000C'
        AND sp.product_id = p.product_id)
 ```
 
-上面这样的子查询就是唯一的参数。确切地说，由于通过条件 “SP.product_id = P.product_id” 将 product 表和 shopproduct 表进行了联接，因此作为参数的是关联子查询。 EXIST 通常会使用关联子查询作为参数。
+上面这样的子查询就是唯一的参数。确切地说，由于通过条件 “SP.product_id = P.product_id” 将 product 表和 shop_product 表进行了联接，因此作为参数的是关联子查询。 EXIST 通常会使用关联子查询作为参数。
 
 * 子查询中的 SELECT
 
-由于 EXIST 只关心记录是否存在，因此返回哪些列都没有关系。 EXIST 只会判断是否存在满足子查询中 WHERE 子句指定的条件“商店编号（shop_id）为 '000C'，商品（product）表和商店商品（shopproduct）表中商品编号（product_id）相同”的记录，只有存在这样的记录时才返回真（TRUE）。
+由于 EXIST 只关心记录是否存在，因此返回哪些列都没有关系。 EXIST 只会判断是否存在满足子查询中 WHERE 子句指定的条件“商店编号（shop_id）为 '000C'，商品（product）表和商店商品（shop_product）表中商品编号（product_id）相同”的记录，只有存在这样的记录时才返回真（TRUE）。
 
 因此，使用下面的查询语句，查询结果也不会发生变化。
 
@@ -2782,7 +2782,7 @@ WHERE EXISTS (SELECT *
 SELECT product_name, sale_price
 FROM product AS p
 WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
-              FROM shopproduct AS sp
+              FROM shop_product AS sp
               WHERE sp.shop_id = '000C'
                   AND sp.product_id = p.product_id);
 +--------------+------------+
@@ -2800,7 +2800,7 @@ WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
 
 * 使用 NOT EXIST 替换 NOT IN
 
-就像 EXIST 可以用来替换 IN 一样， NOT IN 也可以用 NOT EXIST 来替换。
+就像 EXIST 可以用来替换 IN 一样，NOT IN 也可以用 NOT EXIST 来替换。
 
 下面的代码示例取出，不在大阪门店销售的商品的销售单价。
 
@@ -2808,7 +2808,7 @@ WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
 SELECT product_name, sale_price
 FROM product AS p
 WHERE NOT EXISTS (SELECT *
-                  FROM shopproduct AS sp
+                  FROM shop_product AS sp
                   WHERE sp.shop_id = '000A'
                       AND sp.product_id = p.product_id);
 +--------------+------------+
@@ -2893,7 +2893,7 @@ FROM  product;
 ```
 
 ELSE 子句也可以省略不写，这时会被默认为 ELSE NULL。但为了防止有人漏读，还是希望大家能够显示地写出 ELSE 子句。  
-此外， CASE 表达式最后的“END”是不能省略的，请大家特别注意不要遗漏。忘记书写 END 会发生语法错误，这也是初学时最容易犯的错误。
+此外，CASE 表达式最后的“END”是不能省略的，请大家特别注意不要遗漏。忘记书写 END 会发生语法错误，这也是初学时最容易犯的错误。
 
 * **应用场景 2：实现列方向上的聚合**
 
@@ -3025,9 +3025,9 @@ WHERE purchase_price NOT IN (500, 2800, 5000, NULL);
 
 按照销售单价（ sale_price）对练习 6.1 中的 product（商品）表中的商品进行如下分类。
 
-* 低档商品：销售单价在 1000 日元以下（T 恤衫、办公用品、叉子、擦菜板、 圆珠笔）
-* 中档商品：销售单价在 1001 日元以上 3000 日元以下（菜刀）
-* 高档商品：销售单价在 3001 日元以上（运动 T 恤、高压锅）
+* 低档商品：销售单价在 1000 元以下（T 恤衫、办公用品、叉子、擦菜板、 圆珠笔）
+* 中档商品：销售单价在 1001 元以上 3000 元以下（菜刀）
+* 高档商品：销售单价在 3001 元以上（运动 T 恤、高压锅）
 
 请编写出统计上述商品种类中所包含的商品数量的 SELECT 语句，结果如下所示。
 
@@ -3403,7 +3403,7 @@ WHERE product_id NOT IN (
 
 前一节我们学习了 UNION 和 INTERSECT 等集合运算, 这些集合运算的特征就是以行方向为单位进行操作. 通俗地说, 就是进行这些集合运算时, 会导致记录行数的增减. 使用 UNION 会增加记录行数, 而使用 INTERSECT 或者 EXCEPT 会减少记录行数.
 
-但这些运算不能改变列的变化, 虽然使用函数或者 CASE 表达式等列运算, 可以增加列的数量, 但仍然只能从一张表中提供的基础信息列中获得一些 "引申列", 本质上并不能提供更多的信息. 如果想要从多个表获取信息, 例如, 如果我们想要找出某个商店里的衣服类商品的名称, 数量及价格等信息, 则必须分别从 shopproduct 表和 product 表获取信息.
+但这些运算不能改变列的变化, 虽然使用函数或者 CASE 表达式等列运算, 可以增加列的数量, 但仍然只能从一张表中提供的基础信息列中获得一些 "引申列", 本质上并不能提供更多的信息. 如果想要从多个表获取信息, 例如, 如果我们想要找出某个商店里的衣服类商品的名称, 数量及价格等信息, 则必须分别从 shop_product 表和 product 表获取信息.
 
 ![lYCXMM](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/lYCXMM.jpg)
 
@@ -3439,13 +3439,13 @@ FROM <tb_1> INNER JOIN <tb_2> ON <condition(s)>
 
 ![Vft6MK](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/Vft6MK.jpg)
 
-我们接下来观察 shopproduct 表, 这个表里有商店编号名称, 商店的商品编号及数量. 但要想获取商品的种类及名称售价等信息, 则必须借助于 product 表.
+我们接下来观察 shop_product 表, 这个表里有商店编号名称, 商店的商品编号及数量. 但要想获取商品的种类及名称售价等信息, 则必须借助于 product 表.
 
 ![图片](https://img.alicdn.com/imgextra/i2/O1CN01xgPi7J1oEtox2dJly_!!6000000005194-2-tps-366-400.png)
 
 所以问题的关键是, 找出一个类似于 "轴" 或者 "桥梁" 的公共列, 将两张表用这个列连结起来. 这就是连结运算所要作的事情.
 
-我们来对比一下上述两张表, 可以发现, 商品编号列是一个公共列, 因此很自然的事情就是用这个商品编号列来作为连接的“桥梁”，将 **product** 和 **shopproduct** 这两张表连接起来。
+我们来对比一下上述两张表, 可以发现, 商品编号列是一个公共列, 因此很自然的事情就是用这个商品编号列来作为连接的“桥梁”，将 **product** 和 **shop_product** 这两张表连接起来。
 
 ![4yJRHd](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/4yJRHd.jpg)
 
@@ -3483,7 +3483,7 @@ ON SP.product_id = P.product_id;
 
 **要点一: 进行连结时需要在 FROM 子句中使用多张表.**
 
-之前的 FROM 子句中只有一张表, 而这次我们同时使用了 shopproduct 和 product 两张表, 使用关键字 INNER JOIN 就可以将两张表连结在一起了:
+之前的 FROM 子句中只有一张表, 而这次我们同时使用了 shop_product 和 product 两张表, 使用关键字 INNER JOIN 就可以将两张表连结在一起了:
 
 ```sql
 FROM shop_product AS SP INNER JOIN product AS P
@@ -3543,7 +3543,7 @@ SELECT  SP.shop_id
        ,P.product_type
        ,P.sale_price
        ,SP.quantity
-FROM shopproduct AS SP
+FROM shop_product AS SP
 INNER JOIN product AS P
     ON SP.product_id = P.product_id
 WHERE SP.shop_name = '东京'
@@ -3584,7 +3584,7 @@ SELECT SP.shop_id
        ,P.product_type
        ,P.sale_price
        ,SP.quantity
-FROM (-- 子查询 1: 从 shopproduct 表筛选出东京商店的信息
+FROM (-- 子查询 1: 从 shop_product 表筛选出东京商店的信息
         SELECT *
         FROM shop_product
         WHERE shop_name = '东京' ) AS SP
@@ -3614,7 +3614,7 @@ SELECT  SP.shop_id,
         P.product_name,
         P.product_type,
         P.purchase_price
-FROM shopproduct  AS SP 
+FROM shop_product  AS SP 
 
 INNER JOIN product AS P 
 
@@ -3633,7 +3633,7 @@ SELECT
     P.product_name,
     P.product_type,
     P.purchase_price
-FROM shopproduct AS SP 
+FROM shop_product AS SP 
 
 INNER JOIN -- 从 product 表找出衣服类商品的信息
   (SELECT 
@@ -3659,7 +3659,7 @@ ON SP.product_id = P.product_id;
 -- 参考答案
 -- 不使用子查询
 SELECT SP.*, P.*
-FROM shopproduct AS SP 
+FROM shop_product AS SP 
 
 INNER JOIN product AS P 
 
@@ -3685,7 +3685,7 @@ WHERE shop_id = '000A' AND sale_price < 2000;
 SELECT SP.shop_id
       ,SP.shop_name
       ,MAX(P.sale_price) AS max_price
-FROM shopproduct AS SP
+FROM shop_product AS SP
 
 INNER JOIN product AS P
 
@@ -3794,7 +3794,7 @@ GROUP BY P1.product_id,P1.product_name,P1.product_type,P1.sale_price,P2.product_
 自然连结并不是区别于内连结和外连结的第三种连结, 它其实是内连结的一种特例–当两个表进行自然连结时, 会按照两个表中都包含的列名来进行等值内连结, 此时无需使用 ON 来指定连接条件.
 
 ```sql
-SELECT *  FROM shopproduct NATURAL JOIN product
+SELECT *  FROM shop_product NATURAL JOIN product
 ```
 
 上述查询得到的结果, 会把两个表的公共列 (这里是 product_id, 可以有多个公共列) 放在第一列, 然后按照两个表的顺序和表中列的顺序, 将两个表中的其他列都罗列出来.  
@@ -3818,7 +3818,7 @@ SELECT
         P.purchase_price,
         P.regist_date  
 
-FROM shopproduct AS SP 
+FROM shop_product AS SP 
 
 INNER JOIN product AS P 
 
@@ -3926,7 +3926,7 @@ FROM <tb_1> FULL  OUTER JOIN <tb_2> ON <condition(s)>
 
 #### 4.2.2.2 使用左连结从两个表获取信息
 
-如果你仔细观察过将 **shopproduct** 和 **product** 进行内连结前后的结果的话, 你就会发现,product 表中有两种商品并未在内连结的结果里, 就是说, 这两种商品并未在任何商店有售(这通常意味着比较重要的业务信息, 例如, 这两种商品在所有商店都处于缺货状态, 需要及时补货). 现在, 让我们先把之前内连结的 SELECT 语句转换为左连结试试看吧.
+如果你仔细观察过将 **shop_product** 和 **product** 进行内连结前后的结果的话, 你就会发现,product 表中有两种商品并未在内连结的结果里, 就是说, 这两种商品并未在任何商店有售(这通常意味着比较重要的业务信息, 例如, 这两种商品在所有商店都处于缺货状态, 需要及时补货). 现在, 让我们先把之前内连结的 SELECT 语句转换为左连结试试看吧.
 
 练习题: 统计每种商品分别在哪些商店有售, 需要包括那些在每个商店都没货的商品.
 
@@ -3942,7 +3942,7 @@ SELECT
         
 FROM product AS P
 
-LEFT OUTER JOIN shopproduct AS SP
+LEFT OUTER JOIN shop_product AS SP
 
 ON SP.product_id = P.product_id;
 
@@ -3961,7 +3961,7 @@ ON SP.product_id = P.product_id;
 
 内连结的结果中有 13 条记录, 而外连结的结果中有 15 条记录, 增加的 2 条记录到底是什么呢? 
 
-这正是外连结的关键点. 多出的 2 条记录是高压锅和圆珠笔, 这 2 条记录在 shopproduct 表中并不存在, 也就是说, 这 2 种商品在任何商店中都没有销售. 
+这正是外连结的关键点. 多出的 2 条记录是高压锅和圆珠笔, 这 2 条记录在 shop_product 表中并不存在, 也就是说, 这 2 种商品在任何商店中都没有销售. 
 
 由于内连结只能选取出同时存在于两张表中的数据, 因此只在 product 表中存在的 2 种商品并没有出现在结果之中. 
 
@@ -3993,7 +3993,7 @@ ON SP.product_id = P.product_id;
 
 **练习题:**
 
-使用外连结从 shopproduct 表和 product 表中找出那些在某个商店库存少于 50 的商品及对应的商店. 希望得到如下结果.
+使用外连结从 shop_product 表和 product 表中找出那些在某个商店库存少于 50 的商品及对应的商店. 希望得到如下结果.
 
 ![0hILMh](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/0hILMh.jpg)
 
@@ -4012,7 +4012,7 @@ SELECT
         SP.quantity
 FROM product AS P
 
-LEFT OUTER JOIN shopproduct AS SP
+LEFT OUTER JOIN shop_product AS SP
 
 ON SP.product_id = P.product_id
 
@@ -4030,7 +4030,7 @@ WHERE quantity< 50
 
 联系到我们已经掌握了的 SQL 查询的执行顺序(**FROM->WHERE->SELECT**), 我们发现, 问题可能出在筛选条件上, 因为在进行完外连结后才会执行 WHERE 子句, 因此那些主表中无法被匹配到的行就被 WHERE 条件筛选掉了。
 
-明白了这一点, 我们就可以试着把 WHERE 子句挪到外连结之前进行: 先写个子查询, 用来从 **shopproduct** 表中筛选 **quantity<50** 的商品, 然后再把这个子查询和主表连结起来。
+明白了这一点, 我们就可以试着把 WHERE 子句挪到外连结之前进行: 先写个子查询, 用来从 **shop_product** 表中筛选 **quantity<50** 的商品, 然后再把这个子查询和主表连结起来。
 
 我们把上述思路写成 SQL 查询语句:
 
@@ -4046,7 +4046,7 @@ FROM product AS P
 
 LEFT OUTER JOIN-- 先筛选 quantity<50 的商品
    (SELECT *
-    FROM shopproduct
+    FROM shop_product
     WHERE quantity < 50 ) AS SP
      
 ON SP.product_id = P.product_id
@@ -4123,7 +4123,7 @@ VALUES ('P002', '0008', 18);
 COMMIT;
 ```
 
-接下来, 我们根据上表及 shopproduct 表和 product 表, 使用内连接找出每个商店都有那些商品, 每种商品的库存总量分别是多少.
+接下来, 我们根据上表及 shop_product 表和 product 表, 使用内连接找出每个商店都有那些商品, 每种商品的库存总量分别是多少.
 
 ```sql
 SELECT 
@@ -4133,7 +4133,7 @@ SELECT
         P.product_name,
         P.sale_price,
         IP.inventory_quantity
-FROM shopproduct AS SP
+FROM shop_product AS SP
 
 INNER JOIN product AS P
 
@@ -4150,7 +4150,7 @@ WHERE IP.inventory_id = 'P001';
 
 ![nvSG7j](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/nvSG7j.jpg)
 
-我们可以看到, 连结第三张表的时候, 也是通过 **ON** 子句指定连结条件(这里使用最基础的等号将作为连结条件的 **product** 表和 **shopproduct** 表中的商品编号 **product_id** 连结了起来), 由于 **product** 表和 **shopproduct** 表已经进行了连结, 因此就无需再对 **product** 表和 **Inventoryproduct** 表进行连结了(虽然也可以进行连结, 但结果并不会发生改变, 因为本质上并没有增加新的限制条件).
+我们可以看到, 连结第三张表的时候, 也是通过 **ON** 子句指定连结条件(这里使用最基础的等号将作为连结条件的 **product** 表和 **shop_product** 表中的商品编号 **product_id** 连结了起来), 由于 **product** 表和 **shop_product** 表已经进行了连结, 因此就无需再对 **product** 表和 **Inventoryproduct** 表进行连结了(虽然也可以进行连结, 但结果并不会发生改变, 因为本质上并没有增加新的限制条件).
 
 即使想要把连结的表增加到 4 张、5 张……使用 INNER JOIN 进行添加的方式也是完全相同的.
 
@@ -4170,7 +4170,7 @@ SELECT
         IP.inventory_quantity
 FROM product AS P
 
-LEFT OUTER JOIN shopproduct AS SP
+LEFT OUTER JOIN shop_product AS SP
 
 ON SP.product_id = P.product_id
 
@@ -4350,7 +4350,7 @@ SELECT
         P.product_name,
         P.sale_price
         
-FROM shopproduct AS SP
+FROM shop_product AS SP
 
 CROSS JOIN product AS P;
  
@@ -4362,11 +4362,11 @@ SELECT
         SP.product_id,
         P.product_name,
         P.sale_price
-FROM shopproduct AS SP ,product AS P;
+FROM shop_product AS SP ,product AS P;
 ```
 
 请大家试着执行一下以上语句.  
-可能大家会惊讶于结果的行数, 但我们还是先来介绍一下语法结构吧. 对满足相同规则的表进行交叉连结的集合运算符是**CROSS JOIN （笛卡儿积）**. 进行交叉连结时无法使用内连结和外连结中所使用的 ON 子句, 这是因为交叉连结是对两张表中的全部记录进行交叉组合, 因此结果中的记录数通常是两张表中行数的乘积. 本例中, 因为 shopproduct 表存在 13 条记录,product 表存在 8 条记录, 所以结果中就包含了 **13 × 8 = 104** 条记录.
+可能大家会惊讶于结果的行数, 但我们还是先来介绍一下语法结构吧. 对满足相同规则的表进行交叉连结的集合运算符是**CROSS JOIN （笛卡儿积）**. 进行交叉连结时无法使用内连结和外连结中所使用的 ON 子句, 这是因为交叉连结是对两张表中的全部记录进行交叉组合, 因此结果中的记录数通常是两张表中行数的乘积. 本例中, 因为 shop_product 表存在 13 条记录,product 表存在 8 条记录, 所以结果中就包含了 **13 × 8 = 104** 条记录.
 
 可能这时会有读者想起前面我们提到过集合运算中的乘法会在本节中进行详细学习, 这就是上面介绍的交叉连结. 内连结是交叉连结的一部分,“内”也可以理解为“包含在交叉连结结果中的部分”. 相反, 外连结的“外”可以理解为“交叉连结结果之外的部分”.
 
@@ -4378,12 +4378,12 @@ FROM shopproduct AS SP ,product AS P;
 
 反过来思考, 在对笛卡儿积进行适当的限制之后, 也就得到了内连结和外连结.
 
-例如, 对于 shopproduct 表和 product 表, 首先建立笛卡尔乘积:
+例如, 对于 shop_product 表和 product 表, 首先建立笛卡尔乘积:
 
 ```sql
 SELECT SP.*, P.*
 
-FROM shopproduct AS SP 
+FROM shop_product AS SP 
 
 CROSS JOIN product AS P;
 ```
@@ -4397,7 +4397,7 @@ CROSS JOIN product AS P;
 ```sql
 SELECT SP.*, P.*
 
-FROM shopproduct AS SP 
+FROM shop_product AS SP 
 
 CROSS JOIN product AS P
 
@@ -4423,7 +4423,7 @@ SELECT
         SP.product_id,
         P.product_name,
         P.sale_price
-FROM shopproduct AS SP
+FROM shop_product AS SP
 CROSS JOIN product AS P
 WHERE SP.product_id = P.product_id;
 ```
@@ -4443,7 +4443,7 @@ SELECT
         SP.product_id,
         P.product_name,
         P.sale_price
-FROM shopproduct SP,product P
+FROM shop_product SP,product P
 WHERE SP.product_id = P.product_id AND SP.shop_id = '000A';
 ```
 
@@ -4623,7 +4623,7 @@ FROM product
 
 ![e1I3fm](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/e1I3fm.jpg)
 
-我们先忽略生成的新列 - [ranking]， 看下原始数据在 PARTITION BY 和 ORDER BY 关键字的作用下发生了什么变化。
+我们先忽略生成的新列 - [ranking]，看下原始数据在 PARTITION BY 和 ORDER BY 关键字的作用下发生了什么变化。
 
 **PARTITION BY** 能够设定窗口对象范围。本例中，为了按照商品种类进行排序，我们指定了 **product_type**。即一个商品种类就是一个小的 "窗口"。
 
@@ -4776,9 +4776,9 @@ FROM product;
                  ROWS BETWEEN n PRECEDING AND n FOLLOWING)
 ```
 
-PRECEDING（“之前”）， 将框架指定为 “截止到之前 n 行”，加上自身行
+PRECEDING（“之前”），将框架指定为 “截止到之前 n 行”，加上自身行
 
-FOLLOWING（“之后”）， 将框架指定为 “截止到之后 n 行”，加上自身行
+FOLLOWING（“之后”），将框架指定为 “截止到之后 n 行”，加上自身行
 
 BETWEEN 1 PRECEDING AND 1 FOLLOWING，将框架指定为 “之前 1 行” + “之后 1 行” + “自身”
 

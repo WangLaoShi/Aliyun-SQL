@@ -68,15 +68,15 @@
 
 我下面所有的SQL语句是基于MySQL 5.6+运行。 
 
-MySQL 为关系型数据库(Relational Database Management System)，一个关系型数据库由一个或数个表格组成， 如图所示的一个表格：
+MySQL 为关系型数据库(Relational Database Management System)，一个关系型数据库由一个或数个表格组成，如图所示的一个表格：
 
 ![QTcJZh](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/QTcJZh.png)
 
 - `表头(header)`: 每一列的名称;
 - `列(col)`: 具有相同数据类型的数据的集合;
 - `行(row)`: 每一行用来描述某个人/物的具体信息;
-- `值(value)`: 行的具体信息， 每个值必须与该列的数据类型相同;
-- `键(key)`: 表中用来识别某个特定的人\物的方法， 键的值在当前列中具有唯一性。
+- `值(value)`: 行的具体信息，每个值必须与该列的数据类型相同;
+- `键(key)`: 表中用来识别某个特定的人\物的方法，键的值在当前列中具有唯一性。
 
 ### 登录MySQL
 

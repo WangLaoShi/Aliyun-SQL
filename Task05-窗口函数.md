@@ -56,7 +56,7 @@ rows between current row and unbounded following # 包括本行和之后所有�
 rows between 3 preceding and current row # 包括本行和前面三行 
 rows between 3 preceding and 1 following # 从前面三行和下面一行，总共五行 
 # 当order by后面缺少窗口从句条件，窗口规范默认是rows between unbounded preceding and current row. 
-# 当order by和窗口从句都缺失， 窗口规范默认是 rows between unbounded preceding and unbounded following
+# 当order by和窗口从句都缺失，窗口规范默认是 rows between unbounded preceding and unbounded following
 ```
 
 ## 应用
@@ -328,7 +328,7 @@ SELECT
   user_name, 
   pay_time, 
   lag(pay_time,1,pay_time) over(partition by user_name order by pay_time) lag1,
-  -- 没有传入偏移量，那么默认就是1，找不到的话，此处也没有给默认值， 为null 
+  -- 没有传入偏移量，那么默认就是1，找不到的话，此处也没有给默认值，为null 
   lag(pay_time) over(partition by user_name order by pay_time) lag2,
   lag(pay_time,2,pay_time) over(partition by user_name order by pay_time) lag3, 
   lag(pay_time,2) over(partition by user_name order by pay_time) lag4 

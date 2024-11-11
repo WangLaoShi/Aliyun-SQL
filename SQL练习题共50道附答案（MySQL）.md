@@ -1,7 +1,7 @@
 1.学生表 
 student(s_id,s_name,s_birth,s_sex) 
 
--- 学生编号，学生姓名， 出生年月，学生性别 
+-- 学生编号，学生姓名，出生年月，学生性别 
 
 2.课程表 
 course(c_id,c_name,t_id) 

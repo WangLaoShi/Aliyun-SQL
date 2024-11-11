@@ -38,7 +38,7 @@ DESC tableName;
 # 查看创建表格的SQL语句
 show CREATE table table_name;
 
-# 创建数据库，如果存在则先删除， #数据库名一旦创建好像不好修改，删除重建吧
+# 创建数据库，如果存在则先删除，#数据库名一旦创建好像不好修改，删除重建吧
 drop database if exists `school`;
 create database `school` default character set utf8;
 use `school`;
