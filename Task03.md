@@ -24,8 +24,6 @@
 
 ![SopKUf](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/SopKUf.jpg)
 
- 图片来源：《SQL 基础教程第 2 版》
-
 下面这句顺口溜也方便大家记忆视图与表的关系：**“视图不是表，视图是虚表，视图依赖于表，视图不保存正式数据”**。
 
 ### 3.1.3 为什么会存在视图
@@ -52,8 +50,6 @@
 视图不仅可以基于真实表，我们也可以在视图的基础上继续创建视图。
 
 ![LSe4zz](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/LSe4zz.jpg)
-
-图片来源：《SQL 基础教程第 2 版》
 
 <span style="color: rgb(255, 102, 0);">"虽然在视图上继续创建视图的语法没有错误，但是我们还是应该尽量避免这种操作。这是因为对多数 DBMS 来说，多重视图会降低 SQL 的性能。</span>
 
@@ -204,11 +200,9 @@
 
 ![8ZYek0](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/8ZYek0.jpg)
 
-
 此时观察原表也可以发现数据也被更新了
 
 ![FFLV1s](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/FFLV1s.jpg)
-
 
 不知道大家看到这个结果会不会有疑问，刚才修改视图的时候是设置 product_type='办公用品' 的商品的 sale_price=5000，为什么原表的数据只有一条做了修改呢？
 
@@ -363,7 +357,7 @@ product_id | product_name | sale_price
 
 * 关联子查询与子查询的联系
 
-还记得我们之前的那个例子么 ` 查询出销售单价高于平均销售单价的商品 `，这个例子的 SQL 语句如下
+还记得我们之前的那个例子么 `查询出销售单价高于平均销售单价的商品`，这个例子的 SQL 语句如下
 
 ```sql
   SELECT product_id, product_name, sale_price
@@ -371,7 +365,7 @@ product_id | product_name | sale_price
   WHERE sale_price > (SELECT AVG(sale_price) FROM product);
 ```
 
-我们再来看一下这个需求 ` 选取出各商品种类中高于该商品种类的平均销售单价的商品 `。SQL 语句如下：
+我们再来看一下这个需求 `选取出各商品种类中高于该商品种类的平均销售单价的商品`。SQL 语句如下：
 
 ```sql
   SELECT product_type, product_name, sale_price
@@ -429,7 +423,8 @@ T 恤衫        | 　 1000    | 2009-09-20
   CREATE VIEW ViewPractice5_1 AS
   SELECT product_name, sale_price, regist_date
   FROM product
-  WHERE sale_price >= 1000 AND regist_date = '2009-09-20';
+  WHERE sale_price >= 1000 
+  AND regist_date = '2009-09-20';
 ```
 
 ### 练习 3.2
@@ -843,7 +838,6 @@ SQL 自带了各种各样的函数，极大提高了 SQL 语言的便利性。
   1 row in set (0.00 sec)
 ```
 
-
 ## 3.4 谓词
 
 ### 3.4.1 什么是谓词
@@ -1167,7 +1161,7 @@ IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可�
   13 rows in set (0.00 sec)
 ```
 
-由于单独使用商店编号（shop_id）或者商品编号（product_id）不能区分表中每一行数据，因此指定了 2 列作为主键（primary key）对商店和商品进行组合，用来唯一确定每一行数据。
+由于单独使用商店编号（shop_id）或者商品编号（product_id）不能区分表中每一行数据，因此指定了 2 列作为主键（primary_key）对商店和商品进行组合，用来唯一确定每一行数据。
 
 假设我么需要取出大阪在售商品的销售单价，该如何实现呢？
 
@@ -1230,6 +1224,7 @@ IN 谓词（NOT IN 谓词）具有其他谓词所没有的用法，那就是可�
 ```
 
 可以看到，子查询转换之后变为 in 谓词用法，你理解了吗？  
+
 或者，你会疑惑既然 in 谓词也能实现，那为什么还要使用子查询呢？这里给出两点原因：
 
 1. 实际生活中，某个门店的在售商品是不断变化的，使用 in 谓词就需要经常更新 SQL 语句，降低了效率，提高了维护成本；

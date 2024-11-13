@@ -70,7 +70,7 @@ SELECT 语句通过 WHERE 子句来指定查询数据的条件。在 WHERE 子�
            purchase_price AS "进货单价"
     FROM product;
     
-    -- 使用 DISTINCT 删除 product_type 列中重复的数据
+    -- 使用 DISTINCT 剔除 product_type 列中重复的数据
     SELECT DISTINCT product_type
     FROM product;
 ```
@@ -149,12 +149,12 @@ SQL 常见比较运算符如下：
 
 ```sql
     -- 选取 NULL 的记录
-    SELECT product_name，purchase_price
+    SELECT product_name,purchase_price
     FROM product
     WHERE purchase_price IS NULL;
     
     -- 选取不为 NULL 的记录
-    SELECT product_name，purchase_price
+    SELECT product_name,purchase_price
     FROM product
     WHERE purchase_price IS NOT NULL;
 ```
@@ -405,7 +405,7 @@ MySQL 聚合函数主要用于数据统计，比如计数、求和、求平均�
 | **MAX**       | MySQL `MAX()` 函数返回表达式的**最大值**。                                                             |
 | **MIN**       | MySQL `MIN()` 函数返回表达式的**最小值**。                                                             |
 | **STD**       | `STD` 是 `STDDEV_POP()` 的别名，用于计算所有非 NULL 输入值的**总体标准差**并返回结果。                  |
-| **STDDEV**    | `STDDEV` 是 `STDDEV_SAMP` 的别名，计算所有非 NULL 输入值的**样本标准差**并返回结果。                    |
+| **STDDEV**    | `STDDEV` 是 `STDDEV_POP` 的别名，计算所有非 NULL 输入值的**总体标准差**并返回结果。                    |
 | **STDDEV_POP** | MySQL `STDDEV_POP()` 函数计算所有非 NULL 输入值的**总体标准差**并返回结果。                            |
 | **STDDEV_SAMP** | MySQL `STDDEV_SAMP()` 函数计算所有非 NULL 输入值的**样本标准差**并返回结果。                         |
 | **SUM**       | MySQL `SUM()` 函数计算所有指定的非 NULL 值的**总和**并返回。                                          |
@@ -456,7 +456,7 @@ MySQL 聚合函数主要用于数据统计，比如计数、求和、求平均�
     
     -- 不含 GROUP BY
     SELECT product_type, COUNT(*)
-    FROM product
+    FROM product;
 ```
 
 按照商品种类对表进行切分
@@ -588,16 +588,16 @@ SQL 中的执行结果是随机排列的，当需要按照特定顺序排序时�
 
 ```sql
     -- 本 SELECT 语句中存在错误。
-    SELECT product_id, SUM（product_name）
+    SELECT product_id, SUM(product_name)
     FROM product 
     GROUP BY product_type 
     WHERE regist_date > '2009-09-01';
 ```
 
 
-* 错误 1 ，字符型字段  product_name  不可以进行  SUM  聚合
-* 错误 2 ，WHERE  语句应该书写在  GROUP BY  语句之前（  FROM  语句之后）
-* 错误 3 ，GROUP BY  字段（product_type ）与  SELECT  字段不同（product_id ）
+* 错误 1 ，字符型字段 product_name 不可以进行 SUM 聚合
+* 错误 2 ，WHERE 语句应该书写在 GROUP BY 语句之前（FROM 语句之后）
+* 错误 3 ，GROUP BY 字段（product_type）与 SELECT 字段不同（product_id）
 
 ### 练习题 6
 

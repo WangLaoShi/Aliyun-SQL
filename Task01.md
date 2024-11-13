@@ -4,10 +4,6 @@
 
 本章主要对数据库进行基本介绍，考虑易用性及普及度，课程主要使用**MySQL**进行介绍。
 
-SQL 训练营页面地址：[https://tianchi.aliyun.com/specials/promotion/aicampsql](https://tianchi.aliyun.com/specials/promotion/aicampsql?spm=5176.21852664.0.0.459e2e40OvggyN)  
-
-天池龙珠计划训练营地址：https://tianchi.aliyun.com/specials/promotion/aicamps
-
 ## 1.1 初识数据库
 
 数据库是将大量数据保存起来，通过计算机加工而成的可以进行高效访问的数据集合。该数据集合称为数据库（Database，DB）。用来管理数据库的计算机系统称为数据库管理系统（Database Management System，DBMS）。
@@ -298,6 +294,10 @@ SQL 是为操作数据库而开发的语言。
 
 实际使用的 SQL 语句当中有 90% 属于 DQL，本课程会以 DQL 为中心进行讲解。(某些教材中，也经常将 DQL 归到 DML 中)
 
+![6jzhoL](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/6jzhoL.png)
+
+![Qf7ZNo](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/Qf7ZNo.png)
+
 #### 1.2.2.3 SQL 的优势
 
 <span style="color: rgb(255, 102, 0);">SQL 可以用来进行数据分析的主要原因：1. 数据放在数据库中；2. SQL 最终运行在服务器上的数据库中. </span>
@@ -433,6 +433,17 @@ CREATE TABLE 'author' (
     'name' char(20) NOT NULL,
     'age' char(20) NOT NULL,
     'country' char(20) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+```
+
+> 请仔细对比上面的语句和下面的语句的区别！！！
+
+```sql
+CREATE TABLE `author` (
+    `authorid` char(20) NOT NULL,
+    `name` char(20) NOT NULL,
+    `age` char(20) NOT NULL,
+    `country` char(20) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 ```
 
@@ -837,11 +848,12 @@ INSERT INTO ai_test VALUES (0,'128');
 
 ```sql
 CREATE TABLE students_new(
-    student id int not null AUTO INCREMENT,
+    student_id int not null AUTO_INCREMENT,
     student_name varchar(20) not null,
-    student age int not null,
-    student weight float not null DEFAULT 99.9, 
+    student_age int not null,
+    student_weight float not null DEFAULT 99.9, 
     PRIMARY KEY(student_id)
+);
 ```
 
 
@@ -853,7 +865,7 @@ INSERT INTO students_new(student_id,student_name,student_age,student_weight) VAL
 
 INSERT INTO students_new(student_name,student_age) VALUES('丛老师',26);
 
-INSERT INTO students_new VALUES(0,'杨小辉',3,42)
+INSERT INTO students_new VALUES(0,'杨小辉',3,42);
 
 ```
 

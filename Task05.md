@@ -97,9 +97,95 @@ OLAP 是 OnLine Analytical Processing 的简称，意思是**对数据库数据�
 
 * 聚合函数也可以用于窗口函数
 
-下面是一个窗口函数的简单例子：
+### 5.1.2 窗口函数的例子（学生成绩累计平均值）
 
-![BT7D11](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/BT7D11.jpg)
+
+
+窗口函数（也称为 OLAP 函数）是一种可以在查询中对数据进行分组并排序的特殊函数。它的作用是对结果集中的一部分数据进行计算，而不需要像传统的聚合函数那样将数据压缩成一个单一的值。
+
+可以将窗口函数理解为在“窗口”内对数据进行分析，而这个窗口内的数据通常是通过分组、排序或者其他方式指定的。它允许在每一行中计算某种统计值，但每一行的数据仍然会被保留，而不是被合并成一个结果。
+
+举个例子
+
+假设你有一个关于学生成绩的表格，包含以下字段：
+
+* student_id（学生 ID）
+* exam_score（考试成绩）
+* exam_date（考试日期）
+
+表格如下：
+
+```
+student_id	exam_score	exam_date
+1                   90          2024-11-01
+2                   85          2024-11-01
+3                   92          2024-11-01
+1                   88          2024-11-02
+2                   78          2024-11-02
+3                   85          2024-11-02
+```
+
+如果你想要计算每个学生考试成绩的累计平均分，并且希望查看所有学生每一场考试的成绩以及累计平均分，你可以使用窗口函数来实现：
+
+```sql
+SELECT 
+    student_id, 
+    exam_score, 
+    exam_date,
+    AVG(exam_score) OVER (PARTITION BY student_id ORDER BY exam_date) AS running_avg
+FROM 
+    exam_scores;
+```
+
+在这个查询中，`AVG(exam_score) OVER (PARTITION BY student_id ORDER BY exam_date)` 就是一个窗口函数：
+
+* PARTITION BY：按 student_id 分组，即每个学生的数据被单独处理。
+* ORDER BY：按 exam_date 排序，即成绩会按日期顺序进行计算。
+* 窗口函数：在每个学生的所有记录中，计算该学生到当前考试为止的累计平均分。
+
+结果：
+
+```
+student_id	exam_score	exam_date	running_avg
+      1               90	2024-11-01             90.0
+      2               85	2024-11-01             85.0
+      3               92	2024-11-01             92.0
+      1               88	2024-11-02             89.0
+      2               78	2024-11-02             81.5
+      3               85	2024-11-02             88.5
+```
+
+解释：
+
+* 对于 student_id = 1：
+  - 第一行是 90，没有其他成绩，平均分就是 90。
+  - 第二行是 88，所以平均分是 (90 + 88) / 2 = 89。
+* 对于 student_id = 2：
+  - 第一行是 85，没有其他成绩，平均分就是 85。
+  - 第二行是 78，所以平均分是 (85 + 78) / 2 = 81.5。
+* 对于 student_id = 3：
+  - 第一行是 92，没有其他成绩，平均分就是 92。
+  - 第二行是 85，所以平均分是 (92 + 85) / 2 = 88.5。
+
+关键点：
+
+1. 窗口函数保留每一行数据：不像聚合函数（如 SUM() 或 COUNT()），窗口函数不会合并行数据，它为每行计算一个值，并且每行依然保留在结果集中。
+2. 可以进行复杂的分析：你可以使用窗口函数计算累计和、排名、移动平均等，而不需要手动对数据进行多次查询。
+3. 灵活性：可以通过 PARTITION BY 来指定分组，通过 ORDER BY 来指定排序，使得在分析时非常灵活。
+
+常见的窗口函数：
+
+* ROW_NUMBER()：为每一行分配唯一的数字。
+* RANK()：为每一行分配一个排名，若有并列名次，则跳过排名。
+* DENSE_RANK()：与 RANK() 类似，但排名不跳过。
+* NTILE(n)：将数据划分为 n 个部分，并为每行分配一个组号。
+* SUM(), AVG(), MIN(), MAX()：这些聚合函数可以作为窗口函数使用，按特定规则对分组的数据进行计算。
+
+总结：
+
+窗口函数就像是对数据表的一扇“窗口”，它允许你在不改变数据结构的情况下，对某些数据进行详细的统计和分析，非常适合处理类似排名、累计和移动平均等问题。
+
+### 5.1.3 窗口函数功能分类 
 
 按照功能划分，可以把MySQL支持的窗口函数分为如下几类：
 
@@ -111,7 +197,7 @@ OLAP 是 OnLine Analytical Processing 的简称，意思是**对数据库数据�
 
 * 头尾函数：first_val() / last_val()
 
-* 其他函数：nth_value() / nfile()
+* 其他函数：nth_value() / ntile()
 
 窗口函数的通用形式：
 
@@ -160,32 +246,36 @@ _[]_ 中的内容可以省略。
 
 其中，**OVER** 是关键字，用来指定函数执行的窗口范围，如果后面括号中什么都不写，则意味着窗口包含满足 WHERE 条件的所有行，窗口函数基于所有行进行计算；如果不为空，则支持以下四种语法来设置窗口：
 
-* 1. window_name：给窗口指定一个别名，如果SQL中涉及的窗口较多，采用别名可以看起来更清晰易读。
+* 1. **window_name**：给窗口指定一个别名，如果SQL中涉及的窗口较多，采用别名可以看起来更清晰易读。
 
 上面例子中如果指定一个别名 _w_，则改写如下：
 
 ```sql
-    select * from(
-        select 
-          row_number() over w as row_num,
+    SELECT * FROM(
+        SELECT 
+          ROW_NUMBER() OVER w as row_num,
           order_id,
           user_no,
           amount,
           create_date
-        from order_tab
-        WINDOW w AS (partition by user_no order by amount desc)
+        FROM order_tab
+        WINDOW w AS (PARTITION BY user_no ORDER BY amount desc)
     ) t ;
 ```
 
-* 2. partition 子句：窗口按照那些字段进行分组，窗口函数在不同的分组上分别执行。上面的例子就按照用户 id 进行了分组。在每个用户 id 上，按照 order by 的顺序分别生成从 1 开始的顺序编号。
+* 2. **partition 子句**：窗口按照那些字段进行分组，窗口函数在不同的分组上分别执行。上面的例子就按照用户 id 进行了分组。在每个用户 id 上，按照 order by 的顺序分别生成从 1 开始的顺序编号。
 
-* 3. order by 子句：按照哪些字段进行排序，窗口函数将按照排序后的记录顺序进行编号。可以和 partition 子句配合使用，也可以单独使用。上例中二者同时使用，如果没有 partition 子句，则会按照所有用户的订单金额排序来生成序号。
+* 3. **order by 子句**：按照哪些字段进行排序，窗口函数将按照排序后的记录顺序进行编号。可以和 partition 子句配合使用，也可以单独使用。上例中二者同时使用，如果没有 partition 子句，则会按照所有用户的订单金额排序来生成序号。
 
-* 4. frame 子句：frame 是当前分区的一个子集，子句用来定义子集的规则，通常用来作为滑动窗口使用。比如要根据每个订单动态计算包括本订单和按时间顺序前后两个订单的平均订单金额，则可以设置如下frame子句来创建滑动窗口：
+* 4. **frame 子句**：frame 是当前分区的一个子集，子句用来定义子集的规则，通常用来作为滑动窗口使用。比如要根据每个订单动态计算包括本订单和按时间顺序前后两个订单的平均订单金额，则可以设置如下frame子句来创建滑动窗口：
 
  ![WDHDUk](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/WDHDUk.jpg)
 
-从结果可以看出，order_id 为 5 订单属于边界值，没有前一行，因此平均订单金额为 (900+800)/2=850；order_id为 4 的订单前后都有订单，所以平均订单金额为（900+800+300）/3=666.6667，以此类推就可以得到一个基于滑动窗口的动态平均订单值。此例中，窗口函数用到了传统的聚合函数avg()，用来计算动态的平均值。
+从结果可以看出，
+* order_id 为 5 订单属于边界值，没有前一行，因此平均订单金额为 (900+800)/2 = 850；
+* order_id 为 4 的订单前后都有订单，所以平均订单金额为（900+800+300）/3 =6 66.6667，
+* 以此类推就可以得到一个基于滑动窗口的动态平均订单值。
+* 此例中，窗口函数用到了传统的聚合函数avg()，用来计算动态的平均值。
 
 ## 5.2 窗口函数分类
 
@@ -199,21 +289,18 @@ _[]_ 中的内容可以省略。
 
 * **RANK 函数 （英式排序）** 序号函数
 
-    计算排序时，如果存在相同位次的记录，则会跳过之后的位次。
-
-    例如有 3 条记录排在第 1 位时：1 位、1 位、1 位、4 位……
+    - 计算排序时，如果存在相同位次的记录，则会跳过之后的位次。
+    - 例如有 3 条记录排在第 1 位时：1 位、1 位、1 位、4 位……
 
 * **DENSE_RANK 函数 （中式排序）** 序号函数
 
-    同样是计算排序，即使存在相同位次的记录，也不会跳过之后的位次。
-
-    例如有 3 条记录排在第 1 位时：1 位、1 位、1 位、2 位……
+    - 同样是计算排序，即使存在相同位次的记录，也不会跳过之后的位次。
+    - 例如有 3 条记录排在第 1 位时：1 位、1 位、1 位、2 位……
 
 * **ROW_NUMBER 函数** 序号函数
 
-    赋予唯一的连续位次。
-
-    例如有 3 条记录排在第 1 位时：1 位、2 位、3 位、4 位
+    - 赋予唯一的连续位次。
+    - 例如有 3 条记录排在第 1 位时：1 位、2 位、3 位、4 位
 
     运行以下代码：
 
@@ -222,12 +309,9 @@ _[]_ 中的内容可以省略。
             product_name,
             product_type,
             sale_price,
-            RANK() OVER (
-                ORDER BY sale_price) AS ranking,
-            DENSE_RANK() OVER (
-                ORDER BY sale_price) AS dense_ranking ,
-            ROW_NUMBER() OVER (
-                ORDER BY sale_price) AS row_num
+            RANK() OVER (ORDER BY sale_price) AS ranking,
+            DENSE_RANK() OVER (ORDER BY sale_price) AS dense_ranking ,
+            ROW_NUMBER() OVER (ORDER BY sale_price) AS row_num
     FROM product
 ```
 
@@ -254,7 +338,11 @@ _[]_ 中的内容可以省略。
 
 ![9wxzrp](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/9wxzrp.jpg)
 
-可以看出，聚合函数结果是，按我们指定的排序，这里是 product_id，**当前所在行及之前所有的行** 的合计或均值。即累计到当前行的聚合。
+可以看出，聚合函数结果是，按我们指定的排序，这里是 product_id，**当前所在行及之前所有的行** 的合计或均值。
+
+即累计到当前行的聚合。
+
+### 5.2.3 滑动窗口
 
 对于滑动窗口的范围指定，有两种方式，基于行和基于范围，具体区别如下：
 
@@ -262,21 +350,23 @@ _[]_ 中的内容可以省略。
 
     通常使用 **BETWEEN frame_start AND frame_end** 语法来表示行范围，frame_start 和 frame_end 可以支持如下关键字，来确定不同的动态行记录：
     
-    - CURRENT ROW 边界是当前行，一般和其他范围关键字一起使用
-    - UNBOUNDED PRECEDING 边界是分区中的第一行
-    - UNBOUNDED FOLLOWING 边界是分区中的最后一行
-    - expr PRECEDING  边界是当前行减去expr的值
-    - expr FOLLOWING  边界是当前行加上expr的值
+    - **CURRENT ROW** 边界是当前行，一般和其他范围关键字一起使用
+    - **UNBOUNDED PRECEDING** 边界是分区中的第一行
+    - **UNBOUNDED FOLLOWING** 边界是分区中的最后一行
+    - **expr PRECEDING**  边界是当前行减去expr的值
+    - **expr FOLLOWING**  边界是当前行加上expr的值
 
     比如，下面都是合法的范围：
     
-    - rows BETWEEN 1 PRECEDING AND 1 FOLLOWING 窗口范围是当前行、前一行、后一行一共三行记录。
-    - rows UNBOUNDED FOLLOWING 窗口范围是当前行到分区中的最后一行。
-    - rows BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING 窗口范围是当前分区中所有行，等同于不写。
+    - _rows BETWEEN 1 PRECEDING AND 1 FOLLOWING_ 窗口范围是当前行、前一行、后一行一共三行记录。
+    - _rows UNBOUNDED FOLLOWING_ 窗口范围是当前行到分区中的最后一行。
+    - _rows BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING_ 窗口范围是当前分区中所有行，等同于不写。
 
 * 基于范围：
 
-    和基于行类似，但有些范围不是直接可以用行数来表示的，比如希望窗口范围是一周前的订单开始，截止到当前行，则无法使用rows来直接表示，此时就可以使用范围来表示窗口：INTERVAL 7 DAY PRECEDING。Linux中常见的最近1分钟、5分钟负载是一个典型的应用场景。
+    和基于行类似，但有些范围不是直接可以用行数来表示的。
+    比如希望窗口范围是一周前的订单开始，截止到当前行，则无法使用 rows 来直接表示，
+    此时就可以使用范围来表示窗口：INTERVAL 7 DAY PRECEDING。Linux 中常见的最近 1 分钟、5 分钟负载是一个典型的应用场景。
     
     有的函数不管有没有 frame 子句，它的窗口都是固定的，也就是前面介绍的静态窗口，这些函数包括如下：
     
@@ -291,7 +381,7 @@ _[]_ 中的内容可以省略。
 
     接下来我们以上例的订单表为例，来介绍每个函数的使用方法。表中各字段含义按顺序分别为订单号、用户id、订单金额、订单创建日期。
 
-## 5.3 窗口函数的的应用 - 计算移动平均
+### 5.2.4 窗口函数的的应用 - 计算移动平均
 
 在上面提到，聚合函数在窗口函数使用时，计算的是累积到当前行的所有的数据的聚合。
 
@@ -311,7 +401,7 @@ PRECEDING（“之前”），将框架指定为 “截止到之前 n 行”，�
 
 FOLLOWING（“之后”），将框架指定为 “截止到之后 n 行”，加上自身行；
 
-BETWEEN 1 PRECEDING AND 1 FOLLOWING，将框架指定为 “之前 1 行” + “之后 1 行” + “自身”
+**BETWEEN 1 PRECEDING AND 1 FOLLOWING，将框架指定为 “之前 1 行” + “之后 1 行” + “自身”**
 
 执行以下代码：
 
@@ -321,10 +411,12 @@ BETWEEN 1 PRECEDING AND 1 FOLLOWING，将框架指定为 “之前 1 行” + �
             product_name,
             sale_price,
             AVG(sale_price) OVER (
-                                ORDER BY product_id ROWS 2 PRECEDING) AS moving_avg,
+                                ORDER BY product_id 
+                                ROWS 2 PRECEDING) AS moving_avg,
             AVG(sale_price) OVER (
                                 ORDER BY product_id
-                                   ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS moving_avg  
+                                ROWS BETWEEN 1 PRECEDING 
+                                     AND 1 FOLLOWING) AS moving_avg  
     FROM product
 ```
 
@@ -332,22 +424,22 @@ BETWEEN 1 PRECEDING AND 1 FOLLOWING，将框架指定为 “之前 1 行” + �
 
 注意观察框架的范围。
 
-ROWS 2 PRECEDING：
+**ROWS 2 PRECEDING：**
 
 ![VIohyw](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/VIohyw.jpg)
 
-ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING：
+**ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING：**
 
 ![Spv6ae](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/Spv6ae.jpg)
 
-### 5.3.1 窗口函数适用范围和注意事项
+> 窗口函数适用范围和注意事项
 
-* 原则上，窗口函数只能在 SELECT 子句中使用。
-* 窗口函数 OVER 中的 ORDER BY 子句并不会影响最终结果的排序。其只是用来决定窗口函数按何种顺序计算。
+* 原则上，窗口函数只能在 **SELECT** 子句中使用。
+* 窗口函数 OVER 中的 **ORDER BY** 子句并不会影响最终结果的排序。其只是用来决定窗口函数按何种顺序计算。
 
-## 5.4 GROUPING 运算符
+### 5.2.5 GROUPING 运算符
 
-### 5.4.1 ROLLUP - 计算合计及小计
+#### 5.2.4.1 ROLLUP - 计算合计及小计
 
 常规的 GROUP BY 只能得到每个分类的小计，有时候还需要计算分类的合计，可以用 ROLLUP 关键字。
 
@@ -369,25 +461,25 @@ ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING：
 
 这里 ROLLUP 对 product_type, regist_date 两列进行合计汇总。
 
-结果实际上有三层聚合，如下图 模块 3 是常规的 GROUP BY 的结果，需要注意的是衣服 有个注册日期为空的，这是本来数据就存在日期为空的，不是对衣服类别的合计； 
+结果实际上有三层聚合，如下图模块 3 是常规的 GROUP BY 的结果，需要注意的是衣服有个注册日期为空的，这是本来数据就存在日期为空的，不是对衣服类别的合计； 
 
 模块 2 和 1 是 ROLLUP 带来的合计，模块 2 是对产品种类的合计，模块 1 是对全部数据的总计。
 
-ROLLUP 可以对多列进行汇总求小计和合计。
+**ROLLUP 可以对多列进行汇总求小计和合计。**
 
 ![XpyHSn](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/XpyHSn.jpg)
 
-## 5.5 序号函数 row_number() / rank() / dense_rank()。
+### 5.2.6 序号函数 row_number() / rank() / dense_rank()
 
 用途：显示分区中的当前行号
 
-使用场景：希望查询每个用户订单金额最高的前三个订单
+**使用场景：希望查询每个用户订单金额最高的前三个订单**
 
 ![BQMIpR](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/BQMIpR.jpg)
 
-此时可以使用ROW_NUMBER()函数按照用户进行分组并按照订单日期进行由大到小排序，最后查找每组中序号<=3的记录。
+此时可以使用 ROW_NUMBER() 函数按照用户进行分组并按照订单日期进行由大到小排序，最后查找每组中序号 <=3 的记录。
 
-对于用户‘002’的订单，大家发现订单金额为800的有两条，序号随机排了1和2，但很多情况下二者应该是并列第一，而订单为600的序号则可能是第二名，也可能为第三名，这时候，row_number就不能满足需求，需要rank和dense_rank出场。
+对于用户‘002’的订单，大家发现订单金额为800的有两条，序号随机排了 1 和 2，但很多情况下二者应该是并列第一，而订单为600的序号则可能是第二名，也可能为第三名，这时候，row_number就不能满足需求，需要rank和dense_rank出场。
 
 这两个函数和row_number()非常类似，只是在出现重复值时处理逻辑有所不同。
 
@@ -397,13 +489,13 @@ ROLLUP 可以对多列进行汇总求小计和合计。
 
 上面红色粗体显示了三个函数的区别，row_number()在amount都是800的两条记录上随机排序，但序号按照1、2递增，后面amount为600的的序号继续递增为3，中间不会产生序号间隙；rank()/dense_rank()则把amount为800的两条记录序号都设置为1，但后续amount为600的需要则分别设置为3（rank）和2（dense_rank）。即rank（）会产生序号相同的记录，同时可能产生序号间隙；而dense_rank（）也会产生序号相同的记录，但不会产生序号间隙。
 
-## 5.6 分布函数 percent_rank()/cume_dist()。
+### 5.2.7 分布函数 percent_rank()/cume_dist()
 
-### 5.6.1 percent_rank()
+#### 5.2.7.1 percent_rank()
 
 用途：和之前的RANK()函数相关，每行按照如下公式进行计算：
 
-(rank - 1) / (rows - 1)
+$\frac{rank - 1}{rows - 1}$
 
 其中，rank为RANK()函数产生的序号，rows为当前窗口的记录总行数。
 
@@ -411,65 +503,65 @@ ROLLUP 可以对多列进行汇总求小计和合计。
 
 从结果看出，percent列按照公式(rank - 1) / (rows - 1)带入rank值（row_num列）和rows值（user_no为‘001’和‘002’的值均为5）。
 
-### 5.6.2 cume_dist()
+#### 5.2.7.2 cume_dist()
 
 用途：分组内小于等于当前rank值的行数/分组内总行数，这个函数比percen_rank使用场景更多。
 
-应用场景：大于等于当前订单金额的订单比例有多少。
+**应用场景：大于等于当前订单金额的订单比例有多少。**
 
 SQL如下：
 
 ![vfY56p](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/vfY56p.jpg)
 
-列cume显示了预期的数据分布结果。
+列 cume 显示了预期的数据分布结果。
 
-## 5.7 前后函数 lead(n)/lag(n)。
+### 5.2.8 前后函数 lead(n)/lag(n)
 
 用途：分区中位于当前行前n行（lead）/后n行(lag)的记录值。
 
-使用场景：查询上一个订单距离当前订单的时间间隔。
+**使用场景：查询上一个订单距离当前订单的时间间隔。**
 
 SQL如下：
 
 ![nsPbBE](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/nsPbBE.jpg)
 
-内层SQL先通过lag函数得到上一次订单的日期，外层SQL再将本次订单和上次订单日期做差得到时间间隔diff。
+内层SQL先通过 lag 函数得到上一次订单的日期，外层SQL再将本次订单和上次订单日期做差得到时间间隔 diff。
 
-## 5.8 头尾函数 first_val(expr)/last_val(expr)。
+### 5.2.9 头尾函数 first_val(expr)/last_val(expr)。
 
 用途：得到分区中的第一个/最后一个指定参数的值。
 
-使用场景：查询截止到当前订单，按照日期排序第一个订单和最后一个订单的订单金额。
+**使用场景：查询截止到当前订单，按照日期排序第一个订单和最后一个订单的订单金额。**
 
 SQL如下：
 
 ![dtJk8H](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/dtJk8H.jpg)
 
-结果和预期一致，比如order_id为4的记录，first_amount和last_amount分别记录了用户‘001’截止到时间2018-01-03 00:00:00为止，第一条订单金额100和最后一条订单金额800，注意这里是按时间排序的最早订单和最晚订单，并不是最小金额和最大金额订单。
+结果和预期一致，比如 order_id 为 4 的记录，first_amount 和 last_amount 分别记录了用户‘001’截止到时间2018-01-03 00:00:00为止，第一条订单金额100和最后一条订单金额800，注意这里是按时间排序的最早订单和最晚订单，并不是最小金额和最大金额订单。
 
-## 5.9 其他函数 nth_value(expr,n)/nfile(n）。
+### 5.2.10 其他函数 nth_value(expr,n)/ntile(n）
 
-### 5.9.1 nth_value(expr,n)
+#### 5.2.10.1 nth_value(expr,n)
 
 用途：返回窗口中第N个expr的值，expr可以是表达式，也可以是列名。
 
-应用场景：每个用户订单中显示本用户金额排名第二和第三的订单金额。
+**应用场景：每个用户订单中显示本用户金额排名第二和第三的订单金额。**
 
 SQL如下：
 
 ![hNPTk0](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/hNPTk0.jpg)
 
-### 5.9.2 ntile(n)
+### 5.2.10.2 ntile(n)
 
-用途：将分区中的有序数据分为n个桶，记录桶号。
+用途：将分区中的有序数据分为 n 个桶，记录桶号。
 
-应用场景：将每个用户的订单按照订单金额分成3组。
+应用场景：将每个用户的订单按照订单金额分成 3 组。
 
 SQL如下：
 
 ![73v7aH](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/73v7aH.jpg)
 
-此函数在数据分析中应用较多，比如由于数据量大，需要将数据平均分配到N个并行的进程分别计算，此时就可以用NFILE(N)对数据进行分组，由于记录数不一定被N整除，所以数据不一定完全平均，然后将不同桶号的数据再分配。
+此函数在数据分析中应用较多，比如由于数据量大，需要将数据平均分配到N个并行的进程分别计算，此时就可以用NTILE(N)对数据进行分组，由于记录数不一定被N整除，所以数据不一定完全平均，然后将不同桶号的数据再分配。
 
 ## 练习题
 
