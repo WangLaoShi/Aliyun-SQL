@@ -600,3 +600,145 @@ INSERT INTO samplelike (strcol) VALUES ('abddc');
 COMMIT; -- 提交事务
 
 SELECT * FROM samplelike;
+
+-- 前方一致：选取出“dddabc”
+
+SELECT *
+FROM samplelike
+WHERE strcol LIKE 'ddd%';
+
+-- 中间一致：选取出“abcddd”,“dddabc”,“abdddc”
+
+SELECT *
+FROM samplelike
+WHERE strcol LIKE '%ddd%';
+
+-- 后方一致：选取出“abcddd“
+
+SELECT *
+FROM samplelike
+WHERE strcol LIKE '%ddd';
+
+-- 选取销售单价为 100～ 1000 元的商品
+SELECT product_name, sale_price
+FROM product
+WHERE sale_price BETWEEN 100 AND 1000;
+
+-- 如果不想让结果中包含临界值，那就必须使用 `<` 和 `>`。
+SELECT product_name, sale_price
+FROM product
+WHERE sale_price > 100
+    AND sale_price < 1000;
+
+-- 为了选取出某些值为 NULL 的列的数据，不能使用 `=`，而只能使用特定的谓词 **IS NULL**。
+SELECT product_name, purchase_price
+FROM product
+WHERE purchase_price IS NULL;
+
+-- 想要选取 NULL 以外的数据时，需要使用 `IS NOT NULL`。
+SELECT product_name, purchase_price
+FROM product
+WHERE purchase_price IS NOT NULL;
+
+-- 多个查询条件取并集时可以选择使用 `or` 语句。
+-- 通过 OR 指定多个进货单价进行查询
+SELECT product_name, purchase_price
+FROM product
+WHERE purchase_price = 320
+    OR purchase_price = 500
+    OR purchase_price = 5000;
+
+SELECT product_name, purchase_price
+FROM product
+WHERE purchase_price IN (320, 500, 5000);
+
+-- “进货单价不是 320 元、 500 元、 5000 元”的商品时，可以使用否定形式 NOT IN 来实现。
+SELECT product_name, purchase_price
+FROM product
+WHERE purchase_price NOT IN (320, 500, 5000);
+
+
+-- DDL ：创建表
+DROP TABLE IF EXISTS shop_product;
+
+CREATE TABLE shop_product(
+  shop_id CHAR(4)     NOT NULL,
+  shop_name VARCHAR(200) NOT NULL,
+  product_id CHAR(4)      NOT NULL,
+  quantity INTEGER      NOT NULL,
+  PRIMARY KEY (shop_id, product_id) -- 指定主键
+);
+
+-- DML ：插入数据
+START TRANSACTION; -- 开始事务
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000A', '东京', '0001', 30);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000A', '东京', '0002', 50);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000A', '东京', '0003', 15);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000B', '名古屋', '0002', 30);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000B', '名古屋', '0003', 120);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000B', '名古屋', '0004', 20);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000B', '名古屋', '0006', 10);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000B', '名古屋', '0007', 40);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000C', '大阪', '0003', 20);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000C', '大阪', '0004', 50);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000C', '大阪', '0006', 90);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000C', '大阪', '0007', 70);
+INSERT INTO shop_product (shop_id, shop_name, product_id, quantity)
+VALUES ('000D', '福冈', '0001', 100);
+COMMIT; -- 提交事务
+
+
+SELECT * FROM shop_product;
+
+-- step1：取出大阪门店的在售商品 `product_id`
+SELECT product_id
+FROM shop_product
+WHERE shop_id = '000C';
+
+-- step2：取出大阪门店在售商品的销售单价 `sale_price`
+SELECT product_name, sale_price
+FROM product
+WHERE product_id IN (SELECT product_id
+                   FROM shop_product
+                   WHERE shop_id = '000C');
+
+-- 子查询展开后的结果
+SELECT product_name, sale_price
+FROM product
+WHERE product_id IN ('0003', '0004', '0006', '0007');
+
+-- NOT IN 使用子查询作为参数，取出未在大阪门店销售的商品的销售单价
+SELECT product_name, sale_price
+FROM product
+WHERE product_id NOT IN (SELECT product_id
+                       FROM shop_product
+                       WHERE shop_id = '000A');
+
+-- 使用 EXIST 选取出大阪门店在售商品的销售单价。
+SELECT product_name, sale_price
+FROM product AS p
+WHERE EXISTS (SELECT *
+           FROM shop_product AS sp
+           WHERE sp.shop_id = '000C'
+                 AND sp.product_id = p.product_id
+           );
+
+-- 更高效率的写法
+SELECT product_name, sale_price
+FROM product AS p
+WHERE EXISTS (SELECT 1 -- 这里可以书写适当的常数
+           FROM shop_product AS sp
+           WHERE sp.shop_id = '000C'
+               AND sp.product_id = p.product_id);
