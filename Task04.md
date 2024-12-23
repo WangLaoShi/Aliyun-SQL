@@ -1,14 +1,145 @@
-# Task04：集合运算 - 表的加减法和 join 等
+# 集合运算 - 表的加减法和 join
 
 [TOC]
+## 4.1 数学中的集合 
 
-## 4.1 表的加减法
+在数学中，**集合**（set）是指一组特定对象的无序集。集合中的对象称为**元素**，具有明确的属性。例如，所有偶数的集合、所有学生的集合等。
 
-### 4.1.1 什么是集合运算
+### 4.1.1 集合的表示方法
+
+1. **列举法**：直接列出所有元素，用 `{}` 包裹，例如：`A = {1, 2, 3}`。
+2. **描述法**：通过描述属性来定义集合，例如：`A = {x | x 是小于 10 的正整数}`。
+
+### 4.1.2 集合的基本概念
+
+- **元素关系**：如果元素 `a` 属于集合 `A`，则记为 `a ∈ A`；如果不属于，则记为 `a ∉ A`。
+- **子集**：如果集合 `A` 的所有元素都属于集合 `B`，则称 `A` 是 `B` 的子集，记为 `A ⊆ B`。
+- **空集**：不包含任何元素的集合，记为 `{}` 或 `∅`。
+- **全集**：包含所有研究对象的集合。
+- **补集**：全集中不在某集合中的元素构成的集合，称为该集合的补集。
+
+### 4.1.3 集合的基本运算
+
+集合运算用于在集合间进行组合、比较等操作，常见运算有：
+
+1. **并集**（Union）
+    - 符号：`A ∪ B`
+    - 定义：包含在集合 `A` 或集合 `B` 中的所有元素的集合。
+    - 示例：若 `A = {1, 2, 3}`，`B = {3, 4, 5}`，则 `A ∪ B = {1, 2, 3, 4, 5}`。
+
+2. **交集**（Intersection）
+    - 符号：`A ∩ B`
+    - 定义：包含在集合 `A` 和集合 `B` 中的公共元素的集合。
+    - 示例：若 `A = {1, 2, 3}`，`B = {3, 4, 5}`，则 `A ∩ B = {3}`。
+
+3. **差集**（Difference）
+    - 符号：`A - B` 或 `A \ B`
+    - 定义：包含在 `A` 中但不在 `B` 中的元素的集合。
+    - 示例：若 `A = {1, 2, 3}`，`B = {3, 4, 5}`，则 `A - B = {1, 2}`。
+
+4. **补集**（Complement）
+    - 符号：`A'`
+    - 定义：在全集中不属于 `A` 的元素的集合。
+    - 示例：若 `U = {1, 2, 3, 4, 5}` 为全集，`A = {1, 2}`，则 `A' = {3, 4, 5}`。
+
+5. **对称差**（Symmetric Difference）
+    - 符号：`A △ B`
+    - 定义：只属于 `A` 或 `B`，但不属于二者交集的元素的集合。
+    - 示例：若 `A = {1, 2, 3}`，`B = {3, 4, 5}`，则 `A △ B = {1, 2, 4, 5}`。
+
+### 4.1.4 集合运算的性质
+
+1. **交换律**：`A ∪ B = B ∪ A` 和 `A ∩ B = B ∩ A`
+2. **结合律**：`(A ∪ B) ∪ C = A ∪ (B ∪ C)` 和 `(A ∩ B) ∩ C = A ∩ (B ∩ C)`
+3. **分配律**：`A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)` 和 `A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)`
+4. **德摩根律**：`(A ∪ B)' = A' ∩ B'` 和 `(A ∩ B)' = A' ∪ B'`
+
+这些运算和性质使得集合成为数学中处理复杂关系和分类的有效工具，广泛用于数学、逻辑、计算机科学等领域。
+
+### 4.1.5 Python 中的集合运算
+
+```python
+# 定义集合 A, B 和全集 U
+A = {1, 2, 3}
+B = {3, 4, 5}
+U = {1, 2, 3, 4, 5}
+
+# 并集（Union）
+union_ab = A | B  # 等同于 A.union(B)
+print(f"A ∪ B = {union_ab}")
+
+# 交集（Intersection）
+intersection_ab = A & B  # 等同于 A.intersection(B)
+print(f"A ∩ B = {intersection_ab}")
+
+# 差集（Difference）
+difference_ab = A - B  # 等同于 A.difference(B)
+print(f"A - B = {difference_ab}")
+
+# 补集（Complement）: 使用全集减去集合 A
+complement_a = U - A
+print(f"A' = {complement_a}")
+
+# 对称差（Symmetric Difference）
+symmetric_difference_ab = A ^ B  # 等同于 A.symmetric_difference(B)
+print(f"A △ B = {symmetric_difference_ab}")
+
+# 交换律（Commutative Laws）
+assert A | B == B | A, "并集交换律不成立"
+assert A & B == B & A, "交集交换律不成立"
+print("并集和交集的交换律成立")
+
+# 结合律（Associative Laws）
+C = {5, 6}
+assert (A | B) | C == A | (B | C), "并集结合律不成立"
+assert (A & B) & C == A & (B & C), "交集结合律不成立"
+print("并集和交集的结合律成立")
+
+# 分配律（Distributive Laws）
+assert A & (B | C) == (A & B) | (A & C), "交对并分配律不成立"
+assert A | (B & C) == (A | B) & (A | C), "并对交分配律不成立"
+print("分配律成立")
+
+# 德摩根律（De Morgan's Laws）
+complement_union = U - (A | B)  # (A ∪ B)'
+complement_intersection = (U - A) & (U - B)  # A' ∩ B'
+assert complement_union == complement_intersection, "德摩根律第一条不成立"
+
+complement_intersection = U - (A & B)  # (A ∩ B)'
+complement_union = (U - A) | (U - B)  # A' ∪ B'
+assert complement_intersection == complement_union, "德摩根律第二条不成立"
+
+print("德摩根律成立")
+```
+
+## 4.2 表的加减法
+
+### 4.2.1 什么是集合运算
 
 ` 集合 ` 在数学领域表示“各种各样的事物的总和”, 在数据库领域表示记录的集合。
 
 **具体来说，表、视图和查询的执行结果都是记录的集合，其中的元素为表或者查询结果中的每一行。**
+
+product2 的执行语句：
+
+```sql
+-- 创建商品表2
+CREATE TABLE product2(
+     product_id CHAR(4) NOT NULL,
+     product_name VARCHAR(100) NOT NULL,
+     product_type VARCHAR(32) NOT NULL,
+     sale_price INTEGER,
+     purchase_price INTEGER,
+     regist_date DATE,
+     PRIMARY KEY(product_id)
+);
+-- 插入数据
+INSERT INTO product2 VALUES('0001', 'T 恤衫', '衣服', 1000, 500, '2009-09-20');
+INSERT INTO product2 VALUES('0002', '打孔器', '办公用品', 500, 320, '2009-09-11');
+INSERT INTO product2 VALUES('0003', '运动 T 恤', '衣服', 4000, 2800, NULL);
+INSERT INTO product2 VALUES('0009', '手套', '衣服', 500, 800, NULL);
+INSERT INTO product2 VALUES('0010', '水壶', '厨房用具', 1700, 2000, '2009-09-20');
+```
 
 在标准 SQL 中，分别对检索结果使用 `UNION`, `INTERSECT,` `EXCEPT` 来将检索结果进行**并**, **交**和**差**运算，像 `UNION`,`INTERSECT`, `EXCEPT` 这种用来进行集合运算的运算符称为`集合运算符`。
 
@@ -23,11 +154,9 @@
 
 在数据库中，所有的表(以及查询结果)都可以视为集合，因此也可以把表视为集合进行上述集合运算，在很多时候，这种抽象非常有助于对复杂查询问题给出一个可行的思路。
 
-### 4.1.2 表的加法–UNION
+### 4.2.2 并运算 UNION
 
-#### 4.1.2.1 UNION
-
-建表代码及数据导入请使用第一章提供的代码。
+#### 4.2.2.1 UNION
 
 接下来我们演示 UNION 的具体用法及查询结果:
 
@@ -80,15 +209,17 @@
         OR sale_price > 1.5 * purchase_price;
 ```
 
-#### 4.1.2.2 UNION 与 OR 谓词
+#### 4.2.2.2 UNION 与 OR 谓词
 
-对于上边的练习题，如果你已经正确地写出来查询，你会发现，使用 UNION 对两个查询结果取并集，和在一个查询中使用 WHERE 子句，然后使用 OR 谓词连接两个查询条件，能够得到相同的结果。
+对于上边的练习题，如果你已经正确地写出来查询，你会发现，使用 UNION 对两个查询结果取并集和在一个查询中使用 WHERE 子句，然后使用 OR 谓词连接两个查询条件，能够得到相同的结果。
 
-那么是不是就没必要引入 UNION 了呢? 
+**那么是不是就没必要引入 UNION 了呢?** 
 
-当然不是这样的。确实，对于同一个表的两个不同的筛选结果集，使用 UNION 对两个结果集取并集和把两个子查询的筛选条件用 OR 谓词连接，会得到相同的结果，但倘若要将两个不同的表中的结果合并在一起，就不得不使用 UNION 了。
+当然不是这样的。
 
-而且，即便是对于同一张表，有时也会出于查询效率方面的因素来使用 UNION.
+确实，对于同一个表的两个不同的筛选结果集，使用 UNION 对两个结果集取并集和把两个子查询的筛选条件用 OR 谓词连接，会得到相同的结果，但倘若要将**两个不同的表**中的结果合并在一起，就不得不使用 UNION 了。
+
+而且，即便是对于同一张表，有时也会出于**查询效率**方面的因素来使用 UNION.
 
 **练习题**
 
@@ -117,7 +248,9 @@
     WHERE sale_price / purchase_price IS NULL;
 ```
 
-#### 4.1.2.3 包含重复行的集合运算 UNION ALL
+#### 4.2.2.3 UNION ALL
+
+**UNION ALL 是允许包含重复行的集合运算。**
 
 在上面的例子中我们发现，SQL 语句的 UNION 会对两个查询的结果集进行合并和去重，这种去重不仅会去掉两个结果集相互重复的，还会去掉一个结果集中的重复行。但在实践中有时候需要不去重的并集，在 UNION 的结果中保留重复行的语法其实非常简单，**只需要在 UNION 后面添加 ALL 关键字就可以了**.
 
@@ -164,13 +297,17 @@
     WHERE sale_price > 1.5 * purchase_price
 ```
 
-#### 4.1.2.4 [扩展阅读]bag 模型与 set 模型
+#### 4.2.2.4 bag 模型与 set 模型
 
 在高中数学课上我们就学过，集合的一个显著的特征就是集合中的元素都是互异的。
 
-当我们把数据库中的表看作是集合的时候，实际上存在一些问题的: 不论是有意的设计或无意的过失，很多数据库中的表包含了重复的行。
+当我们把数据库中的表看作是集合的时候，实际上存在一些问题的: 
 
-Bag 是和 set 类似的一种数学结构，不一样的地方在于: bag 里面允许存在重复元素，如果同一个元素被加入多次，则袋子里就有多个该元素。
+**不论是有意的设计或无意的过失，很多数据库中的表包含了重复的行。**
+
+Bag 是和 set 类似的一种数学结构，不一样的地方在于: 
+
+* bag 里面允许存在重复元素，如果同一个元素被加入多次，则袋子里就有多个该元素。
 
 通过上述 bag 与 set 定义之间的差别我们就发现，使用 bag 模型来描述数据库中的表在很多时候更加合适。
 
@@ -183,9 +320,9 @@ Bag 是和 set 类似的一种数学结构，不一样的地方在于: bag 里�
 
 这两个方面来进行计算。因此对于 A = {1,1,1,2,3,5,7}, B = {1,1,2,2,4,6,8} 两个 bag, 它们的并就等于 {1,1,1,2,2,3,4,5,6,7,8}.
 
-#### 4.1.2.5 隐式类型转换
+#### 4.2.2.5 隐式类型转换
 
-通常来说，我们会把类型完全一致，并且代表相同属性的列使用 UNION 合并到一~~起显示，~~ 但有时候，即使数据类型不完全相同，也会通过隐式类型转换来将两个类型不同的列放在一列里显示，例如字符串和数值类型:
+通常来说，我们会把类型完全一致，并且代表相同属性的列使用 UNION 合并到一起显示，但有时候，即使数据类型不完全相同，也会通过隐式类型转换来将两个类型不同的列放在一列里显示，例如字符串和数值类型:
 
 ```sql
     SELECT product_id, product_name, '1'
@@ -201,7 +338,7 @@ Bag 是和 set 类似的一种数学结构，不一样的地方在于: bag 里�
 
 **练习题:**
 
-使用 `SYSDATE()` 函数可以返回当前日期时间，是一个日期时间类型的数据，试测试该数据类型和数值，字符串等类型的兼容性。
+使用 `SYSDATE()` 函数可以返回当前日期时间，是一个日期时间类型的数据，测试该数据类型和数值，字符串等类型的兼容性。
 
 例如，以下代码可以正确执行，说明时间日期类型和字符串，数值以及缺失值均能兼容。
 
@@ -217,7 +354,9 @@ Bag 是和 set 类似的一种数学结构，不一样的地方在于: bag 里�
 
 ![8H8qY7](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/8H8qY7.jpg)
 
-### 4.1.3 MySQL 8.0 不支持交运算 INTERSECT
+### 4.2.3 交运算 INTERSECT
+
+**MySQL 8.0 不支持交运算 INTERSECT。**
 
 集合的交，就是两个集合的公共部分，由于集合元素的互异性，集合的交只需通过文氏图就可以很直观地看到它的意义。
 
@@ -237,7 +376,7 @@ Bag 是和 set 类似的一种数学结构，不一样的地方在于: bag 里�
 > You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT product_id, product_name  
 > FROM product2
 
-#### 4.1.3.1 [扩展阅读]bag 的交运算
+#### 4.2.3.1 bag 的交运算
 
 对于两个 bag, 他们的交运算会按照: 
 1. 该元素是否同时属于两个 bag, 
@@ -247,15 +386,15 @@ Bag 是和 set 类似的一种数学结构，不一样的地方在于: bag 里�
 `A = {1,1,1,2,3,5,7}, B = {1,1,2,2,4,6,8}` 两个 bag, 
 它们的交运算结果就等于 {1,1,2}.
 
-### 4.1.4 差集，补集与表的减法
+### 4.2.4 差集 EXCEPT，补集与表的减法
 
 求集合差集的减法运算和实数的减法运算有些不同，当使用一个集合 A 减去另一个集合 B 的时候，对于只存在于集合 B 而不存在于集合 A 的元素，采取直接忽略的策略，因此集合 A 和 B 做减法只是将集合 A 中也同时属于集合 B 的元素减掉。
 
 ![sgdzba](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/sgdzba.jpg)
 
-#### 4.1.4.1 MySQL 8.0 还不支持 EXCEPT 运算
+#### 4.2.4.1 差运算 EXCEPT 
 
-MySQL 8.0 还不支持表的减法运算符 EXCEPT。不过，借助第六章学过的 NOT IN 谓词，我们同样可以实现表的减法。
+**MySQL 8.0 还不支持表的减法运算符 EXCEPT。** 不过，借助之前学过的 NOT IN 谓词，我们同样可以实现表的减法。
 
 **练习题 :**
 
@@ -269,7 +408,7 @@ MySQL 8.0 还不支持表的减法运算符 EXCEPT。不过，借助第六章学
                                 FROM product2)
 ```
 
-#### 4.1.4.2 EXCEPT 与 NOT 谓词
+#### 4.2.4.2 EXCEPT 与 NOT 谓词
 
 通过上述练习题的 MySQL 解法，我们发现，使用 NOT IN 谓词，基本上可以实现和 SQL 标准语法中的 EXCEPT 运算相同的效果。
 
@@ -291,7 +430,7 @@ MySQL 8.0 还不支持表的减法运算符 EXCEPT。不过，借助第六章学
             WHERE sale_price < 1.3*purchase_price)
 ```
 
-#### 4.1.4.3 EXCEPT ALL 与 bag 的差
+#### 4.2.4.3 EXCEPT ALL 与 bag 的差
 
 类似于 UNION ALL, EXCEPT ALL 也是按出现次数进行减法，也是使用 bag 模型进行运算。
 
@@ -301,9 +440,13 @@ MySQL 8.0 还不支持表的减法运算符 EXCEPT。不过，借助第六章学
 
 2. 该元素在两个 bag 中的出现次数
 
-这两个方面来进行计算。只有属于被减数的 bag 的元素才参与 **EXCEP ALL** 运算，并且差 bag 中的次数，等于该元素在两个 bag 的出现次数之差(差为零或负数则不出现). 因此对于 `A = {1,1,1,2,3,5,7}, B = {1,1,2,2,4,6,8}` 两个 bag, 它们的差就等于 {1,3,5,7}.
+这两个方面来进行计算。
 
-#### 4.1.4.4 INTERSECT 与 AND 谓词
+只有属于被减数的 bag 的元素才参与 **EXCEP ALL** 运算，并且差 bag 中的次数，等于该元素在两个 bag 的出现次数之差(差为零或负数则不出现)。
+
+因此对于 `A = {1,1,1,2,3,5,7}, B = {1,1,2,2,4,6,8}` 两个 bag, 它们的差就等于 {1,3,5,7}.
+
+#### 4.2.4.4 INTERSECT 与 AND 谓词
 
 对于同一个表的两个查询结果而言，他们的交 INTERSECT 实际上可以等价地将两个查询的检索条件用 AND 谓词连接来实现。
 
@@ -322,7 +465,7 @@ MySQL 8.0 还不支持表的减法运算符 EXCEPT。不过，借助第六章学
        AND sale_price < 1500
 ```
 
-### 4.1.5 对称差
+### 4.2.5 对称差
 
 两个集合 A,B 的对称差是指那些仅属于 A 或仅属于 B 的元素构成的集合。
 
@@ -334,7 +477,7 @@ MySQL 8.0 还不支持表的减法运算符 EXCEPT。不过，借助第六章学
 * 然后使用 INTERSECT 求两个表的交集，
 * 然后用并集减去交集，就得到了对称差。
 
-但由于在 MySQL 8.0 里，由于两个表或查询结果的并不能直接求出来，因此并不适合使用上述思路来求对称差。
+**但由于在 MySQL 8.0 里，由于两个表或查询结果的并不能直接求出来，因此并不适合使用上述思路来求对称差。**
 
 好在还有差集运算可以使用。从直观上就能看出来，两个集合的对称差等于 A-B 并上 B-A, 因此实践中可以用这个思路来求对称差。
 
@@ -363,36 +506,108 @@ MySQL 8.0 还不支持表的减法运算符 EXCEPT。不过，借助第六章学
         SELECT product_id FROM product)
 ```
 
-#### 4.1.5.1 借助并集和差集迂回实现交集运算 INTERSECT
+#### 4.2.5.1 交集运算 INTERSECT
+
+**可以借助并集和差集迂回实现交集运算 INTERSECT。**
 
 通过观察集合运算的文氏图，我们发现，两个集合的交可以看作是两个集合的并去掉两个集合的对称差。
 
 ![huNmct](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/huNmct.png)
 
-## 4.2 连结(JOIN)
+```sql
+-- 求 product 和 product2 的交集
+SELECT * 
+FROM product
+WHERE product_id IN (
+    SELECT product_id FROM product2
+)
+UNION ALL
+SELECT * 
+FROM product2
+WHERE product_id IN (
+    SELECT product_id FROM product
+);
+```
 
-前一节我们学习了 UNION 和 INTERSECT 等集合运算，这些集合运算的特征就是以行方向为单位进行操作。
+### 4.2.6 总结
 
-通俗地说，就是进行这些集合运算时，会导致记录行数的增减。
+* 我们学习了 UNION 和 INTERSECT 等集合运算，这些集合运算的特征就是以行方向为单位进行操作。
+* 通俗地说，就是进行这些集合运算时，会导致记录行数的增减。
+* 使用 UNION 会增加记录行数，而使用 INTERSECT 或者 EXCEPT 会减少记录行数。
+* 但这些运算不能改变列的变化，虽然使用函数或者 CASE 表达式等列运算，可以增加列的数量，但仍然只能从一张表中提供的基础信息列中获得一些 "引申列", 本质上并不能提供更多的信息。
 
-使用 UNION 会增加记录行数，而使用 INTERSECT 或者 EXCEPT 会减少记录行数。
-
-但这些运算不能改变列的变化，虽然使用函数或者 CASE 表达式等列运算，可以增加列的数量，但仍然只能从一张表中提供的基础信息列中获得一些 "引申列", 本质上并不能提供更多的信息。
+## 4.3 连结(JOIN)
 
 如果想要从多个表获取信息，例如，如果我们想要找出某个商店里的衣服类商品的名称，数量及价格等信息，则必须分别从 shop_product 表和 product 表获取信息。
 
 ![lYCXMM](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/lYCXMM.jpg)
 
 > 注:  
-> 截至目前，本书中出现的示例 (除了关联子查询) 基本上都是从一张表中选取数据，但实际上，期望得到的数据往往会分散在不同的表之中，这时候就需要使用连结了。
+> 截至目前，出现的示例 (除了关联子查询) 基本上都是从一张表中选取数据，但实际上，期望得到的数据往往会分散在不同的表之中，这时候就需要使用连结了。
 > 之前在学习关联子查询时我们发现，使用关联子查询也可以从其他表获取信息，但 **连结** 更适合从多张表获取信息。
+
+### 4.3.1 面试题
+
+#### 4.3.1.1 连接和子查询的对比
+
+在 SQL 查询中，表连接（JOIN）和关联子查询（Correlated Subquery）都用于关联多个表，但表连接通常在性能和查询可读性上具备以下优点：
+
+1. 性能更高
+
+- 直接访问数据：JOIN 操作通常比关联子查询更高效，特别是当需要处理大量数据时。JOIN 能够直接从表中获取所需的数据，而关联子查询需要嵌套地逐行检索并匹配数据，这通常比 JOIN 操作耗时。
+- 数据库优化：大多数数据库对 JOIN 进行了深度优化，比如通过索引来加速查询。而关联子查询在优化上更具挑战性，因为每次子查询都依赖于主查询的行数据。
+
+2. 降低冗余查询
+
+- 表连接通常能一次性获取所需的数据，而不需要像关联子查询一样每次都运行一遍子查询。这种减少冗余查询的特性使得表连接在性能上有明显优势。
+
+3. 更灵活的过滤和排序
+
+- 在 JOIN 语句中，可以直接使用 WHERE 和 ORDER BY 等条件对多表结果进行过滤和排序，操作方便且性能更高。而在关联子查询中，过滤和排序可能需要对内外查询分别处理，增加复杂度。
+
+4. 数据集处理更便捷
+
+- JOIN 可以让多个表的数据合并为一个数据集，可以便捷地用于后续处理，比如分页、排序等。而关联子查询生成的数据集往往需要嵌套处理，不如 JOIN 直观。
+
+5. 可读性和易维护性
+
+- JOIN 语句结构上通常比关联子查询更直观。关联子查询往往需要嵌套，特别是当涉及多表关联时，会显得复杂，不易维护和理解。
+
+6. 实现更多复杂逻辑
+
+- JOIN 支持多种连接方式，如内连接（INNER JOIN）、左连接（LEFT JOIN）、右连接（RIGHT JOIN）等，可以方便地实现复杂的查询需求。而关联子查询实现这些操作时往往需要复杂的条件判断。
+
+示例比较
+
+假设有 Orders 表和 Customers 表，想要查询每个客户的所有订单信息：
+
+- JOIN 查询：
+
+```sql
+SELECT Customers.customer_id, Customers.name, Orders.order_id
+FROM Customers
+JOIN Orders ON Customers.customer_id = Orders.customer_id;
+```
+
+- 关联子查询：
+
+```sql
+SELECT customer_id, name,
+(SELECT order_id FROM Orders WHERE Orders.customer_id = Customers.customer_id)
+FROM Customers;
+```
+
+在这种情况下，JOIN 查询只需要一次获取数据即可，而关联子查询会多次访问 Orders 表来进行匹配，效率低且查询复杂度高。
+
+**总结**
+
+表连接（JOIN）更适合处理大规模的数据关联，性能更高且查询结果更直观，尤其在涉及多表关联时优势更明显。而关联子查询在特定情况中（如单次嵌套查询）可能更简洁，但不如 JOIN 高效，因此在需要高性能的场景中，JOIN 是更好的选择。
 
 连结 (JOIN) 就是使用某种关联条件(一般是使用相等判断谓词 "="), 将其他表中的列添加过来，进行“添加列”的集合运算。
 
 **可以说，连结是 SQL 查询的核心操作**，掌握了连结，能够从两张甚至多张表中获取列，能够将过去使用关联子查询等过于复杂的查询简化为更加易读的形式，以及进行一些更加复杂的查询。
 
 SQL 中的连结有多种分类方法，我们这里使用最基础的内连结和外连结的分类方法来分别进行讲解。
-
 
 在 SQL 查询中，使用 `JOIN` 操作有以下优点：
 
@@ -408,7 +623,89 @@ SQL 中的连结有多种分类方法，我们这里使用最基础的内连结�
 
 这些优点使得 `JOIN` 操作在处理复杂数据关系时非常有用，是 SQL 查询中最常用的操作之一。
 
-### 4.2.1 内连结(INNER JOIN)
+#### 4.3.1.2 从执行计划上来进行对比二者的优劣
+
+执行计划（Execution Plan）提供了 SQL 查询在数据库中的执行过程。通过执行计划，能更详细地了解数据库如何执行 JOIN 查询和关联子查询，尤其在性能和资源使用上。
+
+1. 表连接（JOIN）的执行过程
+
+表连接的执行过程依赖于数据库优化器的策略。优化器会根据表的大小、索引等因素来选择最优的 JOIN 策略，主要包括嵌套循环连接（Nested Loop Join）、排序合并连接（Sort-Merge Join）和哈希连接（Hash Join）。
+
+假设我们执行以下 JOIN 查询：
+
+```sql
+SELECT Customers.customer_id, Customers.name, Orders.order_id
+FROM Customers
+JOIN Orders ON Customers.customer_id = Orders.customer_id;
+```
+
+JOIN 查询的执行计划分析
+
+* 扫描基表
+  - 数据库优化器首先扫描两个基表 Customers 和 Orders，并判断是否可以利用索引。例如，如果 Orders 表上有 customer_id 的索引，则可以直接使用索引访问来加速查询。
+  - 执行计划会显示各表的扫描方式：全表扫描（Full Table Scan）、索引扫描（Index Scan）或范围扫描（Range Scan）。
+* 选择连接方法
+  - 优化器会选择合适的 JOIN 方法。例如，如果 Customers 比较小，Orders 比较大，数据库可能选择以 Customers 作为驱动表，依次从 Customers 中取出每一行，再从 Orders 中寻找匹配的行。
+  - 嵌套循环连接（Nested Loop Join）：对于小表、索引覆盖的情况，通常会采用嵌套循环连接。它逐行扫描一个表，找到匹配行后再连接另一张表。
+  - 排序合并连接（Sort-Merge Join）：适合两个表已经排序（或者可以排序）的情况，按连接列排序后合并匹配的行。
+  - 哈希连接（Hash Join）：将小表载入哈希表中，然后扫描大表并在哈希表中匹配，此方法对大型表效果更好，但内存使用较多。
+* 生成中间结果
+  - 每种 JOIN 策略会在数据库内生成中间结果集，记录符合条件的连接行。
+  - 在执行计划中，JOIN 部分会显示NESTED LOOP JOIN、HASH JOIN、MERGE JOIN等关键字，表明所用的具体 JOIN 方法。
+* 执行过滤、排序和返回结果
+  - 最后，数据库会对连接后的中间结果集应用过滤（如 WHERE 条件）和排序操作（如 ORDER BY），并生成最终结果。
+  - 执行计划会列出过滤和排序操作的步骤。比如 Filter 表示过滤条件，Sort 表示排序操作，这些步骤会根据使用的索引来决定是通过索引还是内存排序进行的。
+
+2. 关联子查询的执行过程
+
+关联子查询执行时，会对主查询的每一行执行一次子查询。因此，在较大数据集上，关联子查询的效率通常低于 JOIN。
+
+假设我们执行以下关联子查询：
+
+```sql
+SELECT customer_id, name,
+(SELECT order_id FROM Orders WHERE Orders.customer_id = Customers.customer_id)
+FROM Customers;
+```
+
+**关联子查询的执行计划分析**
+
+* 主查询扫描
+  - 首先，数据库执行主查询中的 Customers 表扫描。执行计划中，这一步会显示为 TABLE SCAN 或 INDEX SCAN，表示对 Customers 表的扫描方式。
+* 嵌套执行子查询
+  - 每扫描到 Customers 表的一行时，数据库会执行一次子查询。也就是说，对于 Customers 表的每一行，子查询会到 Orders 表中查找 customer_id 相同的 order_id。
+  - 执行计划中，子查询部分通常会列出 CORRELATED SUBQUERY，表示这是个关联子查询。对于每一行，子查询执行的成本会加总到整体查询的成本中。
+* 子查询索引优化
+  - 在优化器计算子查询的访问成本时，如果 Orders 表上 customer_id 字段有索引，数据库可以更快找到匹配行。
+  - 如果 Orders 没有合适的索引，则子查询可能会导致 Orders 表的全表扫描。执行计划会显示是否使用了索引，如 Using index 或 Index scan。
+* 生成结果
+  - 关联子查询会对主查询每行重复执行子查询操作。即使是优化过的索引扫描，关联子查询的性能仍可能较低，尤其是主表较大时，执行次数过多导致性能瓶颈。
+
+**执行计划示例**
+
+在 MySQL 中，可以使用 EXPLAIN 语句查看查询的执行计划。例如：
+
+```sql
+EXPLAIN SELECT Customers.customer_id, Customers.name, Orders.order_id
+FROM Customers
+JOIN Orders ON Customers.customer_id = Orders.customer_id;
+```
+
+JOIN 执行计划输出示例
+
+```
+id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
+1	SIMPLE	Customers	ALL	PRIMARY	NULL	NULL	NULL	100
+1	SIMPLE	Orders	ref	idx_cust_id	idx_cust_id	20	Customers.id	200	Using index; Using join buffer (Block Nested Loop)
+```
+
+**总结**
+
+* 表连接（JOIN）：性能较高，优化器可以选择不同的连接方法，通过索引进一步加速查询。在数据量大、需求复杂的情况下，JOIN 更高效。
+* 关联子查询：适合特定的查询场景，但在大数据量的情况下效率较低，往往产生大量子查询调用，容易形成性能瓶颈。
+
+
+### 4.3.2 内连结(INNER JOIN)
 
 内连结的语法格式是:
 
@@ -421,13 +718,13 @@ SQL 中的连结有多种分类方法，我们这里使用最基础的内连结�
 
 例如，还是刚才那个问题:
 
-找出某个商店里的衣服类商品的名称，数量及价格等信息。
+> 找出某个商店里的衣服类商品的名称，数量及价格等信息。
 
 我们进一步把这个问题明确化:
 
-找出东京商店里的衣服类商品的商品名称，商品价格，商品种类，商品数量信息。
+> 找出东京商店里的衣服类商品的商品名称，商品价格，商品种类，商品数量信息。
 
-#### 4.2.1.1 使用内连结从两个表获取信息
+#### 4.3.2.1 使用内连结从两个表获取信息
 
 我们先来分别观察所涉及的表，product 表保存了商品编号，商品名称，商品种类等信息，这个表可以提供关于衣服种类的衣服的详细信息，但是不能提供商店信息。
 
@@ -446,7 +743,7 @@ SQL 中的连结有多种分类方法，我们这里使用最基础的内连结�
 > 注:  
 > 如果你使用过 excel 的 vlookup 函数，你会发现这个函数正好也能够实现这个功能。
 > 实际上，在思路上，关联子查询更像是 vlookup 函数: 
->   以表 A 为主表，然后根据表 A 的关联列的每一行的取值，逐个到表 B 中的关联列中去查找取值相等的行。 
+> 以表 A 为主表，然后根据表 A 的关联列的每一行的取值，逐个到表 B 中的关联列中去查找取值相等的行。 
 > 当数据量较少时，这种方式并不会有什么性能问题，但数据量较大时，这种方式将会导致较大的计算开销:  
 > 对于外部查询返回的每一行数据，都会向内部的子查询传递一个关联列的值，
 > 然后内部子查询根据传入的值执行一次查询然后返回它的查询结果。
@@ -502,7 +799,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 我们回到上述查询所回答的问题。通过观察上述查询的结果，我们发现，这个结果离我们的目标: 找出东京商店的衣服类商品的基础信息已经很接近了。接下来，我们只需要把这个查询结果作为一张表，给它增加一个 WHERE 子句来指定筛选条件。
 
-#### 4.2.1.2 结合 WHERE 子句使用内连结
+#### 4.3.2.2 结合 WHERE 子句使用内连结
 
 如果需要在使用内连结的时候同时使用 WHERE 子句对检索结果进行筛选，则需要把 WHERE 子句写在 ON 子句的后边。
 
@@ -675,7 +972,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
         WHERE shop_id = '000A' AND sale_price < 2000;
 ```
 
-#### 4.2.1.3 结合 GROUP BY 子句使用内连结
+#### 4.3.2.3 结合 GROUP BY 子句使用内连结
 
 结合 GROUP BY 子句使用内连结，需要根据分组列位于哪个表区别对待。
 
@@ -707,13 +1004,13 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 > 当然，也可以使用其他我们已经学过的知识来实现，
 > 例如，在找出每个商店售价最高商品的价格后，使用这个价格再与 product 列进行连结，但这种做法在价格不唯一时会出现问题。
 
-#### 4.2.1.4 自连结(SELF JOIN)
+#### 4.3.2.4 自连结(SELF JOIN)
 
 之前的内连结，连结的都是不一样的两个表。实际上一张表也可以与自身作连结，这种连接称之为自连结。
 
 需要注意，自连结并不是区分于内连结和外连结的第三种连结，自连结可以是外连结也可以是内连结，它是不同于内连结外连结的另一个连结的分类方法。
 
-#### 4.2.1.5 内连结与关联子查询
+#### 4.3.2.5 内连结与关联子查询
 
 回忆关联子查询中的问题: 找出每个商品种类当中售价高于该类商品的平均售价的商品。当时我们是使用关联子查询来实现的。
 
@@ -798,9 +1095,11 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
     GROUP BY P1.product_id,P1.product_name,P1.product_type,P1.sale_price,P2.product_type
 ```
 
-虽然去掉了子查询，查询语句的层次更少，而且代码行数似乎更少，但实际上这个方法可能更加难以写出来。在实践中，一定要按照易于让自己理解的思路去分层次写代码，而不要花费很长世间写出一个效率可能更高但自己和他人理解起来难度更高的代码。
+虽然去掉了子查询，查询语句的层次更少，而且代码行数似乎更少，但实际上这个方法可能更加难以写出来。
 
-#### 4.2.1.6 自然连结(NATURAL JOIN)
+在实践中，一定要按照易于让自己理解的思路去分层次写代码，而不要花费很长世间写出一个效率可能更高但自己和他人理解起来难度更高的代码。
+
+#### 4.3.2.6 自然连结(NATURAL JOIN)
 
 自然连结并不是区别于内连结和外连结的第三种连结，它其实是内连结的一种特例–当两个表进行自然连结时，会按照两个表中都包含的列名来进行等值内连结，此时无需使用 ON 来指定连接条件。
 
@@ -836,7 +1135,9 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
         ON SP.product_id = P.product_id
 ```
 
-使用自然连结还可以求出两张表或子查询的公共部分，例如教材中 7-1 选取表中公共部分–INTERSECT 一节中的问题: 求表 product 和表 product2 中的公共部分，也可以用自然连结来实现:
+使用自然连结还可以求出两张表或子查询的公共部分，例如选取表中公共部分–INTERSECT 一节中的问题: 
+
+求表 product 和表 product2 中的公共部分，也可以用自然连结来实现:
 
 ```sql
     SELECT * FROM product NATURAL JOIN product2
@@ -867,7 +1168,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 ![Ky1pRa](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/Ky1pRa.jpg)
 
-#### 4.2.1.7 使用连结求交集
+#### 4.3.2.7 使用连结求交集
 
 我们在上一节表的加减法里知道，MySQL 8.0 里没有交集运算，我们当时是通过并集和差集来实现求交集的。
 
@@ -894,7 +1195,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 ![rKoT3K](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/rKoT3K.jpg)
 
 
-注意上述结果和 P230 的结果并不一致–少了 product_id='0001' 这一行，观察源表数据可发现，少的这行数据的 regist_date 为缺失值，回忆第六章讲到的 IS NULL 谓词，我们得知，这是由于缺失值是不能用等号进行比较导致的。
+注意上述结果和之前的结果并不一致–少了 product_id='0001' 这一行，观察源表数据可发现，少的这行数据的 regist_date 为缺失值，回忆第六章讲到的 IS NULL 谓词，我们得知，这是由于缺失值是不能用等号进行比较导致的。
 
 如果我们仅仅用 product_id 来进行连结:
 
@@ -911,12 +1212,13 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 ![hTiBZy](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/hTiBZy.jpg)
 
-
 这次就一致了。
 
-### 4.2.2 外连结(OUTER JOIN)
+### 4.3.3 外连结(OUTER JOIN)
 
-内连结会丢弃两张表中不满足 ON 条件的行，和内连结相对的就是外连结。外连结会根据外连结的种类有选择地保留无法匹配到的行。
+内连结会丢弃两张表中不满足 ON 条件的行，和内连结相对的就是外连结。
+
+**外连结会根据外连结的种类有选择地保留无法匹配到的行。**
 
 按照保留的行位于哪张表，外连结有三种形式: 
 
@@ -941,13 +1243,13 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
     FROM <tb_1> FULL  OUTER JOIN <tb_2> ON <condition(s)>
 ```
 
-#### 4.2.2.1 左连结与右连接
+#### 4.3.3.1 左连结与右连接
 
 由于连结时可以交换左表和右表的位置，因此左连结和右连结并没有本质区别。接下来我们先以左连结为例进行学习。
 
 所有的内容在调换两个表的前后位置，并将左连结改为右连结之后，都能得到相同的结果。 稍后再介绍全外连结的概念。
 
-#### 4.2.2.2 使用左连结从两个表获取信息
+#### 4.3.3.2 使用左连结从两个表获取信息
 
 如果你仔细观察过将 **shop_product** 和 **product** 进行内连结前后的结果的话，你就会发现，product 表中有两种商品并未在内连结的结果里，就是说，这两种商品并未在任何商店有售(这通常意味着比较重要的业务信息，例如，这两种商品在所有商店都处于缺货状态，需要及时补货)。
 
@@ -955,7 +1257,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 练习题: 统计每种商品分别在哪些商店有售，需要包括那些在每个商店都没货的商品。
 
-使用左连结的代码如下(注意区别于书上的右连结):
+使用左连结的代码如下:
 
 ```sql
     SELECT 
@@ -986,17 +1288,21 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 **内连结的结果中有 13 条记录，而外连结的结果中有 15 条记录，增加的 2 条记录到底是什么呢?** 
 
-这正是外连结的关键点。多出的 2 条记录是高压锅和圆珠笔，这 2 条记录在 shop_product 表中并不存在，也就是说，这 2 种商品在任何商店中都没有销售。
+这正是外连结的关键点。
+
+<span style="color: rgb(255, 102, 0);">多出的 2 条记录是高压锅和圆珠笔，这 2 条记录在 shop_product 表中并不存在，也就是说，这 2 种商品在任何商店中都没有销售。</span>
 
 由于内连结只能选取出同时存在于两张表中的数据，因此只在 product 表中存在的 2 种商品并没有出现在结果之中。
 
 相反，对于外连结来说，只要数据存在于某一张表当中，就能够读取出来。
 
-在实际的业务中，例如想要生成固定行数的单据时，就需要使用外连结。如果使用内连结的话，根据 SELECT 语句执行时商店库存状况的不同，结果的行数也会发生改变，生成的单据的版式也会受到影响，而使用外连结能够得到固定行数的结果。
+在实际的业务中，例如想要生成固定行数的单据时，就需要使用外连结。
 
-虽说如此，那些表中不存在的信息我们还是无法得到，结果中高压锅和圆珠笔的商店编号和商店名称都是 NULL （具体信息大家都不知道，真是无可奈何）. 
+如果使用内连结的话，根据 SELECT 语句执行时商店库存状况的不同，结果的行数也会发生改变，生成的单据的版式也会受到影响，而使用外连结能够得到固定行数的结果。
 
-外连结名称的由来也跟 NULL 有关，即“结果中包含原表中不存在（在原表之外）的信息”. 相反，只包含表内信息的连结也就被称为内连结了。
+虽说如此，那些表中不存在的信息我们还是无法得到，结果中高压锅和圆珠笔的商店编号和商店名称都是 NULL 。
+
+外连结名称的由来也跟 NULL 有关，即“结果中包含原表中不存在（在原表之外）的信息”。相反，只包含表内信息的连结也就被称为内连结了。
 
 * **外连结要点 2: 使用 LEFT、RIGHT 来指定主表。**
 
@@ -1012,7 +1318,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 通过交换两个表的顺序，同时将 LEFT 更换为 RIGHT(如果原先是 RIGHT, 则更换为 LEFT), 两种方式会到完全相同的结果。
 
-#### 4.2.2.3 结合 WHERE 子句使用左连结
+#### 4.3.3.3 结合 WHERE 子句使用左连结
 
 上一小节我们学到了外连结的基础用法，并且在上一节也学习了结合 WHERE 子句使用内连结的方法，但在结合 WHERE 子句使用外连结时，由于外连结的结果很可能与内连结的结果不一样，会包含那些主表中无法匹配到的行，并用缺失值填写另一表中的列，由于这些行的存在，因此在外连结时使用 WHERE 子句，情况会有些不一样。
 
@@ -1055,7 +1361,9 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 联系到我们已经掌握了的 SQL 查询的执行顺序(**FROM->WHERE->SELECT**), 我们发现，问题可能出在筛选条件上，因为在进行完外连结后才会执行 WHERE 子句，因此那些主表中无法被匹配到的行就被 WHERE 条件筛选掉了。
 
-明白了这一点，我们就可以试着把 WHERE 子句挪到外连结之前进行: 先写个子查询，用来从 **shop_product** 表中筛选 **quantity<50** 的商品，然后再把这个子查询和主表连结起来。
+明白了这一点，我们就可以试着把 WHERE 子句挪到外连结之前进行: 
+
+先写个子查询，用来从 **shop_product** 表中筛选 **quantity<50** 的商品，然后再把这个子查询和主表连结起来。
 
 我们把上述思路写成 SQL 查询语句:
 
@@ -1069,7 +1377,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
             SP.quantity 
     FROM product AS P
     
-        LEFT OUTER JOIN-- 先筛选 quantity<50 的商品
+        LEFT OUTER JOIN -- 先筛选 quantity<50 的商品
            (SELECT *
             FROM shop_product
             WHERE quantity < 50 ) AS SP
@@ -1082,17 +1390,19 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 ![tWv53V](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/tWv53V.jpg)
 
 
-#### 4.2.2.4 在 MySQL 中实现全外连结
+#### 4.3.3.4 在 MySQL 中实现全外连结
 
-有了对左连结和右连结的了解，就不难理解全外连结的含义了。全外连结本质上就是对左表和右表的所有行都予以保留，能用 ON 关联到的就把左表和右表的内容在一行内显示，不能被关联到的就分别显示，然后把多余的列用缺失值填充。
+有了对左连结和右连结的了解，就不难理解全外连结的含义了。
+
+全外连结本质上就是对左表和右表的所有行都予以保留，能用 ON 关联到的就把左表和右表的内容在一行内显示，不能被关联到的就分别显示，然后把多余的列用缺失值填充。
 
 遗憾的是，**MySQL8.0 目前还不支持全外连结**, 不过我们可以对左连结和右连结的结果进行 UNION 来实现全外连结。
 
-### 4.2.3 多表连结
+### 4.3.4 多表连结
 
 通常连结只涉及 2 张表，但有时也会出现必须同时连结 3 张以上的表的情况，原则上连结表的数量并没有限制。
 
-#### 4.2.3.1 多表进行内连结
+#### 4.3.4.1 多表进行内连结
 
 首先创建一个用于三表连结的表 Inventoryproduct. 首先我们创建一张用来管理库存商品的表，假设商品都保存在 P001 和 P002 这 2 个仓库之中。
 
@@ -1105,7 +1415,8 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
         inventory_id       CHAR(4) NOT NULL,
         product_id         CHAR(4) NOT NULL,
         inventory_quantity INTEGER NOT NULL,
-        PRIMARY KEY (inventory_id, product_id));
+        PRIMARY KEY (inventory_id, product_id)
+        );
 ```
 
 然后插入一些数据:
@@ -1163,9 +1474,9 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 即使想要把连结的表增加到 4 张、5 张……使用 INNER JOIN 进行添加的方式也是完全相同的。
 
-#### 4.2.3.2 多表进行外连结
+#### 4.3.4.2 多表进行外连结
 
-正如之前所学发现的，外连结一般能比内连结有更多的行，从而能够比内连结给出更多关于主表的信息，多表连结的时候使用外连结也有同样的作用。
+外连结一般能比内连结有更多的行，从而能够比内连结给出更多关于主表的信息，多表连结的时候使用外连结也有同样的作用。
 
 例如，
 
@@ -1185,7 +1496,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
         
         LEFT OUTER JOIN Inventoryproduct AS IP
     
-        ON SP.product_id = IP.product_id
+        ON SP.product_id = IP.product_id;
 ```
 
 查询结果  
@@ -1193,19 +1504,23 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 ![hLsIEo](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/hLsIEo.jpg)
 
 
-### 4.2.4 ON 子句进阶–非等值连结
+### 4.3.5 ON 子句进阶–非等值连结
 
-在刚开始介绍连结的时候，书上提到过，除了使用相等判断的等值连结，也可以使用比较运算符来进行连接。
+除了使用相等判断的等值连结，也可以使用比较运算符来进行连接。
 
 实际上，包括比较运算符 (<,<=,>,>=, BETWEEN) 和谓词运算 (LIKE, IN, NOT 等等) 在内的所有的逻辑运算都可以放在 ON 子句内作为连结条件。
 
-#### 4.2.4.1 非等值自左连结(SELF JOIN)
+#### 4.3.5.1 非等值自左连结(SELF JOIN)
 
 使用非等值自左连结实现排名。
 
 **练习题:**
 
-希望对 product 表中的商品按照售价赋予排名。一个从集合论出发，使用自左连结的思路是，对每一种商品，找出售价不低于它的所有商品，然后对售价不低于它的商品使用 COUNT 函数计数。例如，对于价格最高的商品，
+希望对 product 表中的商品按照售价赋予排名。
+
+一个从集合论出发，使用自左连结的思路是，对每一种商品，找出售价不低于它的所有商品，然后对售价不低于它的商品使用 COUNT 函数计数。
+
+例如，对于价格最高的商品，
 
 ```sql
     SELECT  
@@ -1238,14 +1553,13 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 ![QA1Uas](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/QA1Uas.jpg)
 
-
-注 3: 实际上，进行排名有专门的函数，这是 MySQL 8.0 新增加的窗口函数中的一种(窗口函数将在下一章学习), 但在较低版本的 MySQL 中只能使用上述自左连结的思路。
+注 3: 实际上，进行排名有专门的函数，这是 MySQL 8.0 新增加的窗口函数中的一种, 但在较低版本的 MySQL 中只能使用上述自左连结的思路。
 
 使用非等值自左连结进行累计求和:
 
 **练习题:**
 
-请按照商品的售价从低到高，对售价进行累计求和[注: 这个案例缺少实际意义，并且由于有两种商品价格相同导致了不必要的复杂度，但示例数据库的表结构比较简单，暂时未想出有实际意义的例题]
+请按照商品的售价从低到高，对售价进行累计求和
 
 首先，按照题意，对每种商品使用自左连结，找出比该商品售价价格更低或相等的商品
 
@@ -1263,17 +1577,16 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
     
     ON P1.sale_price >= P2.sale_price
     
-    ORDER BY P1.sale_price,P1.product_id
+    ORDER BY P1.sale_price,P1.product_id;
 ```
 
 查看查询结果  
 
 ![kHVqn4](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/kHVqn4.jpg)
 
-
 看起来似乎没什么问题。
 
-下一步，按照 P1.product_Id 分组，对 P2_price 求和:
+下一步，按照 P1.product_id 分组，对 P2_price 求和:
 
 ```sql
     SELECT  
@@ -1281,7 +1594,6 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
             product_name,
             sale_price,
             SUM(P2_price) AS cum_price 
-            
     FROM (SELECT  
                 P1.product_id,
                 P1.product_name,
@@ -1292,7 +1604,8 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
             FROM product AS P1 
             LEFT OUTER JOIN product AS P2 
             ON P1.sale_price >= P2.sale_price
-            ORDER BY P1.sale_price,P1.product_id ) AS X
+            ORDER BY P1.sale_price,P1.product_id 
+            ) AS X
             
     GROUP BY product_id, product_name, sale_price
     
@@ -1303,8 +1616,9 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 ![9pyNrd](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/9pyNrd.jpg)
 
+观察上述查询结果发现，**由于有两种商品的售价相同，在使用 >= 进行连结时，导致了累计求和错误，这是由于这两种商品售价相同导致的。**
 
-观察上述查询结果发现，由于有两种商品的售价相同，在使用 >= 进行连结时，导致了累计求和错误，这是由于这两种商品售价相同导致的。因此实际上之前是不应该单独只用 >= 作为连结条件的。
+因此实际上之前是不应该单独只用 >= 作为连结条件的。
 
 考察我们建立自左连结的本意，是要找出满足:
 
@@ -1343,13 +1657,15 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 ![6E7ukR](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/6E7ukR.jpg)
 
-### 4.2.5 交叉连结 —— CROSS JOIN(笛卡尔积)
+### 4.3.6 交叉连结 —— CROSS JOIN(笛卡尔积)
 
 之前的无论是外连结内连结，一个共同的必备条件就是连结条件 **ON 子句**, 用来指定连结的条件。
 
 如果你试过不使用这个连结条件的连结查询，你可能已经发现，结果会有很多行。
 
-在连结去掉 ON 子句，就是所谓的交叉连结 (CROSS JOIN), 交叉连结又叫笛卡尔积，后者是一个数学术语。两个集合做笛卡尔积，就是使用集合 A 中的每一个元素与集合 B 中的每一个元素组成一个有序的组合。
+在连结去掉 ON 子句，就是所谓的交叉连结 (CROSS JOIN), 交叉连结又叫笛卡尔积，后者是一个数学术语。
+
+两个集合做笛卡尔积，就是使用集合 A 中的每一个元素与集合 B 中的每一个元素组成一个有序的组合。
 
 数据库表(或者子查询) 的并，交和差都是在纵向上对表进行扩张或筛选限制等运算的，这要求表的列数及对应位置的列的数据类型 "相容", 因此这些运算并不会增加新的列，而交叉连接 (笛卡尔积) 则是在横向上对表进行扩张，即增加新的列，这一点和连结的功能是一致的。但因为没有了 ON 子句的限制，会对左表和右表的每一行进行组合，这经常会导致很多无意义的行出现在检索结果中。当然，在某些查询需求中，交叉连结也有一些用处。
 
@@ -1379,13 +1695,22 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 ```
 
 请大家试着执行一下以上语句。 
-可能大家会惊讶于结果的行数，但我们还是先来介绍一下语法结构吧。对满足相同规则的表进行交叉连结的集合运算符是**CROSS JOIN （笛卡儿积）**. 进行交叉连结时无法使用内连结和外连结中所使用的 ON 子句，这是因为交叉连结是对两张表中的全部记录进行交叉组合，因此结果中的记录数通常是两张表中行数的乘积。本例中，因为 shop_product 表存在 13 条记录，product 表存在 8 条记录，所以结果中就包含了 **13 × 8 = 104** 条记录。
 
-可能这时会有读者想起前面我们提到过集合运算中的乘法会在本节中进行详细学习，这就是上面介绍的交叉连结。内连结是交叉连结的一部分，“内”也可以理解为“包含在交叉连结结果中的部分”. 相反，外连结的“外”可以理解为“交叉连结结果之外的部分”.
+可能大家会惊讶于结果的行数，但我们还是先来介绍一下语法结构吧。
 
-交叉连结没有应用到实际业务之中的原因有两个。一是其结果没有实用价值，二是由于其结果行数太多，需要花费大量的运算时间和高性能设备的支持。
+对满足相同规则的表进行交叉连结的集合运算符是**CROSS JOIN （笛卡儿积）**。
 
-#### 4.2.5.1 [扩展阅读]连结与笛卡儿积的关系
+进行交叉连结时无法使用内连结和外连结中所使用的 ON 子句，这是因为交叉连结是对两张表中的全部记录进行交叉组合，因此结果中的记录数通常是两张表中行数的乘积。
+
+本例中，因为 shop_product 表存在 13 条记录，product 表存在 8 条记录，所以结果中就包含了 **13 × 8 = 104** 条记录。
+
+内连结是交叉连结的一部分，“内”也可以理解为“包含在交叉连结结果中的部分”；相反，外连结的“外”可以理解为“交叉连结结果之外的部分”。
+
+交叉连结没有应用到实际业务之中的原因有两个：
+* 一是其结果没有实用价值，
+* 二是由于其结果行数太多，需要花费大量的运算时间和高性能设备的支持。
+
+#### 4.3.6.1 连结与笛卡儿积的关系
 
 考察笛卡儿积和连结，不难发现，笛卡儿积可以视作一种特殊的连结(事实上笛卡儿积的语法也可以写作 CROSS JOIN), 这种连结的 ON 子句是一个恒为真的谓词。
 
@@ -1423,7 +1748,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 实际上，正如书中所说，上述写法中，将 CROSS JOIN 改为逗号后，正是内连结的旧式写法，但在 ANSI 和 ISO 的 SQL-92 标准中，已经将使用 INNER JION …ON… 的写法规定为标准写法，因此极力推荐大家在平时写 SQL 查询时，使用规范写法。
 
-### 4.2.6 连结的特定语法和过时语法
+#### 4.3.6.2 连结的特定语法和过时语法
 
 在笛卡尔积的基础上，我们增加一个 WHERE 子句，将之前的连结条件作为筛选条件加进去，我们会发现，得到的结果恰好是直接使用内连接的结果。
 
@@ -1447,7 +1772,7 @@ ON 子句是专门用来指定连结条件的，我们在上述查询的 ON 之�
 
 SQL 是一门特定语法及过时语法非常多的语言，虽然之前本书中也多次提及，但连结是其中特定语法的部分，现在还有不少年长的程序员和系统工程师仍在使用这些特定的语法。例如，将本节最初介绍的内连结的 SELECT 语句替换为过时语法的结果如下所示。
 
-使用过时语法的内连结（结果与代码清单 7-9 相同）
+使用过时语法的内连结
 
 ```sql
     SELECT 
@@ -1461,13 +1786,12 @@ SQL 是一门特定语法及过时语法非常多的语言，虽然之前本书�
 ```
 
 这样的书写方式所得到的结果与标准语法完全相同，并且这样的语法可以在所有的 DBMS 中执行，并不能算是特定的语法，只是过时了而已。 
+
 但是，由于这样的语法不仅过时，而且还存在很多其他的问题，因此不推荐大家使用，理由主要有以下三点:
 
-第一，使用这样的语法无法马上判断出到底是内连结还是外连结（又或者是其他种类的连结）.
-
-第二，由于连结条件都写在 WHERE 子句之中，因此无法在短时间内分辨出哪部分是连结条件，哪部分是用来选取记录的限制条件。
-
-第三，我们不知道这样的语法到底还能使用多久。每个 DBMS 的开发者都会考虑放弃过时的语法，转而支持新的语法。虽然并不是马上就不能使用了，但那一天总会到来的。
+* 第一，使用这样的语法无法马上判断出到底是内连结还是外连结（又或者是其他种类的连结）.
+* 第二，由于连结条件都写在 WHERE 子句之中，因此无法在短时间内分辨出哪部分是连结条件，哪部分是用来选取记录的限制条件。
+* 第三，我们不知道这样的语法到底还能使用多久。每个 DBMS 的开发者都会考虑放弃过时的语法，转而支持新的语法。虽然并不是马上就不能使用了，但那一天总会到来的。
 
 虽然这么说，但是现在使用这些过时语法编写的程序还有很多，到目前为止还都能正常执行。我想大家很可能会碰到这样的代码，因此还是希望大家能够了解这些知识。
 
@@ -1477,18 +1801,119 @@ SQL 是一门特定语法及过时语法非常多的语言，虽然之前本书�
 
 找出 product 和 product2 中售价高于 500 的商品的基本信息。
 
+```sql
+-- 找出 product 和 product2 中售价高于 500 的商品的基本信息。
+SELECT product_id, product_name, product_type, sale_price, purchase_price, regist_date
+FROM product
+WHERE sale_price > 500
+
+UNION
+
+SELECT product_id, product_name, product_type, sale_price, purchase_price, regist_date
+FROM product2
+WHERE sale_price > 500;
+```
+
 ### 练习题 4.2
 
 借助对称差的实现方式，求 product 和 product2 的交集。
+
+```sql
+-- 借助对称差的实现方式，求 product 和 product2 的交集
+SELECT product_id, product_name, product_type, sale_price, purchase_price, regist_date
+FROM product
+WHERE (product_id, product_name, product_type, sale_price, purchase_price, regist_date) 
+      IN (SELECT product_id, product_name, product_type, sale_price, purchase_price, regist_date FROM product2)
+      
+UNION ALL
+
+SELECT product_id, product_name, product_type, sale_price, purchase_price, regist_date
+FROM product2
+WHERE (product_id, product_name, product_type, sale_price, purchase_price, regist_date) 
+      IN (SELECT product_id, product_name, product_type, sale_price, purchase_price, regist_date FROM product);
+```
 
 ### 练习题 4.3
 
 每类商品中售价最高的商品都在哪些商店有售 ？
 
+```sql
+-- 每类商品中售价最高的商品都在哪些商店有售 ？
+SELECT sp.shop_id, sp.shop_name, p_all.product_type, p_all.product_id, sp.quantity
+FROM shop_product AS sp
+JOIN (
+    -- 合并 product 和 product2 表，并找到每类商品中售价最高的商品
+    SELECT product_type, product_id, sale_price
+    FROM product
+    WHERE (product_type, sale_price) IN (
+        SELECT product_type, MAX(sale_price)
+        FROM (
+            SELECT product_type, sale_price FROM product
+            UNION ALL
+            SELECT product_type, sale_price FROM product2
+        ) AS all_products
+        GROUP BY product_type
+    )
+) AS p_all ON sp.product_id = p_all.product_id;
+```
+
 ### 练习题 4.4
 
 分别使用内连结和关联子查询每一类商品中售价最高的商品。
 
+```sql
+-- 分别使用内连结和关联子查询每一类商品中售价最高的商品。
+-- 使用内连接
+SELECT p.product_type, p.product_id, p.product_name, p.sale_price
+FROM (
+    SELECT product_type, MAX(sale_price) AS max_price
+    FROM (
+        SELECT product_type, product_id, product_name, sale_price FROM product
+        UNION ALL
+        SELECT product_type, product_id, product_name, sale_price FROM product2
+    ) AS all_products
+    GROUP BY product_type
+) AS max_prices
+JOIN (
+    SELECT product_type, product_id, product_name, sale_price
+    FROM product
+    UNION ALL
+    SELECT product_type, product_id, product_name, sale_price
+    FROM product2
+) AS p ON p.product_type = max_prices.product_type AND p.sale_price = max_prices.max_price;
+
+-- 使用关联子查询
+SELECT product_type, product_id, product_name, sale_price
+FROM (
+    SELECT product_type, product_id, product_name, sale_price FROM product
+    UNION ALL
+    SELECT product_type, product_id, product_name, sale_price FROM product2
+) AS all_products
+WHERE sale_price = (
+    SELECT MAX(sale_price)
+    FROM (
+        SELECT sale_price
+        FROM product
+        WHERE product_type = all_products.product_type
+        UNION ALL
+        SELECT sale_price
+        FROM product2
+        WHERE product_type = all_products.product_type
+    ) AS type_prices
+);
+```
+
 ### 练习题 4.5
 
-用关联子查询实现：在 `product` 表中，取出 product_id, produc_name, slae_price, 并按照商品的售价从低到高进行排序、对售价进行累计求和。
+用关联子查询实现：在 `product` 表中，取出 product_id, produc_name, sale_price, 并按照商品的售价从低到高进行排序、对售价进行累计求和。
+
+```sql
+-- 用关联子查询实现：在 `product` 表中，取出 product_id, produc_name, sale_price, 并按照商品的售价从低到高进行排序、对售价进行累计求和。
+
+SELECT p.product_id, p.product_name, p.sale_price,
+       (SELECT SUM(sale_price) 
+        FROM product AS p2 
+        WHERE p2.sale_price <= p.sale_price) AS cumulative_sum
+FROM product AS p
+ORDER BY p.sale_price ASC;
+```

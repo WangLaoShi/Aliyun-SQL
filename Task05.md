@@ -1,12 +1,12 @@
-# Task05：常用函数与窗口函数
+# 常用函数与窗口函数
 
 [TOC]
 
-## 5.0 MySQL 函数
+## 5.1 MySQL 函数
 
 本节为您提供最常用的**MySQL函数**，包括聚合函数，字符串函数，日期时间函数，控制流函数等。
 
-### MySQL聚合函数
+### 5.1.1 MySQL 聚合函数
 
 * [AVG](functions/func-mysql-avg.md "MySQL AVG") - 计算一组值或表达式的平均值。
 * [COUNT](functions/func-mysql-count.md "MySQL COUNT") - 计算表中的行数。
@@ -17,7 +17,7 @@
 * [GROUP_CONCAT()函数](functions/func-mysql-group_concat.md) - 将字符串从分组中连接成具有各种选项(如`DISTINCT`，`ORDER BY`和`SEPARATOR`)的字符串。
 * [MySQL标准偏差函数](functions/func-mysql-standard-deviation.md) - 显示如何计算人口标准偏差和样本标准偏差。
 
-### MySQL字符串函数
+### 5.1.2 MySQL 字符串函数
 
 * [CONCAT](functions/func-mysql-concat.md) - 将两个或多个字符串组合成一个字符串。
 * [LENGTH＆CHAR_LENGTH ](functions/func-mysql-length.md "MySQL字符串长度") - 获取字符串的长度，以字节和字符为单位。
@@ -28,14 +28,14 @@
 * [FIND_IN_SET](functions/func-mysql-find-in-set.md) - 在以逗号分隔的字符串列表中查找字符串。
 * [FORMAT](functions/func-mysql-format.md) - 格式化具有特定区域设置的数字，四舍五入到小数位数
 
-### MySQL控制流功能
+### 5.1.3 MySQL 控制流功能
 
 * [CASE](functions/func-mysql-case.md) - `THEN`如果`WHEN`满足分支中的条件，则返回分支中的相应结果，否则返回`ELSE`分支中的结果。
 * [IF](functions/func-mysql-if.md) - 根据给定条件返回值。
 * [IFNULL](functions/func-mysql-ifnull.md "MySQL IFNULL") - 如果它不是NULL则返回第一个参数，否则返回第二个参数。
 * [NULLIF](functions/func-mysql-nullif.md "MySQL NULLIF") - 如果第一个参数等于第二个参数，[则](functions/func-mysql-nullif.md "MySQL NULLIF")返回NULL，否则返回第一个参数。
 
-### MySQL日期和时间函数
+### 5.1.4 MySQL 日期和时间函数
 
 * [CURDATE](functions/func-mysql-curdate.md) - 返回当前日期。
 * [DATEDIFF](functions/func-mysql-datediff.md)  - 计算两个`DATE`值之间的天数   。
@@ -56,13 +56,13 @@
 * [WEEKDAY](functions/func-mysql-weekday.html)  - 返回日期的工作日索引。
 * [YEAR](functions/func-mysql-year.html) -返回日期值的年份部分。
 
-### MySQL比较功能
+### 5.1.5 MySQL 比较功能
 
 * [COALESCE](functions/func-mysql-coalesce.html) - 返回第一个非null参数，这对于替换null非常方便。
 * [GREATEST＆LEAST](functions/func-mysql-greatest.html) - 取n个参数并分别返回n个参数的最大值和最小值。
 * [ISNULL](functions/mysql-isnull-function.html) - 如果参数为null，则返回1，否则返回零。
 
-### MySQL数学函数
+### 5.1.6 MySQL 数学函数
 
 * [ABS](functions/func-mysql-abs.html) - 返回数字的绝对值。
 * [CEIL](functions/func-mysql-ceil.html) - 返回大于或等于输入数字的最小整数值。
@@ -71,21 +71,21 @@
 * [ROUND](functions/func-mysql-round.html)  - 将数字四舍五入到指定的小数位数。
 * [TRUNCATE](functions/func-mysql-truncate.html) - 将数字截断为指定的小数位数。
 
-### 其他MySQL功能
+### 5.1.7 其他 MySQL 函数
 
 * [LAST_INSERT_ID](functions/func-mysql-last-insert-id.html) - 获取最后生成的最后一个插入记录的序列号。
 * [CAST](functions/func-mysql-cast.html "MySQL CAST") - 将任何类型的值转换为具有指定类型的值。
 
 
-## 5.1 窗口函数
+## 5.2 窗口函数
 
 ![2JGnOx](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/2JGnOx.png)
 
-### 5.1.1 窗口函数概念及基本的使用方法
+### 5.2.1 窗口函数概念及基本的使用方法
 
 窗口函数也称为 **OLAP** 函数。
 
-OLAP 是 OnLine Analytical Processing 的简称，意思是**对数据库数据进行实时分析处理**。
+OLAP 是 **O**n**L**ine **A**nalytical **P**rocessing 的简称，意思是**对数据库数据进行实时分析处理**。
 
 为了便于理解，称之为窗口函数。
 
@@ -93,17 +93,19 @@ OLAP 是 OnLine Analytical Processing 的简称，意思是**对数据库数据�
 
 窗口函数和普通聚合函数也很容易混淆，二者区别如下：
 
-* 聚合函数是将多条记录聚合为一条；而窗口函数是每条记录都会执行，有几条记录执行完还是几条。
+* 聚合函数是将多条记录聚合为**一条**；而窗口函数是每条记录都会执行，**有几条记录执行完还是几条**。
 
-* 聚合函数也可以用于窗口函数
+* 部分聚合函数也可以用于窗口函数。
 
-### 5.1.2 窗口函数的例子（学生成绩累计平均值）
+### 5.2.2 窗口函数的例子（学生成绩累计平均值）
 
+窗口函数（也称为 OLAP 函数）是一种可以在查询中对数据进行分组并排序的特殊函数。
 
+它的作用是对结果集中的一部分数据进行计算，而不需要像传统的聚合函数那样将数据压缩成一个单一的值。
 
-窗口函数（也称为 OLAP 函数）是一种可以在查询中对数据进行分组并排序的特殊函数。它的作用是对结果集中的一部分数据进行计算，而不需要像传统的聚合函数那样将数据压缩成一个单一的值。
+可以将窗口函数理解为在“窗口”内对数据进行分析，而这个窗口内的数据通常是通过分组、排序或者其他方式指定的。
 
-可以将窗口函数理解为在“窗口”内对数据进行分析，而这个窗口内的数据通常是通过分组、排序或者其他方式指定的。它允许在每一行中计算某种统计值，但每一行的数据仍然会被保留，而不是被合并成一个结果。
+它允许在每一行中计算某种统计值，但每一行的数据仍然会被保留，而不是被合并成一个结果。
 
 举个例子
 
@@ -139,20 +141,20 @@ FROM
 
 在这个查询中，`AVG(exam_score) OVER (PARTITION BY student_id ORDER BY exam_date)` 就是一个窗口函数：
 
-* PARTITION BY：按 student_id 分组，即每个学生的数据被单独处理。
-* ORDER BY：按 exam_date 排序，即成绩会按日期顺序进行计算。
-* 窗口函数：在每个学生的所有记录中，计算该学生到当前考试为止的累计平均分。
+* PARTITION BY：按 student_id **分组**，即每个学生的数据被单独处理。
+* ORDER BY：按 exam_date **排序**，即成绩会按日期顺序进行计算。
+* 窗口函数：在每个学生的所有记录中，计算该学生到当前考试为止的**累计**平均分。
 
 结果：
 
 ```
 student_id	exam_score	exam_date	running_avg
-      1               90	2024-11-01             90.0
-      2               85	2024-11-01             85.0
-      3               92	2024-11-01             92.0
-      1               88	2024-11-02             89.0
-      2               78	2024-11-02             81.5
-      3               85	2024-11-02             88.5
+      1            90	        2024-11-01             90.0
+      2            85	        2024-11-01             85.0
+      3            92	        2024-11-01             92.0
+      1            88	        2024-11-02             89.0
+      2            78	        2024-11-02             81.5
+      3            85	        2024-11-02             88.5
 ```
 
 解释：
@@ -185,19 +187,19 @@ student_id	exam_score	exam_date	running_avg
 
 窗口函数就像是对数据表的一扇“窗口”，它允许你在不改变数据结构的情况下，对某些数据进行详细的统计和分析，非常适合处理类似排名、累计和移动平均等问题。
 
-### 5.1.3 窗口函数功能分类 
+### 5.2.3 窗口函数功能分类 
 
 按照功能划分，可以把MySQL支持的窗口函数分为如下几类：
 
-* 序号函数：row_number() / rank() / dense_rank()
+* 序号函数：ROW_NUMBER() / RANK() / DENSE_RANK()
 
-* 分布函数：percent_rank() / cume_dist()
+* 分布函数：PERCENT_RANK() / CUME_DIST()
 
-* 前后函数：lag() / lead()
+* 前后函数：LAG() / LEAD()
 
-* 头尾函数：first_val() / last_val()
+* 头尾函数：FIRST_VALUE() / LAST_VALUE()
 
-* 其他函数：nth_value() / ntile()
+* 其他函数：NTH_VALUE() / NTILE()
 
 窗口函数的通用形式：
 
@@ -244,11 +246,13 @@ _[]_ 中的内容可以省略。
 
 ![5qnRyd](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/5qnRyd.jpg)
 
-其中，**OVER** 是关键字，用来指定函数执行的窗口范围，如果后面括号中什么都不写，则意味着窗口包含满足 WHERE 条件的所有行，窗口函数基于所有行进行计算；如果不为空，则支持以下四种语法来设置窗口：
+其中，**OVER** 是关键字，用来指定函数执行的窗口范围，如果后面括号中什么都不写，则意味着窗口包含满足 WHERE 条件的所有行，窗口函数基于所有行进行计算；如果不为空，则支持以下四种语法来设置窗口。
 
-* 1. **window_name**：给窗口指定一个别名，如果SQL中涉及的窗口较多，采用别名可以看起来更清晰易读。
+#### 5.2.3.1 WINDOWS NAME
 
-上面例子中如果指定一个别名 _w_，则改写如下：
+**window_name**：给窗口指定一个别名，如果SQL中涉及的窗口较多，采用别名可以看起来更清晰易读。
+
+看下面的例子，如果指定一个别名 _w_，则编写程序如下：
 
 ```sql
     SELECT * FROM(
@@ -263,11 +267,38 @@ _[]_ 中的内容可以省略。
     ) t ;
 ```
 
-* 2. **partition 子句**：窗口按照那些字段进行分组，窗口函数在不同的分组上分别执行。上面的例子就按照用户 id 进行了分组。在每个用户 id 上，按照 order by 的顺序分别生成从 1 开始的顺序编号。
+#### 5.2.3.2 PARTITION 子句
 
-* 3. **order by 子句**：按照哪些字段进行排序，窗口函数将按照排序后的记录顺序进行编号。可以和 partition 子句配合使用，也可以单独使用。上例中二者同时使用，如果没有 partition 子句，则会按照所有用户的订单金额排序来生成序号。
+**partition 子句**：窗口按照那些字段进行分组，窗口函数在不同的分组上分别执行。
 
-* 4. **frame 子句**：frame 是当前分区的一个子集，子句用来定义子集的规则，通常用来作为滑动窗口使用。比如要根据每个订单动态计算包括本订单和按时间顺序前后两个订单的平均订单金额，则可以设置如下frame子句来创建滑动窗口：
+上面的例子就按照用户 id 进行了分组。在每个用户 id 上，按照 order by 的顺序分别生成从 1 开始的顺序编号。
+
+#### 5.2.3.3 ORDER BY 子句
+
+**order by 子句**：按照哪些字段进行排序，窗口函数将按照排序后的记录顺序进行编号。
+
+可以和 partition 子句配合使用，也可以单独使用。
+
+上例中二者同时使用，如果没有 partition 子句，则会按照所有用户的订单金额排序来生成序号。
+
+#### 5.2.3.4 FRAME 子句
+
+**frame 子句**：frame 是当前分区的一个子集，子句用来定义子集的规则，通常用来作为滑动窗口使用。
+
+比如要根据每个订单动态计算包括本订单和按时间顺序前后两个订单的平均订单金额，则可以设置如下 frame 子句来创建滑动窗口：
+
+```sql
+select * from
+(
+    select
+      order_id,user_no, amount,
+      avg(amount)over w as avg_num,
+      create_date
+    from order_tab
+    WINDOW w AS (partition by user_no order by create_date desc ROWS BETWEEN I PRECEDING AND I FOLLOWING)
+)t
+
+```
 
  ![WDHDUk](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/WDHDUk.jpg)
 
@@ -277,7 +308,7 @@ _[]_ 中的内容可以省略。
 * 以此类推就可以得到一个基于滑动窗口的动态平均订单值。
 * 此例中，窗口函数用到了传统的聚合函数avg()，用来计算动态的平均值。
 
-## 5.2 窗口函数分类
+## 5.3 窗口函数分类
 
 大致来说，窗口函数可以分为两类。
 
@@ -285,7 +316,7 @@ _[]_ 中的内容可以省略。
 
 * 二是 RANK、DENSE_RANK 等排序用的专用窗口函数
 
-### 5.2.1 专用窗口函数
+### 5.3.1 专用窗口函数
 
 * **RANK 函数 （英式排序）** 序号函数
 
@@ -318,7 +349,7 @@ _[]_ 中的内容可以省略。
 ![mJkouF](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/mJkouF.jpg)
 
 
-### 5.2.2 聚合函数在窗口函数上的使用
+### 5.3.2 聚合函数在窗口函数上的使用
 
 聚合函数在开窗函数中的使用方法和之前的专用窗口函数一样，只是出来的结果是一个 **累计** 的聚合函数值。
 
@@ -342,7 +373,7 @@ _[]_ 中的内容可以省略。
 
 即累计到当前行的聚合。
 
-### 5.2.3 滑动窗口
+### 5.3.3 滑动窗口
 
 对于滑动窗口的范围指定，有两种方式，基于行和基于范围，具体区别如下：
 
@@ -381,7 +412,7 @@ _[]_ 中的内容可以省略。
 
     接下来我们以上例的订单表为例，来介绍每个函数的使用方法。表中各字段含义按顺序分别为订单号、用户id、订单金额、订单创建日期。
 
-### 5.2.4 窗口函数的的应用 - 计算移动平均
+### 5.3.4 窗口函数的的应用 - 计算移动平均
 
 在上面提到，聚合函数在窗口函数使用时，计算的是累积到当前行的所有的数据的聚合。
 
@@ -437,9 +468,9 @@ FOLLOWING（“之后”），将框架指定为 “截止到之后 n 行”，�
 * 原则上，窗口函数只能在 **SELECT** 子句中使用。
 * 窗口函数 OVER 中的 **ORDER BY** 子句并不会影响最终结果的排序。其只是用来决定窗口函数按何种顺序计算。
 
-### 5.2.5 GROUPING 运算符
+### 5.3.5 GROUPING 运算符
 
-#### 5.2.4.1 ROLLUP - 计算合计及小计
+#### 5.3.5.1 ROLLUP - 计算合计及小计
 
 常规的 GROUP BY 只能得到每个分类的小计，有时候还需要计算分类的合计，可以用 ROLLUP 关键字。
 
@@ -469,7 +500,7 @@ FOLLOWING（“之后”），将框架指定为 “截止到之后 n 行”，�
 
 ![XpyHSn](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/XpyHSn.jpg)
 
-### 5.2.6 序号函数 row_number() / rank() / dense_rank()
+### 5.3.6 序号函数 row_number() / rank() / dense_rank()
 
 用途：显示分区中的当前行号
 
@@ -489,9 +520,9 @@ FOLLOWING（“之后”），将框架指定为 “截止到之后 n 行”，�
 
 上面红色粗体显示了三个函数的区别，row_number()在amount都是800的两条记录上随机排序，但序号按照1、2递增，后面amount为600的的序号继续递增为3，中间不会产生序号间隙；rank()/dense_rank()则把amount为800的两条记录序号都设置为1，但后续amount为600的需要则分别设置为3（rank）和2（dense_rank）。即rank（）会产生序号相同的记录，同时可能产生序号间隙；而dense_rank（）也会产生序号相同的记录，但不会产生序号间隙。
 
-### 5.2.7 分布函数 percent_rank()/cume_dist()
+### 5.3.7 分布函数 percent_rank()/cume_dist()
 
-#### 5.2.7.1 percent_rank()
+#### 5.3.7.1 percent_rank()
 
 用途：和之前的RANK()函数相关，每行按照如下公式进行计算：
 
@@ -503,7 +534,7 @@ $\frac{rank - 1}{rows - 1}$
 
 从结果看出，percent列按照公式(rank - 1) / (rows - 1)带入rank值（row_num列）和rows值（user_no为‘001’和‘002’的值均为5）。
 
-#### 5.2.7.2 cume_dist()
+#### 5.3.7.2 cume_dist()
 
 用途：分组内小于等于当前rank值的行数/分组内总行数，这个函数比percen_rank使用场景更多。
 
@@ -515,7 +546,7 @@ SQL如下：
 
 列 cume 显示了预期的数据分布结果。
 
-### 5.2.8 前后函数 lead(n)/lag(n)
+### 5.3.8 前后函数 lead(n)/lag(n)
 
 用途：分区中位于当前行前n行（lead）/后n行(lag)的记录值。
 
@@ -527,7 +558,7 @@ SQL如下：
 
 内层SQL先通过 lag 函数得到上一次订单的日期，外层SQL再将本次订单和上次订单日期做差得到时间间隔 diff。
 
-### 5.2.9 头尾函数 first_val(expr)/last_val(expr)。
+### 5.3.9 头尾函数 first_val(expr)/last_val(expr)。
 
 用途：得到分区中的第一个/最后一个指定参数的值。
 
@@ -539,9 +570,9 @@ SQL如下：
 
 结果和预期一致，比如 order_id 为 4 的记录，first_amount 和 last_amount 分别记录了用户‘001’截止到时间2018-01-03 00:00:00为止，第一条订单金额100和最后一条订单金额800，注意这里是按时间排序的最早订单和最晚订单，并不是最小金额和最大金额订单。
 
-### 5.2.10 其他函数 nth_value(expr,n)/ntile(n）
+### 5.3.10 其他函数 nth_value(expr,n)/ntile(n）
 
-#### 5.2.10.1 nth_value(expr,n)
+#### 5.3.10.1 nth_value(expr,n)
 
 用途：返回窗口中第N个expr的值，expr可以是表达式，也可以是列名。
 
@@ -551,7 +582,7 @@ SQL如下：
 
 ![hNPTk0](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/hNPTk0.jpg)
 
-### 5.2.10.2 ntile(n)
+#### 5.3.10.2 ntile(n)
 
 用途：将分区中的有序数据分为 n 个桶，记录桶号。
 
@@ -563,9 +594,9 @@ SQL如下：
 
 此函数在数据分析中应用较多，比如由于数据量大，需要将数据平均分配到N个并行的进程分别计算，此时就可以用NTILE(N)对数据进行分组，由于记录数不一定被N整除，所以数据不一定完全平均，然后将不同桶号的数据再分配。
 
-## 练习题
+## 5.4 练习题
 
-### 练习 5.1
+### 5.4.1 练习
 
 请说出针对本章中使用的 product（商品）表执行如下 SELECT 语句所能得到的结果。
 
@@ -580,7 +611,7 @@ SQL如下：
 
 > 按照 product_id 升序排列，计算出截⾄当前⾏的最⾼ sale_price 。
 
-### 练习 5.2
+### 5.4.2 练习
 
 继续使用 product 表，计算出按照登记日期（regist_date）升序进行排列的各日期的销售单价（sale_price）的总额。排序是需要将登记日期为 NULL 的“运动 T 恤”记录排在第 1 位（也就是将其看作比其他日期都早）
 
@@ -609,7 +640,7 @@ SQL如下：
     FROM Product;
 ```
 
-### 练习 5.3
+### 5.4.3 练习
 
 思考题
 
@@ -623,4 +654,4 @@ SQL如下：
 
 **FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY**
 
-如果在 WHERE, GROUP BY, HAVING 使⽤了窗⼝函数，就是说提前进⾏了⼀次排序，排序之后再去除 记录、汇总、汇总过滤，第⼀次排序结果就是错误的，没有实际意义。⽽ ORDER BY 语句执⾏顺序在 SELECT 语句之后，⾃然是可以使⽤的。
+如果在 WHERE, GROUP BY, HAVING 使⽤了窗⼝函数，就是说提前进⾏了⼀次排序，排序之后再去除记录、汇总、汇总过滤，第⼀次排序结果就是错误的，没有实际意义。⽽ ORDER BY 语句执⾏顺序在 SELECT 语句之后，⾃然是可以使⽤的。

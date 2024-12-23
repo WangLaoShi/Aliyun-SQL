@@ -1,4 +1,4 @@
-# Task02：SQL 基础查询与排序
+# SQL 基础查询与排序
 
 [TOC]
 
@@ -580,9 +580,9 @@ SQL 中的执行结果是随机排列的，当需要按照特定顺序排序时�
 
 也就是说，当在 ORDER BY 中使用别名时，已经知道了 SELECT 设置的别名存在，但是在 GROUP BY 中使用别名时还不知道别名的存在，所以 **在 ORDER BY 中可以使用别名，但是在 GROUP BY 中不能使用别名。**
 
-## 练习题 - 第二部分
+## 2.8 练习题
 
-### 练习题 5
+### 2.8.1 指出语法错误
 
 请指出下述 SELECT 语句中所有的语法错误。
 
@@ -594,12 +594,11 @@ SQL 中的执行结果是随机排列的，当需要按照特定顺序排序时�
     WHERE regist_date > '2009-09-01';
 ```
 
-
 * 错误 1 ，字符型字段 product_name 不可以进行 SUM 聚合
 * 错误 2 ，WHERE 语句应该书写在 GROUP BY 语句之前（FROM 语句之后）
 * 错误 3 ，GROUP BY 字段（product_type）与 SELECT 字段不同（product_id）
 
-### 练习题 6
+### 2.8.2 编写语句
 
 请编写一条 SELECT 语句，求出销售单价（sale_price 列）合计值大于进货单价（purchase_price 列）合计值 1.5 倍的商品种类。执行结果如下所示。
 
@@ -612,9 +611,9 @@ SQL 中的执行结果是随机排列的，当需要按照特定顺序排序时�
     HAVING SUM(sale_price) > SUM(purchase_price) * 1.5;
 ```
 
-### 练习题 7
+### 2.8.3 ORDER BY 练习题
 
-此前我们曾经使用 SELECT 语句选取出了 product（商品）表中的全部记录。当时我们使用了 ORDERBY 子句来指定排列顺序，但现在已经无法记起当时如何指定的了。请根据下列执行结果，思考 ORDERBY 子句的内容。
+此前我们曾经使用 SELECT 语句选取出了 product（商品）表中的全部记录。当时我们使用了 ORDER BY 子句来指定排列顺序，但现在已经无法记起当时如何指定的了。请根据下列执行结果，思考 ORDER BY 子句的内容。
 
 ![DwKApk](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/DwKApk.jpg)
 
