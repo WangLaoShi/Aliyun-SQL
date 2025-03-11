@@ -37,7 +37,42 @@ Excel 对十万条以内的数据处理起来没有问题，但是大数据时�
 
 **FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY**
 
-![XiDooE](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/XiDooE.png)
+
+根据图片，我将把这些 SQL 关键字和其功能翻译整理成中文：
+
+## SQL 关键字及其功能
+
+- `SELECT` - 从数据库中选择数据
+- `FROM` - 指定要从哪个表选择数据
+- `WHERE` - 基于条件筛选行
+- `AS` - 为列或表指定别名
+- `JOIN` - 合并来自两个或多个表的行
+- `AND` - 组合多个条件，所有条件都必须为真
+- `OR` - 组合多个条件，至少一个条件必须为真
+- `LIMIT` - 限制返回的行数
+- `IN` - 在 WHERE 子句中指定多个值
+- `CASE` - 在 SQL 语句中创建条件逻辑
+- `IS NULL` - 检查空值
+- `LIKE` - 在列中搜索指定模式
+- `COMMIT` - 保存事务中所做的更改
+- `ROLLBACK` - 撤销事务中所做的更改
+- `ALTER TABLE` - 修改现有表结构
+- `UPDATE` - 修改表中现有行
+- `CREATE` - 在数据库中创建新表、视图或其他对象
+- `DELETE` - 从表中删除行
+- `INSERT INTO` - 向表中添加新行
+- `DROP` - 删除表或数据库中的其他对象
+- `GROUP BY` - 将具有相同值的行分组为汇总行
+- `ORDER BY` - 按指定列对查询结果集排序
+- `HAVING` - 基于条件筛选分组（在 GROUP BY 之后使用）
+- `COUNT` - 返回符合指定条件的行数
+- `SUM` - 计算数值列的总和
+- `AVG` - 计算数值列的平均值
+- `MIN` - 返回所选列的最小值
+- `MAX` - 返回所选列的最大值
+
+这些是 SQL 中最常用的关键字和函数，掌握它们对于数据库操作和查询非常重要。
+
 
 ![zGd1U2](https://upiclw.oss-cn-beijing.aliyuncs.com/uPic/zGd1U2.png)
 
