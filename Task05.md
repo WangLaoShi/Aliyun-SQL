@@ -404,7 +404,7 @@ select * from
       avg(amount)over w as avg_num,
       create_date
     from order_tab
-    WINDOW w AS (partition by user_no order by create_date desc ROWS BETWEEN I PRECEDING AND I FOLLOWING)
+    WINDOW w AS (partition by user_no order by create_date desc ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING)
 )t
 
 ```
