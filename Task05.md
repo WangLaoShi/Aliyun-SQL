@@ -125,6 +125,23 @@ student_id	exam_score	exam_date
 3                   85          2024-11-02
 ```
 
+建表和插入语句：
+
+```sql
+CREATE TABLE exam_scores (
+    student_id INT NOT NULL,
+    exam_score INT NOT NULL,
+    exam_date DATE NOT NULL
+);
+INSERT INTO exam_scores (student_id, exam_score, exam_date) VALUES
+(1, 90, '2024-11-01'),
+(2, 85, '2024-11-01'),
+(3, 92, '2024-11-01'),
+(1, 88, '2024-11-02'),
+(2, 78, '2024-11-02'),
+(3, 85, '2024-11-02');
+```
+
 如果你想要计算每个学生考试成绩的累计平均分，并且希望查看所有学生每一场考试的成绩以及累计平均分，你可以使用窗口函数来实现：
 
 ```sql
