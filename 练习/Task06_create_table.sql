@@ -5,6 +5,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for ccf_offline_stage1_test_revised
 -- ----------------------------
 DROP TABLE IF EXISTS `ccf_offline_stage1_test_revised`;
+
 CREATE TABLE `ccf_offline_stage1_test_revised`  (
   `User_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Merchant_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -18,6 +19,7 @@ CREATE TABLE `ccf_offline_stage1_test_revised`  (
 -- Table structure for ccf_offline_stage1_train
 -- ----------------------------
 DROP TABLE IF EXISTS `ccf_offline_stage1_train`;
+
 CREATE TABLE `ccf_offline_stage1_train`  (
   `User_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Merchant_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -32,6 +34,7 @@ CREATE TABLE `ccf_offline_stage1_train`  (
 -- Table structure for ccf_online_stage1_train
 -- ----------------------------
 DROP TABLE IF EXISTS `ccf_online_stage1_train`;
+
 CREATE TABLE `ccf_online_stage1_train`  (
   `User_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Merchant_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -46,6 +49,7 @@ CREATE TABLE `ccf_online_stage1_train`  (
 -- Table structure for company operating
 -- ----------------------------
 DROP TABLE IF EXISTS `company operating`;
+
 CREATE TABLE `company operating`  (
   `SECURITY_ID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `TICKER_SYMBOL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -59,6 +63,7 @@ CREATE TABLE `company operating`  (
 -- Table structure for income statement
 -- ----------------------------
 DROP TABLE IF EXISTS `income statement`;
+
 CREATE TABLE `income statement`  (
   `PARTY_ID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `TICKER_SYMBOL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -134,6 +139,7 @@ CREATE TABLE `income statement`  (
 -- Table structure for macro industry
 -- ----------------------------
 DROP TABLE IF EXISTS `macro industry`;
+
 CREATE TABLE `macro industry`  (
   `indic_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `name_cn` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -146,6 +152,7 @@ CREATE TABLE `macro industry`  (
 -- Table structure for market data
 -- ----------------------------
 DROP TABLE IF EXISTS `market data`;
+
 CREATE TABLE `market data`  (
   `SECURITY_ID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `TICKER_SYMBOL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -163,6 +170,7 @@ CREATE TABLE `market data`  (
 -- Table structure for winequality-red
 -- ----------------------------
 DROP TABLE IF EXISTS `winequality-red`;
+
 CREATE TABLE `winequality-red`  (
   `fixed acidity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `volatile acidity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -182,6 +190,7 @@ CREATE TABLE `winequality-red`  (
 -- Table structure for winequality-white
 -- ----------------------------
 DROP TABLE IF EXISTS `winequality-white`;
+
 CREATE TABLE `winequality-white`  (
   `fixed acidity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `volatile acidity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
