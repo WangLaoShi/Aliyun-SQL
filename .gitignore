@@ -1,11 +1,11 @@
+# macOS
 .DS_Store
-PDFs/.DS_Store
+**/.DS_Store
+
+# IDE / 编辑器
 .idea/
 .MWebMetaData/
+
+# 本地数据与虚拟环境
 练习/data.zip
-.DS_Store
 Task05-PythonInsertDatas/venv
-.DS_Store
-.DS_Store
-PDFs/.DS_Store
-练习/.DS_Store
